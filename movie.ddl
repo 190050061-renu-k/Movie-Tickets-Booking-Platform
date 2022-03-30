@@ -1,4 +1,24 @@
 --Defining tables
+DROP TABLE IF EXISTS movie;
+DROP TABLE IF EXISTS theater;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS show_timings;
+DROP TABLE IF EXISTS role;
+DROP TABLE IF EXISTS artist;
+DROP TABLE IF EXISTS cast_;
+DROP TABLE IF EXISTS genre;
+DROP TABLE IF EXISTS language;
+DROP TABLE IF EXISTS city;
+DROP TABLE IF EXISTS movie_genre;
+DROP TABLE IF EXISTS movie_language;
+DROP TABLE IF EXISTS screen;
+DROP TABLE IF EXISTS seat;
+DROP TABLE IF EXISTS show;
+DROP TABLE IF EXISTS booking;
+DROP TABLE IF EXISTS user_language;
+DROP TABLE IF EXISTS user_genre;
+DROP TABLE IF EXISTS movie_user;
+DROP TABLE IF EXISTS user_theater;
 
 -- Table : movie(trigger to be added)
 create table movie(
@@ -59,7 +79,7 @@ create table artist(
 );
 
 -- Table : cast
-create table cast(
+create table cast_(
 	role_id INT,
 	artist_id INT,
     movie_id INT,
@@ -126,7 +146,7 @@ create table seat(
 );
 
 -- Table : show
-create table screen(
+create table show(
 	show_id INT,
     show_timings_id INT,
     movie_id INT,
