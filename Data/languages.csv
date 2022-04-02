@@ -1,72 +1,72 @@
-,language_id,name
-0,English,52711
-1,Français,52694
-2,Español,52670
-3,Deutsch,52674
-4,Pусский,52686
-5,Latin,50797
-6,Nederlands,52689
-7,广州话 / 廣州話,52519
-8,普通话,52671
-9,Magyar,52279
-10,shqip,52376
-11,Italiano,52703
-12,한국어/조선말,52465
-13,فارسی,52709
-14,Dansk,52506
-15,日本語,52566
-16,العربية,52569
-17,Hrvatski,48243
-18,Bosanski,51546
-19,Română,50351
-20,Bahasa indonesia,52565
-21,Bahasa melayu,51539
-22,svenska,52540
-23,עִבְרִית,52295
-24,Český,52684
-25,Polski,52669
-26,Gaeilge,51493
-27,Norsk,52552
-28,Slovenčina,49257
-29,Tiếng Việt,52212
-30,Português,52621
-31,हिन्दी,52701
-32,Català,52169
-33,Íslenska,52539
-34,Afrikaans,49675
-35,Srpski,51237
-36,বাংলা,52625
-37,Wolof,29250
-38,Cymraeg,21872
-39,ภาษาไทย,52077
-40,Latviešu,48470
-41,Kiswahili,49332
-42,български език,51547
-43,ελληνικά,52355
-44,Türkçe,52109
-45,suomi,52648
-46,Esperanto,45855
-47,Український,52631
-48,ქართული,49780
-49,Bokmål,33500
-50,No Language,52698
-51,euskera,50190
-52,Azərbaycan,23396
-53,Malti,40455
-54,اردو,51843
-55,isiZulu,49286
-56,Bamanankan,46474
-57,پښتو,51542
-58,Somali,47292
-59,ਪੰਜਾਬੀ,48210
-60,беларуская мова,21668
-61,தமிழ்,52495
-62,Galego,44351
-63,Kinyarwanda,25113
-64,қазақ,51799
-65,Eesti,50532
-66,Slovenščina,50669
-67,తెలుగు,52496
-68,Fulfulde,52699
-69,ozbek,47991
-70,Hausa,49701
+language_id,name
+English,52711
+Français,52694
+Español,52670
+Deutsch,52674
+Pусский,52686
+Latin,50797
+Nederlands,52689
+广州话 / 廣州話,52519
+普通话,52671
+Magyar,52279
+shqip,52376
+Italiano,52703
+한국어/조선말,52465
+فارسی,52709
+Dansk,52506
+日本語,52566
+العربية,52569
+Hrvatski,48243
+Bosanski,51546
+Română,50351
+Bahasa indonesia,52565
+Bahasa melayu,51539
+svenska,52540
+עִבְרִית,52295
+Český,52684
+Polski,52669
+Gaeilge,51493
+Norsk,52552
+Slovenčina,49257
+Tiếng Việt,52212
+Português,52621
+हिन्दी,52701
+Català,52169
+Íslenska,52539
+Afrikaans,49675
+Srpski,51237
+বাংলা,52625
+Wolof,29250
+Cymraeg,21872
+ภาษาไทย,52077
+Latviešu,48470
+Kiswahili,49332
+български език,51547
+ελληνικά,52355
+Türkçe,52109
+suomi,52648
+Esperanto,45855
+Український,52631
+ქართული,49780
+Bokmål,33500
+No Language,52698
+euskera,50190
+Azərbaycan,23396
+Malti,40455
+اردو,51843
+isiZulu,49286
+Bamanankan,46474
+پښتو,51542
+Somali,47292
+ਪੰਜਾਬੀ,48210
+беларуская мова,21668
+தமிழ்,52495
+Galego,44351
+Kinyarwanda,25113
+қазақ,51799
+Eesti,50532
+Slovenščina,50669
+తెలుగు,52496
+Fulfulde,52699
+ozbek,47991
+Hausa,49701
