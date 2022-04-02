@@ -17,7 +17,7 @@ df_new['count_theatres']=0
 df_new['upcoming']=True
 
 df_new['imdb_rating']=np.random.random_sample(df_new.shape[0])*(5)+5
-df_new.to_csv('movies.csv')
+df_new.to_csv('movies.csv', index=False)
 
 
 def red_genres(a,b):
@@ -42,8 +42,8 @@ moviegenres_list=functools.reduce(construct_moviegenres,df[['genres','id']].appl
 genres_df=pd.DataFrame(genres_dict.items(),columns=['genre_id','name'])
 # print(moviegenres_df[:10])
 moviegenres_df=pd.DataFrame(moviegenres_list,columns=['movie_id','genre_id'])
-moviegenres_df.to_csv('movie-genres.csv')
-genres_df.to_csv('genres.csv')
+moviegenres_df.to_csv('movie-genres.csv', index=False)
+genres_df.to_csv('genres.csv', index=False)
 
 def red_languages(a,b):
     languages=b
@@ -71,7 +71,7 @@ def construct_movielanguages(a,b):
 languages_dict={k:v for v,k in enumerate(functools.reduce(red_languages,df['spoken_languages'],[]))}
 rev_lang_dict = dict((v,k) for k,v in languages_dict.items())
 languages_df=pd.DataFrame(languages_dict.items(),columns=['language_id','name'])
-languages_df.to_csv('languages.csv')
+languages_df.to_csv('languages.csv', index=False)
 movielanguages_list=functools.reduce(construct_movielanguages,df[['spoken_languages','id']].apply(tuple,axis=1),[])
 movielanguages_df=pd.DataFrame(movielanguages_list,columns=['movie_id','language_id'])
-movielanguages_df.to_csv('movie-languages.csv')
+movielanguages_df.to_csv('movie-languages.csv', index=False)
