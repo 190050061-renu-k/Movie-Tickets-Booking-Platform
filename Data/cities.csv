@@ -1,9 +1,9 @@
 city_id,city
-0,Bangalore
-1,Chennai
-2,Kochi
-3,Hyderabad
-4,Kolkata
+0,Chennai
+1,Bangalore
+2,Ahmedabad
+3,Kolkata
+4,Delhi
 5,Mumbai
-6,Ahmedabad
-7,Delhi
+6,Kochi
+7,Hyderabad
