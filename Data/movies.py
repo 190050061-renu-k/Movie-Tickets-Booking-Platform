@@ -1,3 +1,4 @@
+import enum
 import functools
 import json
 from shutil import move
@@ -43,3 +44,34 @@ genres_df=pd.DataFrame(genres_dict.items(),columns=['genre_id','name'])
 moviegenres_df=pd.DataFrame(moviegenres_list,columns=['movie_id','genre_id'])
 moviegenres_df.to_csv('movie-genres.csv')
 genres_df.to_csv('genres.csv')
+
+def red_languages(a,b):
+    languages=b
+    if ('\\' in b ) or ('?' in b):
+        return a
+    for item in json.loads(languages.replace("'",'"')):
+        # moviegenres_df.append({'movie_id':movie_id,'genre_id':item['id']}, ignore_index = True)
+        # print(moviegenres_df)
+        if item['name']=='':
+            continue
+        a=a+[item['name']]
+    return a
+
+def construct_movielanguages(a,b):
+    languages=b[0]
+    movie_id=b[1]
+    if ('\\' in b[0] ) or ('?' in b[0]):
+        return a
+    for item in json.loads(languages.replace("'",'"')):
+        if item['name']=='':
+            continue
+        a.append((movie_id,languages_dict[item['name']]))
+    return a
+
+languages_dict={k:v for v,k in enumerate(functools.reduce(red_languages,df['spoken_languages'],[]))}
+rev_lang_dict = dict((v,k) for k,v in languages_dict.items())
+languages_df=pd.DataFrame(languages_dict.items(),columns=['language_id','name'])
+languages_df.to_csv('languages.csv')
+movielanguages_list=functools.reduce(construct_movielanguages,df[['spoken_languages','id']].apply(tuple,axis=1),[])
+movielanguages_df=pd.DataFrame(movielanguages_list,columns=['movie_id','language_id'])
+movielanguages_df.to_csv('movie-languages.csv')
