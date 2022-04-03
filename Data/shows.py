@@ -1,6 +1,4 @@
-from os import access
 from matplotlib.cbook import flatten
-from matplotlib.pyplot import axis, show
 import pandas as pd
 import datetime
 import itertools
