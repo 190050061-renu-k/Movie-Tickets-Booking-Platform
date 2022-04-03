@@ -68,7 +68,7 @@ def construct_movielanguages(a,b):
 
 languages_dict={k:v for v,k in enumerate(functools.reduce(red_languages,df['spoken_languages'],[]))}
 rev_lang_dict = dict((v,k) for k,v in languages_dict.items())
-languages_df=pd.DataFrame(languages_dict.items(),columns=['language_id','name'])
+languages_df=pd.DataFrame(languages_dict.items(),columns=['name','language_id'])
 languages_df.to_csv('languages.csv', index=False)
 movielanguages_list=functools.reduce(construct_movielanguages,df[['spoken_languages','id']].apply(tuple,axis=1),[])
 movielanguages_df=pd.DataFrame(movielanguages_list,columns=['movie_id','language_id'])
