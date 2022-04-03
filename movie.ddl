@@ -40,7 +40,7 @@ create table theatre(
     login_id TEXT UNIQUE NOT NULL,
     pswd TEXT NOT NULL,
     city_id INT,
-    FOREIGN KEY (city_id) references city on delete set null
+    FOREIGN KEY (city_id) references city on delete set null,
 	PRIMARY KEY (theatre_id)	
 );
 
