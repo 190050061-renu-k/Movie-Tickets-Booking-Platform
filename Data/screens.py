@@ -11,4 +11,4 @@ for theatre in theatre_df['theatre_id']:
         theatre_screen_df.loc[theatre_screen_index]=[screen,theatre]
         theatre_screen_index=theatre_screen_index+1
 
-theatre_screen_df.to_csv("./screens.csv")
+theatre_screen_df.to_csv("./screens.csv",index=False)

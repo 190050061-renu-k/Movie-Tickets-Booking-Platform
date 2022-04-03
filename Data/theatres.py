@@ -28,5 +28,5 @@ df_new['password']=[''.join(random.choice(string.ascii_letters+string.digits) fo
 theatre_ids = set()
 while len(theatre_ids) < df.shape[0] :
     theatre_ids.add(''.join(random.choice(string.digits) for i in range(np.random.randint(4, 8))))
-df["theatre_id"] = list(theatre_ids)
+df_new["theatre_id"] = list(theatre_ids)
 df_new.to_csv("theatres.csv", index=False)
