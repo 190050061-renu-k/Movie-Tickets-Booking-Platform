@@ -2,14 +2,25 @@ import functools
 import json
 import pandas as pd
 import numpy as np
+import re
 
 df=pd.read_csv("./Movies/archive/credits.csv")
 df=df.filter(['cast'])
 
 def red_cast(a,b):
     cast=b
-    for item in json.loads(cast.replace("'",'"').replace("None", '"None"')):
-        # moviegenres_df.append({'movie_id':movie_id,'genre_id':item['id']}, ignore_index = True)
+    pattern1 = r"'character': .*?'credit_id'"
+    cast = re.sub(pattern1, "'credit_id'", cast)
+    pattern2 = r''''name': ".*?",'''
+    cast = re.sub(pattern2, ''''name': 'Ariana',''', cast)
+    pattern3 = r'".*?"'
+    cast = re.sub(pattern3, "James", cast)
+    cast=cast.replace("None",'"None"')
+    cast = cast.replace("'",'"')
+    
+    if ('\\' in cast ) or ('?' in cast):
+        return a
+    for item in json.loads(cast):
         a[item['id']]=item['name']
     return a
 
