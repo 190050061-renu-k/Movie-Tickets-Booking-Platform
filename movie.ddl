@@ -1,6 +1,6 @@
 --Defining tables
 DROP TABLE IF EXISTS movie;
-DROP TABLE IF EXISTS theater;
+DROP TABLE IF EXISTS theatre;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS show_timings;
 DROP TABLE IF EXISTS artist;
@@ -17,7 +17,7 @@ DROP TABLE IF EXISTS booking;
 DROP TABLE IF EXISTS user_language;
 DROP TABLE IF EXISTS user_genre;
 DROP TABLE IF EXISTS movie_user;
-DROP TABLE IF EXISTS user_theater;
+DROP TABLE IF EXISTS user_theatre;
 
 -- Table : movie(trigger to be added)
 create table movie(
@@ -33,15 +33,15 @@ create table movie(
 	PRIMARY KEY (movie_id)	
 );
 
--- Table : theater - location attribute to be added
-create table theater(
-	theater_id INT,
-	theater_name TEXT NOT NULL,
+-- Table : theatre - location attribute to be added
+create table theatre(
+	theatre_id INT,
+	theatre_name TEXT NOT NULL,
     login_id TEXT UNIQUE NOT NULL,
     pswd TEXT NOT NULL,
     city_id INT,
     FOREIGN KEY (city_id) references city on delete set null
-	PRIMARY KEY (theater_id)	
+	PRIMARY KEY (theatre_id)	
 );
 
 -- Table : User
@@ -123,9 +123,9 @@ create table movie_language(
 -- Table : screen
 create table screen(
 	screen_num INT NOT NULL,
-	theater_id INT,
-    FOREIGN KEY (theater_id) references theater on delete set null,
-	PRIMARY KEY (screen_num, theater_id)	
+	theatre_id INT,
+    FOREIGN KEY (theatre_id) references theatre on delete set null,
+	PRIMARY KEY (screen_num, theatre_id)	
 );
 
 -- Table : seat
@@ -142,15 +142,14 @@ create table show(
 	show_id INT,
     show_timings_id INT,
     movie_id INT,
-	theater_id INT,
+	theatre_id INT,
     screen_num INT,
     ticket INT NOT NULL CHECK(ticket>0),
-    start_date DATE NOT NULL,
-    end_date DATE NOT NULL CHECK(end_date>start_date),
+    show_date DATE NOT NULL,
     FOREIGN KEY (show_timings_id) references show_timings on delete set null,
     FOREIGN KEY (movie_id) references movie on delete set null,
-    FOREIGN KEY (screen_num, theater_id) references screen on delete set null,
-    CONSTRAINT UNIQUE (show_id,show_timings_id,movie_id, screen_num, theater_id),
+    FOREIGN KEY (screen_num, theatre_id) references screen on delete set null,
+    CONSTRAINT UNIQUE (show_id,show_timings_id,movie_id, screen_num, theatre_id),
 	PRIMARY KEY (show_id)	
 );
 
@@ -196,19 +195,19 @@ create table movie_user(
 	PRIMARY KEY (user_id,movie_id)
 );
 
---  Table : user_theater
-create table user_theater(
+--  Table : user_theatre
+create table user_theatre(
 	user_id INT,
-    theater_id INT,
+    theatre_id INT,
     rating INT CHECK(rating>=1 and rating<=5),
     FOREIGN KEY (user_id) references users on delete set null,
-    FOREIGN KEY (theater_id) references theater on delete set null,
-	PRIMARY KEY (user_id,theater_id)
+    FOREIGN KEY (theatre_id) references theatre on delete set null,
+	PRIMARY KEY (user_id,theatre_id)
 );
 
 -- auto increment id for user and theatre
 CREATE SEQUENCE user_id_seq START WITH 1 INCREMENT BY 1;
 ALTER TABLE venue alter user_id set default nextval('user_id_seq');
 
-CREATE SEQUENCE theater_id_seq START WITH 1 INCREMENT BY 1;
-ALTER TABLE venue alter theater_id set default nextval('theater_id_seq');
+CREATE SEQUENCE theatre_id_seq START WITH 1 INCREMENT BY 1;
+ALTER TABLE venue alter theatre_id set default nextval('theatre_id_seq');
