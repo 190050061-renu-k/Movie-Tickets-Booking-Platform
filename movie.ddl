@@ -33,6 +33,13 @@ create table movie(
 	PRIMARY KEY (movie_id)	
 );
 
+-- Table : city
+create table city(
+	city_id INT,
+	city_name TEXT NOT NULL,
+	PRIMARY KEY (city_id)	
+);
+
 -- Table : theatre - location attribute to be added
 create table theatre(
 	theatre_id INT,
@@ -205,6 +212,15 @@ create table user_theatre(
 	PRIMARY KEY (user_id,theater_id)
 );
 
+-- auto increment id for user and theatre
+CREATE SEQUENCE user_id_seq START WITH 1 INCREMENT BY 1;
+ALTER TABLE users alter user_id set default nextval('user_id_seq');
+
+CREATE SEQUENCE theatre_id_seq START WITH 1 INCREMENT BY 1;
+ALTER TABLE theatre alter theatre_id set default nextval('theatre_id_seq');
+
+
+--trigger
 CREATE OR REPLACE FUNCTION change_upcoming()
     RETURNS TRIGGER
     LANGUAGE PLPGSQL
