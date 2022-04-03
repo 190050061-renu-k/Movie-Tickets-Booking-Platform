@@ -213,3 +213,21 @@ create table user_theater(
     FOREIGN KEY (theater_id) references theater on delete set null,
 	PRIMARY KEY (user_id,theater_id)
 );
+
+CREATE OR REPLACE FUNCTION change_upcoming()
+    RETURNS TRIGGER
+    LANGUAGE PLPGSQL
+    AS 
+$$
+BEGIN 
+    UPDATE movie
+    SET upcoming_movie = FALSE
+    WHERE movie_id = NEW.movie_id;
+END;
+$$
+
+CREATE TRIGGER upcming
+    AFTER INSERT
+    ON show
+    FOR EACH ROW 
+    EXECUTE PROCEDURE change_upcoming()
