@@ -3,7 +3,6 @@ DROP TABLE IF EXISTS movie;
 DROP TABLE IF EXISTS theater;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS show_timings;
-DROP TABLE IF EXISTS role;
 DROP TABLE IF EXISTS artist;
 DROP TABLE IF EXISTS cast_;
 DROP TABLE IF EXISTS genre;
@@ -64,12 +63,7 @@ create table show_timings(
 	PRIMARY KEY (show_timings_id)	
 );
 
--- Table : role
-create table role(
-	role_id INT,
-	role_name TEXT NOT NULL,
-	PRIMARY KEY (role_id)	
-);
+
 
 -- Table : artist
 create table artist(
@@ -80,13 +74,11 @@ create table artist(
 
 -- Table : cast
 create table cast_(
-	role_id INT,
 	artist_id INT,
     movie_id INT,
-    FOREIGN KEY (role_id) references role on delete set null,
     FOREIGN KEY (artist_id) references artist on delete set null,
     FOREIGN KEY (movie_id) references movie on delete set null,
-	PRIMARY KEY (role_id,artist_id,movie_id)	
+	PRIMARY KEY (artist_id,movie_id)	
 );
 
 -- Table : genre
@@ -213,3 +205,10 @@ create table user_theater(
     FOREIGN KEY (theater_id) references theater on delete set null,
 	PRIMARY KEY (user_id,theater_id)
 );
+
+-- auto increment id for user and theatre
+CREATE SEQUENCE user_id_seq START WITH 1 INCREMENT BY 1;
+ALTER TABLE venue alter user_id set default nextval('user_id_seq');
+
+CREATE SEQUENCE theater_id_seq START WITH 1 INCREMENT BY 1;
+ALTER TABLE venue alter theater_id set default nextval('theater_id_seq');
