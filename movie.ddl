@@ -201,13 +201,24 @@ create table user_theatre(
     theatre_id INT,
     rating INT CHECK(rating>=1 and rating<=5),
     FOREIGN KEY (user_id) references users on delete set null,
-    FOREIGN KEY (theatre_id) references theatre on delete set null,
-	PRIMARY KEY (user_id,theatre_id)
+    FOREIGN KEY (theater_id) references theater on delete set null,
+	PRIMARY KEY (user_id,theater_id)
 );
 
--- auto increment id for user and theatre
-CREATE SEQUENCE user_id_seq START WITH 1 INCREMENT BY 1;
-ALTER TABLE venue alter user_id set default nextval('user_id_seq');
+CREATE OR REPLACE FUNCTION change_upcoming()
+    RETURNS TRIGGER
+    LANGUAGE PLPGSQL
+    AS 
+$$
+BEGIN 
+    UPDATE movie
+    SET upcoming_movie = FALSE
+    WHERE movie_id = NEW.movie_id;
+END;
+$$
 
-CREATE SEQUENCE theatre_id_seq START WITH 1 INCREMENT BY 1;
-ALTER TABLE venue alter theatre_id set default nextval('theatre_id_seq');
+CREATE TRIGGER upcming
+    AFTER INSERT
+    ON show
+    FOR EACH ROW 
+    EXECUTE PROCEDURE change_upcoming()
