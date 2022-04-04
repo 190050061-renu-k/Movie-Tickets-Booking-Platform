@@ -66,7 +66,7 @@ create table users(
 	user_id INT,
 	userName TEXT NOT NULL,
     age INT CHECK(age>0),
-    mobileNumber CHAR(10) UNIQUE NOT NULL CHECK(mobileNumber not like '%[^0-9]%' and LENGTH(mobile)=10), 
+    mobileNumber CHAR(10) UNIQUE NOT NULL CHECK(mobileNumber not like '%[^0-9]%' and LENGTH(mobileNumber)=10), 
     password TEXT NOT NULL,
 	PRIMARY KEY (user_id)	
 );
