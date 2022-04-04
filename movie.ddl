@@ -5,7 +5,7 @@ DROP SEQUENCE IF EXISTS theatre_id_seq CASCADE;
 DROP SEQUENCE IF EXISTS movie_id_seq CASCADE;
 DROP SEQUENCE IF EXISTS artist_id_seq CASCADE;
 DROP SEQUENCE IF EXISTS show_id_seq CASCADE;
-DROP SEQUENCE IF EXISTS booking_id_seq CASCADE;
+DROP SEQUENCE IF EXISTS bookings_id_seq CASCADE;
 DROP TABLE IF EXISTS movies CASCADE;
 DROP TABLE IF EXISTS theatres CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
@@ -20,7 +20,7 @@ DROP TABLE IF EXISTS movie_languages CASCADE;
 DROP TABLE IF EXISTS screens CASCADE;
 DROP TABLE IF EXISTS seats CASCADE;
 DROP TABLE IF EXISTS shows CASCADE;
-DROP TABLE IF EXISTS booking CASCADE;
+DROP TABLE IF EXISTS bookings CASCADE;
 DROP TABLE IF EXISTS booking_seat CASCADE;
 DROP TABLE IF EXISTS user_languages CASCADE;
 DROP TABLE IF EXISTS user_genres CASCADE;
@@ -142,7 +142,7 @@ create table screens(
 -- Table : seat
 create table seats(
 	seat_id INT,
-	label CHAR CHECK(label like '[A-M]'),
+	label CHAR CHECK(label like '%[A-M]%' and LENGTH(label)=1),
     column_ INT CHECK(column_ in (1,2,3,4,5,6,7,8,9,10)),
     CONSTRAINT seat_unique UNIQUE (seat_id,label,column_),
 	PRIMARY KEY (seat_id)	
@@ -165,7 +165,7 @@ create table shows(
 );
 
 -- Table : booking
-create table booking(
+create table bookings(
 	show_id INT,
     user_id INT,
     booking_id INT,
@@ -180,7 +180,8 @@ create table booking(
 create table booking_seat(
     booking_id INT,
     seat_id INT,
-    PRIMARY KEY(booking_id, seat_id)
+    PRIMARY KEY(booking_id, seat_id),
+    FOREIGN KEY (booking_id) references bookings on delete set null
 );
 
 --  Table : user_language
@@ -239,7 +240,7 @@ CREATE SEQUENCE show_id_seq START WITH 144000 INCREMENT BY 1;
 ALTER TABLE shows alter show_id set default nextval('show_id_seq');
 
 CREATE SEQUENCE booking_id_seq START WITH 81000 INCREMENT BY 1;
-ALTER TABLE booking alter booking_id set default nextval('booking_id_seq');
+ALTER TABLE bookings alter booking_id set default nextval('booking_id_seq');
 
 
 
