@@ -11,19 +11,19 @@ DROP TABLE IF EXISTS theatres CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS show_timings CASCADE;
 DROP TABLE IF EXISTS artists CASCADE;
-DROP TABLE IF EXISTS cast_ CASCADE;
-DROP TABLE IF EXISTS genre CASCADE;
-DROP TABLE IF EXISTS language CASCADE;
-DROP TABLE IF EXISTS city CASCADE;
-DROP TABLE IF EXISTS movie_genre CASCADE;
-DROP TABLE IF EXISTS movie_language CASCADE;
+DROP TABLE IF EXISTS movie_artists CASCADE;
+DROP TABLE IF EXISTS genres CASCADE;
+DROP TABLE IF EXISTS languages CASCADE;
+DROP TABLE IF EXISTS cities CASCADE;
+DROP TABLE IF EXISTS movie_genres CASCADE;
+DROP TABLE IF EXISTS movie_languages CASCADE;
 DROP TABLE IF EXISTS screens CASCADE;
 DROP TABLE IF EXISTS seats CASCADE;
 DROP TABLE IF EXISTS shows CASCADE;
 DROP TABLE IF EXISTS booking CASCADE;
 DROP TABLE IF EXISTS booking_seat CASCADE;
-DROP TABLE IF EXISTS user_language CASCADE;
-DROP TABLE IF EXISTS user_genre CASCADE;
+DROP TABLE IF EXISTS user_languages CASCADE;
+DROP TABLE IF EXISTS user_genres CASCADE;
 DROP TABLE IF EXISTS user_movie CASCADE;
 DROP TABLE IF EXISTS user_theatre CASCADE;
 
@@ -45,7 +45,7 @@ create table movies(
 -- Table : city
 create table cities(
 	city_id INT,
-	city_name TEXT NOT NULL,
+	city TEXT NOT NULL,
 	PRIMARY KEY (city_id)	
 );
 
@@ -90,7 +90,7 @@ create table artists(
 );
 
 -- Table : cast
-create table cast_(
+create table movie_artists(
 	artist_id INT,
     movie_id INT,
     FOREIGN KEY (artist_id) references artist on delete set null,
@@ -99,21 +99,21 @@ create table cast_(
 );
 
 -- Table : genre
-create table genre(
+create table genres(
 	genre_id INT,
-	genre_name TEXT NOT NULL,
+	name TEXT NOT NULL,
 	PRIMARY KEY (genre_id)	
 );
 
 -- Table : language
-create table language(
+create table languages(
 	language_id INT,
-	language_name TEXT NOT NULL,
+	name TEXT NOT NULL,
 	PRIMARY KEY (language_id)	
 );
 
 -- Table : movie_genre
-create table movie_genre(
+create table movie_genres(
 	movie_id INT,
 	genre_id INT,
     FOREIGN KEY (movie_id) references movie on delete set null,
@@ -122,7 +122,7 @@ create table movie_genre(
 );
 
 -- Table : movie_language
-create table movie_language(
+create table movie_languages(
 	movie_id INT,
 	language_id INT,
     FOREIGN KEY (movie_id) references movie on delete set null,
@@ -183,7 +183,7 @@ create table booking_seat(
 );
 
 --  Table : user_language
-create table user_language(
+create table user_languages(
 	user_id INT,
     language_id INT,
     FOREIGN KEY (user_id) references users on delete set null,
@@ -192,7 +192,7 @@ create table user_language(
 );
 
 --  Table : user_genre
-create table user_genre(
+create table user_genres(
 	user_id INT,
     genre_id INT,
     FOREIGN KEY (user_id) references users on delete set null,
