@@ -1,0 +1,17 @@
+1) Sign up for application
+transaction - 
+checks if entry of user with entered phone number is present in users
+if(success){
+    insert entry into users
+    insert entry into user_language if language entry not empty
+    insert entry into user_genre if genre entry not empty
+}
+
+queries - 
+
+
+
+
+
+
+
