@@ -14,6 +14,7 @@ DROP TABLE IF EXISTS screen;
 DROP TABLE IF EXISTS seat;
 DROP TABLE IF EXISTS show;
 DROP TABLE IF EXISTS booking;
+DROP TABLE IF EXISTS booking_seat;
 DROP TABLE IF EXISTS user_language;
 DROP TABLE IF EXISTS user_genre;
 DROP TABLE IF EXISTS movie_user;
@@ -156,7 +157,7 @@ create table show(
     FOREIGN KEY (show_timings_id) references show_timings on delete set null,
     FOREIGN KEY (movie_id) references movie on delete set null,
     FOREIGN KEY (screen_num, theatre_id) references screen on delete set null,
-    CONSTRAINT UNIQUE (show_id,show_timings_id,movie_id, screen_num, theatre_id),
+    CONSTRAINT UNIQUE (show_id,show_timings_id,movie_id,screen_num,theatre_id,show_date),
 	PRIMARY KEY (show_id)	
 );
 
@@ -164,13 +165,19 @@ create table show(
 create table booking(
 	show_id INT,
     user_id INT,
-    seat_id INT,
+    booking_id INT,
     book_date DATE,
     book_type TEXT CHECK(book_type in('online','offline')),
     FOREIGN KEY (show_id) references show on delete set null,
     FOREIGN KEY (user_id) references users on delete set null,
-    FOREIGN KEY (seat_id) references seat on delete set null,
-	PRIMARY KEY (show_id, user_id,seat_id)
+	PRIMARY KEY (booking_id),
+    CONSTRAINT UNIQUE (booking_id, show_id, user_id)
+);
+
+create table booking_seat(
+    booking_id INT,
+    seat_id INT,
+    PRIMARY KEY(booking_id, seat_id)
 );
 
 --  Table : user_language
@@ -218,6 +225,9 @@ ALTER TABLE users alter user_id set default nextval('user_id_seq');
 
 CREATE SEQUENCE theatre_id_seq START WITH 1 INCREMENT BY 1;
 ALTER TABLE theatre alter theatre_id set default nextval('theatre_id_seq');
+
+CREATE SEQUENCE movie_id_seq START WITH 470000 INCREMENT BY 1;
+ALTER TABLE movie alter movie_id set default nextval('movie_id_seq');
 
 
 --trigger
