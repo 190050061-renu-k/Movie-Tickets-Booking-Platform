@@ -8,10 +8,7 @@ df=df.filter(['userName'])[:20000]
 df['age']=np.random.randint(18,60,df.shape[0])
 df['mobileNumber']=[''.join(random.choice(string.digits) for i in range(10)) for j in range(df.shape[0])]
 df['password']=[''.join(random.choice(string.ascii_letters+string.digits) for i in range(np.random.randint(8,12))) for j in range(df.shape[0])]
-user_ids = set()
-while len(user_ids) < df.shape[0] :
-    user_ids.add(''.join(random.choice(string.digits) for i in range(np.random.randint(4, 8))))
-df["user_id"] = list(user_ids)
+df["user_id"] = list(range(1,df.shape[0]+1))
 
 df.to_csv("users.csv",index=False)
 

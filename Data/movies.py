@@ -8,6 +8,7 @@ df=pd.read_csv("./Movies/archive/movies_metadata.csv")
 df_new=df.filter(['id','title','release_date','poster_path','overview','homepage'])
 
 #our columns- id,name,release_date,count_theatres,upcoming,poster_img,imdb_rating,description
+df_new.rename(columns={'id':'movie_id'}, inplace=True)
 df_new.rename(columns={'title':'name'}, inplace=True)
 df_new.rename(columns={'poster_path':'poster_img'},inplace=True)
 df_new.rename(columns={'overview':'description'},inplace=True)

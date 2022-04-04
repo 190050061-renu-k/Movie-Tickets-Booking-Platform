@@ -7,7 +7,7 @@ import numpy as np
 start_date=datetime.date(2021,1,1)
 dates_list=[start_date+datetime.timedelta(days=idx) for idx in range(360)]
 
-movies_list=list(flatten(pd.read_csv("movies.csv").filter(['id']).sample(frac=1).values.tolist()))
+movies_list=list(flatten(pd.read_csv("movies.csv").filter(['movie_id']).sample(frac=1).values.tolist()))
 show_timings_list=pd.read_csv("show_timings.csv").filter(["show_timings_id"])['show_timings_id']
 screens_list = pd.read_csv("screens.csv").values.tolist()
 

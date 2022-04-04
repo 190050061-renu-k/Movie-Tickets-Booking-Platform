@@ -25,8 +25,5 @@ df_new=pd.concat([df_new,df_loginids[:df_new.shape[0]]],axis=1)
 
 df_new['password']=[''.join(random.choice(string.ascii_letters+string.digits) for i in range(np.random.randint(8,12))) for j in range(df_new.shape[0])]
 
-theatre_ids = set()
-while len(theatre_ids) < df.shape[0] :
-    theatre_ids.add(''.join(random.choice(string.digits) for i in range(np.random.randint(4, 8))))
-df_new["theatre_id"] = list(theatre_ids)
+df_new["theatre_id"] = list(range(1,df_new.shape[0]+1))
 df_new.to_csv("theatres.csv", index=False)

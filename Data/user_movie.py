@@ -5,7 +5,7 @@ import numpy as np
 
 users_list=pd.read_csv("users.csv")['user_id']
 users_list=np.array(users_list)[np.random.randint(len(users_list),size=1000)]
-movies_list=pd.read_csv("movies.csv")['id']
+movies_list=pd.read_csv("movies.csv")['movie_id']
 movies_list=np.array(movies_list)[np.random.randint(len(movies_list),size=100)]
 
 user_movie_df=pd.DataFrame(columns=['user_id','movie_id','rating','notif'])
