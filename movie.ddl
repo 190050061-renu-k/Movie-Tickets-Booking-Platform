@@ -142,8 +142,8 @@ create table screens(
 create table seats(
 	seat_id INT,
 	label CHAR CHECK(label like '[A-M]'),
-    column INT CHECK(column in (1,2,3,4,5,6,7,8,9,10)),
-    CONSTRAINT seat_unique UNIQUE (seat_id,label,column),
+    column_ INT CHECK(column_ in (1,2,3,4,5,6,7,8,9,10)),
+    CONSTRAINT seat_unique UNIQUE (seat_id,label,column_),
 	PRIMARY KEY (seat_id)	
 );
 
