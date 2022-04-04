@@ -94,8 +94,8 @@ create table artists(
 create table movie_artists(
 	artist_id INT,
     movie_id INT,
-    FOREIGN KEY (artist_id) references artists on delete set null,
-    FOREIGN KEY (movie_id) references movies on delete set null,
+    FOREIGN KEY (artist_id) references artists on delete cascade,
+    FOREIGN KEY (movie_id) references movies on delete cascade,
 	PRIMARY KEY (artist_id,movie_id)	
 );
 
@@ -117,8 +117,8 @@ create table languages(
 create table movie_genres(
 	movie_id INT,
 	genre_id INT,
-    FOREIGN KEY (movie_id) references movies on delete set null,
-    FOREIGN KEY (genre_id) references genres on delete set null,
+    FOREIGN KEY (movie_id) references movies on delete cascade,
+    FOREIGN KEY (genre_id) references genres on delete cascade,
 	PRIMARY KEY (movie_id, genre_id)	
 );
 
@@ -126,8 +126,8 @@ create table movie_genres(
 create table movie_languages(
 	movie_id INT,
 	language_id INT,
-    FOREIGN KEY (movie_id) references movies on delete set null,
-    FOREIGN KEY (language_id) references languages on delete set null,
+    FOREIGN KEY (movie_id) references movies on delete cascade,
+    FOREIGN KEY (language_id) references languages on delete cascade,
 	PRIMARY KEY (movie_id, language_id)	
 );
 
@@ -135,7 +135,7 @@ create table movie_languages(
 create table screens(
 	screen_num INT NOT NULL,
 	theatre_id INT,
-    FOREIGN KEY (theatre_id) references theatres on delete set null,
+    FOREIGN KEY (theatre_id) references theatres on delete cascade,
 	PRIMARY KEY (screen_num, theatre_id)	
 );
 
@@ -157,9 +157,9 @@ create table shows(
     screen_num INT,
     ticket INT NOT NULL CHECK(ticket>0),
     show_date DATE NOT NULL,
-    FOREIGN KEY (show_timings_id) references show_timings on delete set null,
-    FOREIGN KEY (movie_id) references movies on delete set null,
-    FOREIGN KEY (screen_num, theatre_id) references screens on delete set null,
+    FOREIGN KEY (show_timings_id) references show_timings on delete cascade,
+    FOREIGN KEY (movie_id) references movies on delete cascade,
+    FOREIGN KEY (screen_num, theatre_id) references screens on delete cascade,
     CONSTRAINT sow_unique UNIQUE (show_id,show_timings_id,movie_id,screen_num,theatre_id,show_date),
 	PRIMARY KEY (show_id)	
 );
@@ -171,8 +171,8 @@ create table bookings(
     booking_id INT,
     book_date DATE not null,
     book_type TEXT CHECK(book_type in('online','offline')),
-    FOREIGN KEY (show_id) references shows on delete set null,
-    FOREIGN KEY (user_id) references users on delete set null,
+    FOREIGN KEY (show_id) references shows on delete cascade,
+    FOREIGN KEY (user_id) references users on delete cascade,
 	PRIMARY KEY (booking_id),
     CONSTRAINT booking_unique UNIQUE (booking_id, show_id, user_id)
 );
@@ -181,15 +181,16 @@ create table booking_seat(
     booking_id INT,
     seat_id INT,
     PRIMARY KEY(booking_id, seat_id),
-    FOREIGN KEY (booking_id) references bookings on delete set null
+    FOREIGN KEY (booking_id) references bookings on delete cascade,
+	FOREIGN KEY (seat_id) references seats on delete cascade
 );
 
 --  Table : user_language
 create table user_languages(
 	user_id INT,
     language_id INT,
-    FOREIGN KEY (user_id) references users on delete set null,
-    FOREIGN KEY (language_id) references languages on delete set null,
+    FOREIGN KEY (user_id) references users on delete cascade,
+    FOREIGN KEY (language_id) references languages on delete cascade,
 	PRIMARY KEY (user_id,language_id)
 );
 
@@ -197,8 +198,8 @@ create table user_languages(
 create table user_genres(
 	user_id INT,
     genre_id INT,
-    FOREIGN KEY (user_id) references users on delete set null,
-    FOREIGN KEY (genre_id) references genres on delete set null,
+    FOREIGN KEY (user_id) references users on delete cascade,
+    FOREIGN KEY (genre_id) references genres on delete cascade,
 	PRIMARY KEY (user_id,genre_id)
 );
 
@@ -208,8 +209,8 @@ create table user_movie(
     movie_id INT,
     notif BOOLEAN default False,
     rating INT CHECK((rating>=1 and rating<=5) or rating is null),
-    FOREIGN KEY (user_id) references users on delete set null,
-    FOREIGN KEY (movie_id) references movies on delete set null,
+    FOREIGN KEY (user_id) references users on delete cascade,
+    FOREIGN KEY (movie_id) references movies on delete cascade,
 	PRIMARY KEY (user_id,movie_id)
 );
 
@@ -218,8 +219,8 @@ create table user_theatre(
 	user_id INT,
     theatre_id INT,
     rating INT CHECK(rating>=1 and rating<=5),
-    FOREIGN KEY (user_id) references users on delete set null,
-    FOREIGN KEY (theatre_id) references theatres on delete set null,
+    FOREIGN KEY (user_id) references users on delete cascade,
+    FOREIGN KEY (theatre_id) references theatres on delete cascade,
 	PRIMARY KEY (user_id,theatre_id)
 );
 
