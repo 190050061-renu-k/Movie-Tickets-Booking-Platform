@@ -103,13 +103,6 @@ create table language(
 	PRIMARY KEY (language_id)	
 );
 
--- Table : city
-create table city(
-	city_id INT,
-	city_name TEXT NOT NULL,
-	PRIMARY KEY (city_id)	
-);
-
 -- Table : movie_genre
 create table movie_genre(
 	movie_id INT,
@@ -139,9 +132,9 @@ create table screen(
 -- Table : seat
 create table seat(
 	seat_id INT,
-	label CHAR CHECK(label like '[A-M]'),
-    column INT CHECK(column in '[1-10]'),
-    CONSTRAINT UNIQUE (seat_id,label,column),
+	label_seat CHAR CHECK(label_seat like '[A-M]'),
+    column_seat INT CHECK(column_seat in (1,2,3,4,5,6,7,8,9,10)),
+    CONSTRAINT seat_unique UNIQUE (seat_id,label_seat,column_seat),
 	PRIMARY KEY (seat_id)	
 );
 
@@ -157,7 +150,7 @@ create table show(
     FOREIGN KEY (show_timings_id) references show_timings on delete set null,
     FOREIGN KEY (movie_id) references movie on delete set null,
     FOREIGN KEY (screen_num, theatre_id) references screen on delete set null,
-    CONSTRAINT UNIQUE (show_id,show_timings_id,movie_id,screen_num,theatre_id,show_date),
+    CONSTRAINT sow_unique UNIQUE (show_id,show_timings_id,movie_id,screen_num,theatre_id,show_date),
 	PRIMARY KEY (show_id)	
 );
 
@@ -171,7 +164,7 @@ create table booking(
     FOREIGN KEY (show_id) references show on delete set null,
     FOREIGN KEY (user_id) references users on delete set null,
 	PRIMARY KEY (booking_id),
-    CONSTRAINT UNIQUE (booking_id, show_id, user_id)
+    CONSTRAINT booking_unique UNIQUE (booking_id, show_id, user_id)
 );
 
 create table booking_seat(
@@ -215,8 +208,8 @@ create table user_theatre(
     theatre_id INT,
     rating INT CHECK(rating>=1 and rating<=5),
     FOREIGN KEY (user_id) references users on delete set null,
-    FOREIGN KEY (theater_id) references theater on delete set null,
-	PRIMARY KEY (user_id,theater_id)
+    FOREIGN KEY (theatre_id) references theatre on delete set null,
+	PRIMARY KEY (user_id,theatre_id)
 );
 
 -- auto increment id for user and theatre
@@ -242,9 +235,8 @@ BEGIN
     WHERE movie_id = NEW.movie_id;
 END;
 $$
-
-CREATE TRIGGER upcming
-    AFTER INSERT
-    ON show
-    FOR EACH ROW 
-    EXECUTE PROCEDURE change_upcoming()
+-- CREATE TRIGGER upcoming
+--     AFTER INSERT
+--     ON show
+--     FOR EACH ROW 
+--     EXECUTE PROCEDURE change_upcoming()
