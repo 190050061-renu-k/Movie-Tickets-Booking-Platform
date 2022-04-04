@@ -261,3 +261,11 @@ $$
 --     ON show
 --     FOR EACH ROW 
 --     EXECUTE PROCEDURE change_upcoming()
+
+--views creation
+CREATE view all_bookings AS
+SELECT show_id, user_id, booking_id, book_date, book_type, COUNT(*) seats_booked 
+FROM bookings, booking_seat 
+WHERE bookings.booking_id = booking_seat.booking_id 
+GROUP BY show_id, user_id, booking_id, book_date, book_type
+
