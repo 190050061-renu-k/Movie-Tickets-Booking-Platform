@@ -33,7 +33,7 @@ create table movies(
 	movie_id INT,
 	name TEXT NOT NULL,
     release_date DATE,
-    count_theatres INT CHECK(count_theatres>=0),
+    count_theatres INT NOT NULL CHECK(count_theatres>=0),
     upcoming BOOLEAN,
     poster_img TEXT,
     imdb_rating NUMERIC(4,2) CHECK(imdb_rating>=0 and imdb_rating<=10),
