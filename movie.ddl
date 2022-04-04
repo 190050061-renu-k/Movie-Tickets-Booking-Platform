@@ -3,68 +3,71 @@ CREATE EXTENSION IF NOT EXISTS postgis;
 DROP SEQUENCE IF EXISTS user_id_seq CASCADE;
 DROP SEQUENCE IF EXISTS theatre_id_seq CASCADE;
 DROP SEQUENCE IF EXISTS movie_id_seq CASCADE;
-DROP TABLE IF EXISTS movie CASCADE;
-DROP TABLE IF EXISTS theatre CASCADE;
+DROP SEQUENCE IF EXISTS artist_id_seq CASCADE;
+DROP SEQUENCE IF EXISTS show_id_seq CASCADE;
+DROP SEQUENCE IF EXISTS booking_id_seq CASCADE;
+DROP TABLE IF EXISTS movies CASCADE;
+DROP TABLE IF EXISTS theatres CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS show_timings CASCADE;
-DROP TABLE IF EXISTS artist CASCADE;
+DROP TABLE IF EXISTS artists CASCADE;
 DROP TABLE IF EXISTS cast_ CASCADE;
 DROP TABLE IF EXISTS genre CASCADE;
 DROP TABLE IF EXISTS language CASCADE;
 DROP TABLE IF EXISTS city CASCADE;
 DROP TABLE IF EXISTS movie_genre CASCADE;
 DROP TABLE IF EXISTS movie_language CASCADE;
-DROP TABLE IF EXISTS screen CASCADE;
-DROP TABLE IF EXISTS seat CASCADE;
-DROP TABLE IF EXISTS show CASCADE;
+DROP TABLE IF EXISTS screens CASCADE;
+DROP TABLE IF EXISTS seats CASCADE;
+DROP TABLE IF EXISTS shows CASCADE;
 DROP TABLE IF EXISTS booking CASCADE;
 DROP TABLE IF EXISTS booking_seat CASCADE;
 DROP TABLE IF EXISTS user_language CASCADE;
 DROP TABLE IF EXISTS user_genre CASCADE;
-DROP TABLE IF EXISTS movie_user CASCADE;
+DROP TABLE IF EXISTS user_movie CASCADE;
 DROP TABLE IF EXISTS user_theatre CASCADE;
 
 
 -- Table : movie(trigger to be added)
-create table movie(
+create table movies(
 	movie_id INT,
-	movie_name TEXT NOT NULL,
+	name TEXT NOT NULL,
     release_date DATE,
-    num_theatres INT CHECK(num_theatres>=0),
-    upcoming_movie BOOLEAN,
+    count_theatres INT CHECK(count_theatres>=0),
+    upcoming BOOLEAN,
     poster_img TEXT,
     imdb_rating NUMERIC(4,2) CHECK(imdb_rating>=0 and imdb_rating<=10),
     description TEXT,
-    webpage TEXT,
+    homepage TEXT,
 	PRIMARY KEY (movie_id)	
 );
 
 -- Table : city
-create table city(
+create table cities(
 	city_id INT,
 	city_name TEXT NOT NULL,
 	PRIMARY KEY (city_id)	
 );
 
 -- Table : theatre - location attribute to be added
-create table theatre(
+create table theatres(
 	theatre_id INT,
-	theatre_name TEXT NOT NULL,
-    login_id TEXT UNIQUE NOT NULL,
-    pswd TEXT NOT NULL,
-    city_id INT,
-	location_name GEOMETRY, 
-    FOREIGN KEY (city_id) references city on delete set null,
+	name TEXT NOT NULL,
+    username TEXT UNIQUE NOT NULL,
+    password TEXT NOT NULL,
+    city INT,
+	location GEOMETRY, 
+    FOREIGN KEY (city) references city on delete set null,
 	PRIMARY KEY (theatre_id)	
 );
 
 -- Table : User
 create table users(
 	user_id INT,
-	user_name TEXT NOT NULL,
+	userName TEXT NOT NULL,
     age INT CHECK(age>0),
-    mobile CHAR(10) UNIQUE NOT NULL CHECK(mobile like '[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'), 
-    pswd TEXT NOT NULL,
+    mobileNumber CHAR(10) UNIQUE NOT NULL CHECK(mobileNumber not like '%[^0-9]%' and LENGTH(mobile)=10), 
+    password TEXT NOT NULL,
 	PRIMARY KEY (user_id)	
 );
 
@@ -80,9 +83,9 @@ create table show_timings(
 
 
 -- Table : artist
-create table artist(
+create table artists(
 	artist_id INT,
-	artist_name TEXT NOT NULL,
+	name TEXT NOT NULL,
 	PRIMARY KEY (artist_id)	
 );
 
@@ -128,7 +131,7 @@ create table movie_language(
 );
 
 -- Table : screen
-create table screen(
+create table screens(
 	screen_num INT NOT NULL,
 	theatre_id INT,
     FOREIGN KEY (theatre_id) references theatre on delete set null,
@@ -136,16 +139,16 @@ create table screen(
 );
 
 -- Table : seat
-create table seat(
+create table seats(
 	seat_id INT,
-	label_seat CHAR CHECK(label_seat like '[A-M]'),
-    column_seat INT CHECK(column_seat in (1,2,3,4,5,6,7,8,9,10)),
-    CONSTRAINT seat_unique UNIQUE (seat_id,label_seat,column_seat),
+	label CHAR CHECK(label like '[A-M]'),
+    column INT CHECK(column in (1,2,3,4,5,6,7,8,9,10)),
+    CONSTRAINT seat_unique UNIQUE (seat_id,label,column),
 	PRIMARY KEY (seat_id)	
 );
 
 -- Table : show
-create table show(
+create table shows(
 	show_id INT,
     show_timings_id INT,
     movie_id INT,
@@ -198,7 +201,7 @@ create table user_genre(
 );
 
 --  Table : movie_user
-create table movie_user(
+create table user_movie(
 	user_id INT,
     movie_id INT,
     notif BOOLEAN,
@@ -219,14 +222,24 @@ create table user_theatre(
 );
 
 -- auto increment id for user and theatre
-CREATE SEQUENCE user_id_seq START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE movie_id_seq START WITH 470000 INCREMENT BY 1;
+ALTER TABLE movies alter movie_id set default nextval('movie_id_seq');
+
+CREATE SEQUENCE user_id_seq START WITH 20001 INCREMENT BY 1;
 ALTER TABLE users alter user_id set default nextval('user_id_seq');
 
-CREATE SEQUENCE theatre_id_seq START WITH 1 INCREMENT BY 1;
-ALTER TABLE theatre alter theatre_id set default nextval('theatre_id_seq');
+CREATE SEQUENCE artist_id_seq START WITH 1910000 INCREMENT BY 1;
+ALTER TABLE artists alter artist_id set default nextval('artist_id_seq');
 
-CREATE SEQUENCE movie_id_seq START WITH 470000 INCREMENT BY 1;
-ALTER TABLE movie alter movie_id set default nextval('movie_id_seq');
+CREATE SEQUENCE theatre_id_seq START WITH 600 INCREMENT BY 1;
+ALTER TABLE theatres alter theatre_id set default nextval('theatre_id_seq');
+
+CREATE SEQUENCE show_id_seq START WITH 144000 INCREMENT BY 1;
+ALTER TABLE shows alter show_id set default nextval('show_id_seq');
+
+CREATE SEQUENCE booking_id_seq START WITH 81000 INCREMENT BY 1;
+ALTER TABLE booking alter booking_id set default nextval('booking_id_seq');
+
 
 
 --trigger
