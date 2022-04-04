@@ -33,8 +33,8 @@ create table movies(
 	movie_id INT,
 	name TEXT NOT NULL,
     release_date DATE,
-    count_theatres INT NOT NULL CHECK(count_theatres>=0),
-    upcoming BOOLEAN,
+    count_theatres INT NOT NULL CHECK(count_theatres>=0) DEFAULT 0,
+    upcoming BOOLEAN DEFAULT FALSE,
     poster_img TEXT,
     imdb_rating NUMERIC(4,2) CHECK(imdb_rating>=0 and imdb_rating<=10),
     description TEXT,
@@ -206,8 +206,8 @@ create table user_genres(
 create table user_movie(
 	user_id INT,
     movie_id INT,
-    notif BOOLEAN,
-    rating INT CHECK(rating>=1 and rating<=5),
+    notif BOOLEAN default False,
+    rating INT CHECK((rating>=1 and rating<=5) or rating is null),
     FOREIGN KEY (user_id) references users on delete set null,
     FOREIGN KEY (movie_id) references movies on delete set null,
 	PRIMARY KEY (user_id,movie_id)
