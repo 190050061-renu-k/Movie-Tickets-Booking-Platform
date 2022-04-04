@@ -57,7 +57,7 @@ create table theatres(
     password TEXT NOT NULL,
     city INT,
 	location GEOMETRY, 
-    FOREIGN KEY (city) references city on delete set null,
+    FOREIGN KEY (city) references cities on delete set null,
 	PRIMARY KEY (theatre_id)	
 );
 
@@ -93,8 +93,8 @@ create table artists(
 create table movie_artists(
 	artist_id INT,
     movie_id INT,
-    FOREIGN KEY (artist_id) references artist on delete set null,
-    FOREIGN KEY (movie_id) references movie on delete set null,
+    FOREIGN KEY (artist_id) references artists on delete set null,
+    FOREIGN KEY (movie_id) references movies on delete set null,
 	PRIMARY KEY (artist_id,movie_id)	
 );
 
@@ -116,8 +116,8 @@ create table languages(
 create table movie_genres(
 	movie_id INT,
 	genre_id INT,
-    FOREIGN KEY (movie_id) references movie on delete set null,
-    FOREIGN KEY (genre_id) references genre on delete set null,
+    FOREIGN KEY (movie_id) references movies on delete set null,
+    FOREIGN KEY (genre_id) references genres on delete set null,
 	PRIMARY KEY (movie_id, genre_id)	
 );
 
@@ -125,8 +125,8 @@ create table movie_genres(
 create table movie_languages(
 	movie_id INT,
 	language_id INT,
-    FOREIGN KEY (movie_id) references movie on delete set null,
-    FOREIGN KEY (language_id) references language on delete set null,
+    FOREIGN KEY (movie_id) references movies on delete set null,
+    FOREIGN KEY (language_id) references languages on delete set null,
 	PRIMARY KEY (movie_id, language_id)	
 );
 
@@ -134,7 +134,7 @@ create table movie_languages(
 create table screens(
 	screen_num INT NOT NULL,
 	theatre_id INT,
-    FOREIGN KEY (theatre_id) references theatre on delete set null,
+    FOREIGN KEY (theatre_id) references theatres on delete set null,
 	PRIMARY KEY (screen_num, theatre_id)	
 );
 
@@ -157,8 +157,8 @@ create table shows(
     ticket INT NOT NULL CHECK(ticket>0),
     show_date DATE NOT NULL,
     FOREIGN KEY (show_timings_id) references show_timings on delete set null,
-    FOREIGN KEY (movie_id) references movie on delete set null,
-    FOREIGN KEY (screen_num, theatre_id) references screen on delete set null,
+    FOREIGN KEY (movie_id) references movies on delete set null,
+    FOREIGN KEY (screen_num, theatre_id) references screens on delete set null,
     CONSTRAINT sow_unique UNIQUE (show_id,show_timings_id,movie_id,screen_num,theatre_id,show_date),
 	PRIMARY KEY (show_id)	
 );
@@ -170,7 +170,7 @@ create table booking(
     booking_id INT,
     book_date DATE,
     book_type TEXT CHECK(book_type in('online','offline')),
-    FOREIGN KEY (show_id) references show on delete set null,
+    FOREIGN KEY (show_id) references shows on delete set null,
     FOREIGN KEY (user_id) references users on delete set null,
 	PRIMARY KEY (booking_id),
     CONSTRAINT booking_unique UNIQUE (booking_id, show_id, user_id)
@@ -187,7 +187,7 @@ create table user_languages(
 	user_id INT,
     language_id INT,
     FOREIGN KEY (user_id) references users on delete set null,
-    FOREIGN KEY (language_id) references language on delete set null,
+    FOREIGN KEY (language_id) references languages on delete set null,
 	PRIMARY KEY (user_id,language_id)
 );
 
@@ -196,7 +196,7 @@ create table user_genres(
 	user_id INT,
     genre_id INT,
     FOREIGN KEY (user_id) references users on delete set null,
-    FOREIGN KEY (genre_id) references genre on delete set null,
+    FOREIGN KEY (genre_id) references genres on delete set null,
 	PRIMARY KEY (user_id,genre_id)
 );
 
@@ -207,7 +207,7 @@ create table user_movie(
     notif BOOLEAN,
     rating INT CHECK(rating>=1 and rating<=5),
     FOREIGN KEY (user_id) references users on delete set null,
-    FOREIGN KEY (movie_id) references movie on delete set null,
+    FOREIGN KEY (movie_id) references movies on delete set null,
 	PRIMARY KEY (user_id,movie_id)
 );
 
@@ -217,7 +217,7 @@ create table user_theatre(
     theatre_id INT,
     rating INT CHECK(rating>=1 and rating<=5),
     FOREIGN KEY (user_id) references users on delete set null,
-    FOREIGN KEY (theatre_id) references theatre on delete set null,
+    FOREIGN KEY (theatre_id) references theatres on delete set null,
 	PRIMARY KEY (user_id,theatre_id)
 );
 
@@ -249,7 +249,7 @@ CREATE OR REPLACE FUNCTION change_upcoming()
     AS 
 $$
 BEGIN 
-    UPDATE movie
+    UPDATE movies
     SET upcoming_movie = FALSE
     WHERE movie_id = NEW.movie_id;
 END;
