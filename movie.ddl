@@ -5,7 +5,7 @@ DROP SEQUENCE IF EXISTS theatre_id_seq CASCADE;
 DROP SEQUENCE IF EXISTS movie_id_seq CASCADE;
 DROP SEQUENCE IF EXISTS artist_id_seq CASCADE;
 DROP SEQUENCE IF EXISTS show_id_seq CASCADE;
-DROP SEQUENCE IF EXISTS bookings_id_seq CASCADE;
+DROP SEQUENCE IF EXISTS booking_id_seq CASCADE;
 DROP TABLE IF EXISTS movies CASCADE;
 DROP TABLE IF EXISTS theatres CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
@@ -242,6 +242,20 @@ ALTER TABLE shows alter show_id set default nextval('show_id_seq');
 CREATE SEQUENCE booking_id_seq START WITH 81000 INCREMENT BY 1;
 ALTER TABLE bookings alter booking_id set default nextval('booking_id_seq');
 
+-- CREATE TRIGGER upcoming
+--     AFTER INSERT
+--     ON show
+--     FOR EACH ROW 
+--     EXECUTE PROCEDURE change_upcoming()
+
+--views creation
+
+
+CREATE view all_bookings AS
+SELECT show_id, user_id, bookings.booking_id, book_date, book_type, COUNT(*) seats_booked 
+FROM bookings, booking_seat 
+WHERE bookings.booking_id = booking_seat.booking_id 
+GROUP BY show_id, user_id, bookings.booking_id, book_date, book_type;
 
 
 --trigger
@@ -256,16 +270,3 @@ BEGIN
     WHERE movie_id = NEW.movie_id;
 END;
 $$
--- CREATE TRIGGER upcoming
---     AFTER INSERT
---     ON show
---     FOR EACH ROW 
---     EXECUTE PROCEDURE change_upcoming()
-
---views creation
-CREATE view all_bookings AS
-SELECT show_id, user_id, booking_id, book_date, book_type, COUNT(*) seats_booked 
-FROM bookings, booking_seat 
-WHERE bookings.booking_id = booking_seat.booking_id 
-GROUP BY show_id, user_id, booking_id, book_date, book_type
-
