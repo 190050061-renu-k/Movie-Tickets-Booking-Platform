@@ -160,8 +160,8 @@ create table shows(
     FOREIGN KEY (show_timings_id) references show_timings on delete cascade,
     FOREIGN KEY (movie_id) references movies on delete cascade,
     FOREIGN KEY (screen_num, theatre_id) references screens on delete cascade,
-    CONSTRAINT sow_unique UNIQUE (show_id,show_timings_id,movie_id,screen_num,theatre_id,show_date),
-	PRIMARY KEY (show_id)	
+    CONSTRAINT show_unique UNIQUE (show_timings_id,movie_id,screen_num,theatre_id,show_date),
+	PRIMARY KEY (show_id)
 );
 
 -- Table : booking
