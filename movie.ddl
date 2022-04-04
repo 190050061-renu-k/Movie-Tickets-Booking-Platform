@@ -56,7 +56,7 @@ create table theatres(
     username TEXT UNIQUE NOT NULL,
     password TEXT NOT NULL,
     city INT,
-	location GEOMETRY, 
+	location GEOMETRY NOT NULL, 
     FOREIGN KEY (city) references cities on delete set null,
 	PRIMARY KEY (theatre_id)	
 );
@@ -169,7 +169,7 @@ create table bookings(
 	show_id INT,
     user_id INT,
     booking_id INT,
-    book_date DATE,
+    book_date DATE not null,
     book_type TEXT CHECK(book_type in('online','offline')),
     FOREIGN KEY (show_id) references shows on delete set null,
     FOREIGN KEY (user_id) references users on delete set null,
