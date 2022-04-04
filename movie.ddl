@@ -133,7 +133,7 @@ create table movie_languages(
 
 -- Table : screen
 create table screens(
-	screen_num INT NOT NULL,
+	screen_num INT,
 	theatre_id INT,
     FOREIGN KEY (theatre_id) references theatres on delete cascade,
 	PRIMARY KEY (screen_num, theatre_id)	
