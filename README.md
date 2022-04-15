@@ -2,7 +2,7 @@
 ### Developers - Ilindra Sai Lakshmi Shreya, Konda Renu, Palti Ramyasri, Penta Rahul Krishna
 
 Timeline -
-* [Project Proposal](Resources/Project%Proposal.pdf) 
+* [Project Proposal](Resources/Project_Proposal.pdf) 
 * [Requirements](Resources/requirements.pdf)
-* [Design Document](Resources/"Project Design Document.pdf")
+* [Design Document](Resources/"Project_Design_Document.pdf")
 * [Testing](Resources/Testing.pdf) 
