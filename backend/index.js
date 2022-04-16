@@ -4,6 +4,7 @@ const app = express();
 const port = 3001;
 
 const user_model = require("./models/user_model");
+const movie_model = require("./models/movie_model");
 
 app.use(express.json());
 app.use(function (req, res, next) {
@@ -19,6 +20,18 @@ app.use(function (req, res, next) {
 app.post("/getProfile", (req, res) => {
   match_model
     .getMatches(req.body)
+    .then((response) => {
+      res.json(response);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).send(error);
+    });
+});
+
+app.post("/getMovies", (req, res) => {
+  movie_model
+    .getMovies(req.body)
     .then((response) => {
       res.json(response);
     })
