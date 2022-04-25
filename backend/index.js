@@ -41,17 +41,29 @@ app.post("/getMovies", (req, res) => {
     });
 });
 
-// app.post("/getInfo", (req, res) => {
-//   inn_model
-//     .getSomeInfo(req.body)
-//     .then((response) => {
-//       res.json(response);
-//     })
-//     .catch((error) => {
-//       console.log(error);
-//       res.status(500).send(error);
-//     });
-// });
+app.post("/getMovieInfo", (req, res) => {
+  movie_model
+    .getMovieInfo(req.body)
+    .then((response) => {
+      res.json(response);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).send(error);
+    });
+});
+
+app.post("/getArtistInfo", (req, res) => {
+  artist_model
+    .getArtistInfo(req.body)
+    .then((response) => {
+      res.json(response);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).send(error);
+    });
+});
 
 // //fetches players --> player_id, player_name, country_name
 // app.post("/getPlayers", (req, res) => {
