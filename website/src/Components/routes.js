@@ -7,6 +7,9 @@ import Points from "Components/views/Points";
 import AllVenues from "Components/views/AllVenues";
 import Venue from "Components/views/Venue";
 import AddVenue from "Components/views/AddVenue";
+import Signup from "./newpages/user-pages/Signup";
+import Login from "./newpages/user-pages/Login";
+import MovieDetails from "./newpages/details/MovieDetails";
 
 var routes = [
   {
@@ -73,6 +76,28 @@ var routes = [
     component: AllVenues,
     layout: "",
   },
+  {
+    path: "/signup",
+    name: "Register",
+    icon: "nc-icon nc-pin-3",
+    component: Signup,
+    layout: "",
+  },
+  {
+    path: "/login",
+    name: "Login",
+    icon: "nc-icon nc-pin-3",
+    component: Login,
+    layout: "",
+  },
+  {
+    path: "/moviedetails", // movies/:id to be done
+    name: "Movie Details",
+    icon: "nc-icon nc-pin-3",
+    component: MovieDetails,
+    layout: "",
+  },
+
   
 ];
 
@@ -111,6 +136,27 @@ var sidebar_display = [
     name: "Add New Venue",
     icon: "nc-icon nc-simple-add",
     component: AddVenue,
+    layout: "",
+  },
+  {
+    path: "/signup",
+    name: "Register",
+    icon: "nc-icon nc-simple-add",
+    component: Signup,
+    layout: "",
+  },
+  {
+    path: "/login",
+    name: "Login",
+    icon: "nc-icon nc-pin-3",
+    component: Login,
+    layout: "",
+  },
+  {
+    path: "/moviedetails", // movies/:id to be done
+    name: "Movie Details",
+    icon: "nc-icon nc-pin-3",
+    component: MovieDetails,
     layout: "",
   },
 ];
