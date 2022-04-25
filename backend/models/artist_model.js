@@ -20,6 +20,20 @@ const getArtistInfo = (body) => {
   });
 };
 
+const addArtist = (body) => {
+  const { artist_id } = body;
+  const query1 = "INSERT INTO artists (name) VALUES($1);";
+  return new Promise(function (resolve, reject) {
+    pool.query(query1, [artist_id], (error, results) => {
+      if (error) {
+        reject(error);
+      }
+      resolve(results.rows);
+    });
+  });
+};
+
 module.exports = {
   getArtistInfo,
+  addArtist,
 };
