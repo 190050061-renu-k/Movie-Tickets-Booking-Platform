@@ -12,6 +12,7 @@ import Login from "./newpages/user-pages/Login";
 import MovieDetails from "./newpages/details/MovieDetails";
 import ArtistDetails from "./newpages/details/ArtistDetails";
 import TheatreList from "./newpages/lists/TheatreList";
+import TheatreDetails from "./newpages/details/TheatreDetails";
 
 var routes = [
   {
@@ -104,6 +105,13 @@ var routes = [
     name: "Artist Details",
     icon: "nc-icon nc-pin-3",
     component: ArtistDetails,
+    layout: "",
+  },
+  {
+    path: "/theatres/:id", // artist/:id to be done
+    name: "Theatres",
+    icon: "nc-icon nc-pin-3",
+    component: TheatreDetails,
     layout: "",
   },
   {
