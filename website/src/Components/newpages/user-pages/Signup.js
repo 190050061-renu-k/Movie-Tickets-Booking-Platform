@@ -34,8 +34,7 @@ var genres = [
 ]
 
 
-export class Signup extends Component {
-  render() {
+const Signup =(props)=> {
     return (
       <div>
         <div className="d-flex align-items-center auth px-0" style={{marginTop:'100px'}}>
@@ -108,8 +107,7 @@ export class Signup extends Component {
             </div>
             </div>
 
-    )
-  }
+    );
 }
 
 export default Signup;

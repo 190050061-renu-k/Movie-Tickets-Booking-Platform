@@ -10,8 +10,7 @@ import {
     CardTitle
   } from "reactstrap";
 
-export class Login extends Component {
-  render() {
+const Login = (props) => {
     return (
       <div>
         <div className="d-flex align-items-center auth px-0" style={{marginTop:'100px'}}>
@@ -43,8 +42,7 @@ export class Login extends Component {
             </div>
             </div>
 
-    )
-  }
+    );
 }
 
 export default Login;

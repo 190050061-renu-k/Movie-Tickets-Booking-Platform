@@ -10,6 +10,8 @@ import AddVenue from "Components/views/AddVenue";
 import Signup from "./newpages/user-pages/Signup";
 import Login from "./newpages/user-pages/Login";
 import MovieDetails from "./newpages/details/MovieDetails";
+import ArtistDetails from "./newpages/details/ArtistDetails";
+import TheatreList from "./newpages/lists/TheatreList";
 
 var routes = [
   {
@@ -97,6 +99,20 @@ var routes = [
     component: MovieDetails,
     layout: "",
   },
+  {
+    path: "/artistdetails", // artist/:id to be done
+    name: "Artist Details",
+    icon: "nc-icon nc-pin-3",
+    component: ArtistDetails,
+    layout: "",
+  },
+  {
+    path: "/theatres", // artist/:id to be done
+    name: "Theatres",
+    icon: "nc-icon nc-pin-3",
+    component: TheatreList,
+    layout: "",
+  },
 
   
 ];
@@ -157,6 +173,20 @@ var sidebar_display = [
     name: "Movie Details",
     icon: "nc-icon nc-pin-3",
     component: MovieDetails,
+    layout: "",
+  },
+  {
+    path: "/artistdetails", // artist/:id to be done
+    name: "Artist Details",
+    icon: "nc-icon nc-pin-3",
+    component: ArtistDetails,
+    layout: "",
+  },
+  {
+    path: "/theatres", // artist/:id to be done
+    name: "Theatres",
+    icon: "nc-icon nc-pin-3",
+    component: TheatreList,
     layout: "",
   },
 ];

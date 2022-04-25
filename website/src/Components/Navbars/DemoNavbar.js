@@ -41,7 +41,7 @@ function Header(props) {
               <span className="navbar-toggler-bar bar3" />
             </button>
           </div>
-          <NavbarBrand href="/">IITB CricInfo</NavbarBrand>
+          {/* <NavbarBrand href="/">IITB CricInfo</NavbarBrand> */}
         </div>
       </Container>
     </Navbar>

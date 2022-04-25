@@ -42,7 +42,7 @@ function Sidebar(props) {
             <img src={logo} alt="react-logo" />
           </div>
         </a>
-        <a className="simple-text logo-normal">IPL</a>
+        <a className="simple-text logo-normal">Book Your Show</a>
       </div>
       <div className="sidebar-wrapper" ref={sidebar}>
         <Nav>
