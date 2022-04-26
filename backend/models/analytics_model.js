@@ -88,8 +88,31 @@ const getAudiencePercent = (body) => {
   });
 };
 
-const onlinevsoffline = () => {
-  //const { artist_id } = body;
+const getOnlineVsOffline = async (body) => {
+  const { theatre_id } = body;
+  const client = await pool.connect();
+
+  try {
+    await client.query("BEGIN");
+    const query1 =
+      "SELECT count(seat_id) from booking_seat where booking_id in (SELECT booking_id FROM bookings WHERE book_type ='online' and show_id in (SELECT show_id from shows WHERE theatre_id = $1));";
+    const res1 = await client.query(query1, [theatre_id]);
+
+    const query2 =
+      "SELECT count(seat_id) from booking_seat where booking_id in (SELECT booking_id FROM bookings WHERE book_type = 'offline' and show_id in (SELECT show_id from shows WHERE theatre_id = $1));";
+    const res2 = await client.query(query2, [theatre_id]);
+
+    await client.query("COMMIT");
+    return { online: res1.rows, offline: res2.rows };
+  } catch (e) {
+    await client.query("ROLLBACK");
+    throw e;
+  } finally {
+    client.release();
+  }
+};
+
+const getAdminAnalytics = () => {
   const query1 = `SELECT theatre_id, theatres.name, show_online_offline.book_type, SUM(show_online_offline.seats_booked) sum_seats FROM theatres, shows,
   (SELECT book_type, show_id, SUM(seats_booked) seats_booked_ FROM all_bookings GROUP BY book_type, show_id) show_online_offline
   WHERE theatres.theatre_id = shows.theatre_id AND shows.show_id = show_online_offline.show_id
@@ -110,5 +133,6 @@ module.exports = {
   getGenreChoice,
   getLanguageChoice,
   getAudiencePercent,
-  onlinevsoffline,
+  getAdminAnalytics,
+  getOnlineVsOffline,
 };

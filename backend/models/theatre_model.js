@@ -74,10 +74,34 @@ const movies_aired = (body) => {
   });
 };
 
+const registerTheatre = async (body) => {
+  const { name, city, location, screen_num, theatre_id } = body;
+  const client = await pool.connect();
+
+  try {
+    await client.query("BEGIN");
+    const query1 =
+      "INSERT INTO theatres(name, city, location) values($1, $2, $3)";
+    await client.query(query1, [name, city, location]);
+
+    const query2 = "INSERT INTO screens values ($1, $2);";
+    await client.query(query2, [screen_num, theatre_id]);
+
+    await client.query("COMMIT");
+    return "";
+  } catch (e) {
+    await client.query("ROLLBACK");
+    throw e;
+  } finally {
+    client.release();
+  }
+};
+
 module.exports = {
   getTheatres,
   getTheatreShows,
   rateTheatre,
   theatres_within_range,
   movies_aired,
+  registerTheatre,
 };

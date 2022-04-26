@@ -43,16 +43,14 @@ app.post("/getMovies", (req, res) => {
     });
 });
 
-app.post("/getMovieInfo", (req, res) => {
-  movie_model
-    .getMovieInfo(req.body)
-    .then((response) => {
-      res.json(response);
-    })
-    .catch((error) => {
-      console.log(error);
-      res.status(500).send(error);
-    });
+app.post("/getMovieInfo", async (req, res) => {
+  try {
+    response = await movie_model.getMovieInfo(req.body);
+    res.json(response);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
 });
 
 app.post("/getArtistInfo", (req, res) => {
@@ -247,18 +245,6 @@ app.post("/getAudiencePercent", (req, res) => {
     });
 });
 
-app.post("/filtermovies", (req, res) => {
-  movie_model
-    .getfilteredmovies(req.body)
-    .then((response) => {
-      res.json(response);
-    })
-    .catch((error) => {
-      console.log(error);
-      res.status(500).send(error);
-    });
-});
-
 app.post("/gettheatresinrange", (req, res) => {
   theatre_model
     .theatres_within_range(req.body)
@@ -319,9 +305,9 @@ app.post("/addartist", (req, res) => {
     });
 });
 
-app.get("/onlinevsoffline", (req, res) => {
+app.get("/getAdminAnalytics", (req, res) => {
   analytics_model
-    .onlinevsoffline()
+    .getAdminAnalytics()
     .then((response) => {
       res.json(response);
     })
@@ -334,6 +320,102 @@ app.get("/onlinevsoffline", (req, res) => {
 app.post("/moviesaired", (req, res) => {
   theatre_model
     .movies_aired(req.body)
+    .then((response) => {
+      res.json(response);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).send(error);
+    });
+});
+
+app.post("/getOnlineVsOffline", async (req, res) => {
+  try {
+    response = await analytics_model.getOnlineVsOffline(req.body);
+    res.json(response);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+});
+
+app.post("/getFilteredMovies", async (req, res) => {
+  try {
+    response = await movie_model.getFilteredMovies(req.body);
+    res.json(response);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+});
+
+app.post("/signUp", async (req, res) => {
+  try {
+    response = await user_model.signUp(req.body);
+    res.json(response);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+});
+
+app.post("/editProfile", async (req, res) => {
+  try {
+    response = await user_model.editProfile(req.body);
+    res.json(response);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+});
+
+app.post("/bookSeats", async (req, res) => {
+  try {
+    response = await show_model.bookSeats(req.body);
+    res.json(response);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+});
+
+app.post("/registerTheatre", async (req, res) => {
+  try {
+    response = await theatre_model.registerTheatre(req.body);
+    res.json(response);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+});
+
+app.post("/addMovie", (req, res) => {
+  movie_model
+    .addMovie(req.body)
+    .then((response) => {
+      res.json(response);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).send(error);
+    });
+});
+
+app.post("/getShowSlots", (req, res) => {
+  show_model
+    .getShowSlots(req.body)
+    .then((response) => {
+      res.json(response);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).send(error);
+    });
+});
+
+app.post("/selectShows", (req, res) => {
+  show_model
+    .selectShows(req.body)
     .then((response) => {
       res.json(response);
     })

@@ -93,10 +93,88 @@ const passwordchange = (body) => {
   });
 };
 
+const signUp = async (body) => {
+  const { username, age, mobile_num, pswd, city_id, language_id, genre_id } =
+    body;
+  const client = await pool.connect();
+
+  try {
+    await client.query("BEGIN");
+    const query1 = "SELECT COUNT(*) FROM users WHERE mobileNumber= $1";
+    const res1 = await client.query(query1, [mobile_num]);
+    if (res1.rows[0][0] > 0) {
+      await client.query("COMMIT");
+      return res1.rows;
+    }
+
+    const query2 =
+      "INSERT INTO users (userName, age, mobileNumber, password, city_id) VALUES($1, $2, $3, $4, $5) RETURNING user_id;";
+    const res2 = await client.query(query2, [
+      username,
+      age,
+      mobile_num,
+      pswd,
+      city_id,
+    ]);
+
+    user_id = res2[0][0];
+
+    const query3 =
+      "INSERT INTO user_languages (user_id, language_id) VALUES($1, 2);";
+    await client.query(query3, [user_id, language_id]);
+
+    const query4 =
+      "INSERT INTO user_genres (user_id, genre_id) VALUES($1, $2);";
+    await client.query(query4, [user_id, genre_id]);
+
+    await client.query("COMMIT");
+    return { mobile_cnt: res1.rows, user_id: res2.rows };
+  } catch (e) {
+    await client.query("ROLLBACK");
+    throw e;
+  } finally {
+    client.release();
+  }
+};
+
+const editProfile = async (body) => {
+  const { username, age, user_id, city_id, language_id, genre_id } = body;
+  const client = await pool.connect();
+
+  try {
+    await client.query("BEGIN");
+    const query1 = "UPDATE users SET city_id = $1 WHERE user_id = $2";
+    await client.query(query1, [city_id, user_id]);
+
+    const query2 = "UPDATE users SET age = $1  WHERE user_id = $2;";
+    const res2 = await client.query(query2, [age, user_id]);
+
+    const query3 = "UPDATE users SET userName = $1  WHERE user_id = $2;";
+    await client.query(query3, [username, user_id]);
+
+    const query4 =
+      "UPDATE user_languages SET language_id =$1  WHERE user_id = $2;";
+    await client.query(query4, [language_id, user_id]);
+
+    const query5 = "UPDATE user_genres SET genre_id = $1  WHERE user_id = $2;";
+    await client.query(query4, [genre_id, user_id]);
+
+    await client.query("COMMIT");
+    return "";
+  } catch (e) {
+    await client.query("ROLLBACK");
+    throw e;
+  } finally {
+    client.release();
+  }
+};
+
 module.exports = {
   getProfile,
   getRecommendations,
   bookinghistory,
   userlogin,
   passwordchange,
+  signUp,
+  editProfile,
 };

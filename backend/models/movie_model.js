@@ -21,40 +21,27 @@ const getMovies = (body) => {
   });
 };
 
-const getMovieInfo = (body) => {
+const getMovieInfo = async (body) => {
   const { movie_id } = body;
-  const query1 = "SELECT * from movies where movie_id = $1;";
-  const movieInfo = new Promise(function (resolve, reject) {
-    pool.query(query1, [movie_id], (error, results) => {
-      if (error) {
-        reject(error);
-      }
-      resolve(results.rows);
-    });
-  });
+  const client = await pool.connect();
 
-  const query2 =
-    "SELECT distinct name from artist WHERE artist_id in (SELECT artist_id from movie_artists where movie_id = $1;";
-  const artists = new Promise(function (resolve, reject) {
-    pool.query(query2, [movie_id], (error, results) => {
-      if (error) {
-        reject(error);
-      }
-      resolve(results.rows);
-    });
-  });
+  try {
+    await client.query("BEGIN");
+    const query1 = "SELECT * from movies where movie_id = $1;";
+    const res1 = await client.query(query1, [movie_id]);
 
-  return Promise.all([movieInfo, artists]).then(
-    function (values) {
-      return {
-        movie: values[0],
-        artists: values[1],
-      };
-    },
-    function (error) {
-      throw error;
-    }
-  );
+    const query2 =
+      "SELECT distinct name from artist WHERE artist_id in (SELECT artist_id from movie_artists where movie_id = $1;";
+    const res2 = await client.query(query2, [movie_id]);
+
+    await client.query("COMMIT");
+    return { info: res1.rows, artists: res2.rows };
+  } catch (e) {
+    await client.query("ROLLBACK");
+    throw e;
+  } finally {
+    client.release();
+  }
 };
 
 const rateMovie = (body) => {
@@ -95,41 +82,46 @@ const setPreference = (body) => {
   });
 };
 
-const getfilteredmovies = (body) => {
+const addMovie = (body) => {
+  const { name, release_date, poster_img, description, homepage } = body;
+  const query =
+    "INSERT INTO movies (name, release_date, count_theatres, upcoming, poster_img, imdb_rating, description, homepage) VALUES($1, $2, 0, 1, $3, NULL, $4, $5);";
+  return new Promise(function (resolve, reject) {
+    pool.query(
+      query,
+      [name, release_date, poster_img, description, homepage],
+      (error, results) => {
+        if (error) {
+          reject(error);
+        }
+        resolve(results.rows);
+      }
+    );
+  });
+};
+
+const getFilteredMovies = async (body) => {
   const { genre_id, language_id } = body;
-  const query1 =
-    "SELECT name FROM movies WHERE movie_id IN (SELECT movie_id FROM movie_genres WHERE genre_id = $1)";
-  const genremovies = new Promise(function (resolve, reject) {
-    pool.query(query1, [genre_id], (error, results) => {
-      if (error) {
-        reject(error);
-      }
-      resolve(results.rows);
-    });
-  });
+  const client = await pool.connect();
 
-  const query2 =
-    "SELECT name FROM movies WHERE movie_id IN (SELECT movie_id FROM movie_languages WHERE language_id = $1)";
-  const languagemovies = new Promise(function (resolve, reject) {
-    pool.query(query2, [language_id], (error, results) => {
-      if (error) {
-        reject(error);
-      }
-      resolve(results.rows);
-    });
-  });
+  try {
+    await client.query("BEGIN");
+    const query1 =
+      "SELECT name FROM movies WHERE movie_id IN (SELECT movie_id FROM movie_genres WHERE genre_id = $1);";
+    const res1 = await client.query(query1, [genre_id]);
 
-  return Promise.all([genremovies, languagemovies]).then(
-    function (values) {
-      return {
-        movie_name1: values[0],
-        movie_name2: values[1],
-      };
-    },
-    function (error) {
-      throw error;
-    }
-  );
+    const query2 =
+      "SELECT name FROM movies WHERE movie_id IN (SELECT movie_id FROM movie_languages WHERE language_id = $1);";
+    const res2 = await client.query(query2, [language_id]);
+
+    await client.query("COMMIT");
+    return { online: res1.rows, offline: res2.rows };
+  } catch (e) {
+    await client.query("ROLLBACK");
+    throw e;
+  } finally {
+    client.release();
+  }
 };
 
 module.exports = {
@@ -138,5 +130,6 @@ module.exports = {
   rateMovie,
   getUpcomingMovies,
   setPreference,
-  getfilteredmovies,
+  getFilteredMovies,
+  addMovie,
 };
