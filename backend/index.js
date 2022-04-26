@@ -21,16 +21,14 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.post("/getProfile", (req, res) => {
-  match_model
-    .getMatches(req.body)
-    .then((response) => {
-      res.json(response);
-    })
-    .catch((error) => {
-      console.log(error);
-      res.status(500).send(error);
-    });
+app.post("/getProfile", async (req, res) => {
+  try {
+    response = await user_model.getProfile(req.body);
+    res.json(response);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
 });
 
 app.post("/getMovies", (req, res) => {
@@ -343,4 +341,8 @@ app.post("/moviesaired", (req, res) => {
       console.log(error);
       res.status(500).send(error);
     });
+});
+
+app.listen(port, () => {
+  console.log(`App running on port ${port}.`);
 });

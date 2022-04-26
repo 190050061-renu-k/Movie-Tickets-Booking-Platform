@@ -7,54 +7,32 @@ const pool = new Pool({
   port: process.env.PORT,
 });
 
-const getProfile = (body) => {
+const getProfile = async (body) => {
   const { user_id } = body;
+  const client = await pool.connect();
 
-  const demographic = new Promise(function (resolve, reject) {
-    query_1 =
-      "SELECT userName, age, mobileNumber, city from users, cities where user_id = $1 and cities.city_id = users.city_id;";
-    pool.query(query_1, [user_id], (error, results) => {
-      if (error) {
-        reject(error);
-      }
-      resolve(results.rows);
-    });
-  });
+  try {
+    await client.query("BEGIN");
+    const query1 =
+      "SELECT name, user_bookings.booking_id, book_date, book_type, label, column_ FROM movies, shows, booking_seat, seats, (SELECT * FROM bookings WHERE user_id = $1) user_bookings WHERE user_bookings.booking_id = booking_seat.booking_id AND user_bookings.show_id  = shows.show_id AND shows.movie_id = movies.movie_id AND booking_seat.seat_id  = seats.seat_id";
+    const res1 = await client.query(query1, [user_id]);
 
-  const genres = new Promise(function (resolve, reject) {
-    query_1 =
-      "SELECT name from genres where genre_id in (SELECT genre_id from user_genre where user_id = $1);";
-    pool.query(query_1, [user_id], (error, results) => {
-      if (error) {
-        reject(error);
-      }
-      resolve(results.rows);
-    });
-  });
+    const query2 =
+      "SELECT name from genres where genre_id in (SELECT genre_id from user_genres where user_id = $1);";
+    const res2 = await client.query(query2, [user_id]);
 
-  const languages = new Promise(function (resolve, reject) {
-    query_1 =
-      "SELECT name from languages where language_id in (SELECT language _id from user_language where user_id = $1)";
-    pool.query(query_1, [user_id], (error, results) => {
-      if (error) {
-        reject(error);
-      }
-      resolve(results.rows);
-    });
-  });
+    const query3 =
+      "SELECT name from languages where language_id in (SELECT language_id from user_languages where user_id = $1);";
+    const res3 = await client.query(query3, [user_id]);
 
-  return Promise.all([demographic, genres, languages]).then(
-    function (values) {
-      return {
-        demographic: values[0],
-        genres: values[1],
-        languages: values[2],
-      };
-    },
-    function (error) {
-      throw error;
-    }
-  );
+    await client.query("COMMIT");
+    return { demographic: res1.rows, genres: res2.rows, languages: res3.rows };
+  } catch (e) {
+    await client.query("ROLLBACK");
+    throw e;
+  } finally {
+    client.release();
+  }
 };
 
 const getRecommendations = (body) => {

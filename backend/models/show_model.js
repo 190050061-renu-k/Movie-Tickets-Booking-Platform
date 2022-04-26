@@ -42,6 +42,6 @@ const getAvailableSeats = (body) => {
 };
 
 module.exports = {
-  getTheatreShows,
+  getTheatreMovieShows,
   getAvailableSeats,
 };
