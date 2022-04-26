@@ -35,33 +35,48 @@ var genres = [
 
 
 const Signup =(props)=> {
+
+    var getcol = props.col ? props.col : 12;
+    var getcard = props.card ? props.card : 4;
+    var margin = props.margin?props.margin:"100px";
     return (
       <div>
-        <div className="d-flex align-items-center auth px-0" style={{marginTop:'100px'}}>
+        <div className="d-flex align-items-center auth px-0" style={{marginTop:margin}}>
           <div className="row w-100 mx-0">
-            <div className="col-lg-4 mx-auto">
+            <div className={"mx-auto col-lg-" + getcard}>
+                
                 <Card>
                     <CardHeader>
-                        <CardTitle tag="h3">Register</CardTitle>
+                        <CardTitle tag="h3">{props.showsign ? "Edit Profile" : "Register"}</CardTitle>
                     </CardHeader>
+                    
                     <CardBody>
+                   
                 {/* brand logo  */}
                 {/* <h4>New here?</h4> */}
                 {/* <h6 className="font-weight-light">Signing up is easy. It only takes a few steps</h6> */}
                     <form className="pt-3">
-                    <div className="form-group">
+                        <div className='row'>
+
+                    <div className={"form-group col-" + getcol }>
                         <input type="text" className="form-control form-control-lg" id="inputname" placeholder="Username" />
                     </div>
-                    <div className="form-group">
+                    {props.showsign ? <></> : 
+                    <div className={"form-group col-"  + getcol }>
                         <input type="password" className="form-control form-control-lg" id="inputpswd1" placeholder="Password" />
-                    </div>
-                    <div className="form-group">
+                    </div>}
+                    
+                    {props.showsign ? <></> : 
+                    <div className={"form-group col-" + getcol }>
                         <input type="password" className="form-control form-control-lg" id="inputpswd2" placeholder="Re-enter Password" />
                     </div>
-                    <div className="form-group">
+                    }
+                    {props.showsign ? <></> : 
+                    <div className={"form-group col-"  + getcol }>
                         <input type="tel" className="form-control form-control-lg" id="inputtel" placeholder="Phone Number" />
                     </div>
-                    <div className="form-group">
+                    }
+                    <div className={"form-group col-" + getcol }>
                         <select className="form-control form-control-lg" id="inputcity">
                         <option>City</option>
                         <option>Hyderabad</option>
@@ -74,7 +89,7 @@ const Signup =(props)=> {
                         <option>Chennai</option>
                         </select>
                     </div>
-                    <div className="form-group">
+                    <div className={"form-group col-"  + getcol }>
                     <select className="form-control form-control-lg" id="inputlang">
                         <option>Language</option>
                         <option>Telugu</option>
@@ -83,7 +98,7 @@ const Signup =(props)=> {
                         <option>Marathi</option>
                         </select>
                     </div>
-                    <div className="form-group">
+                    <div className={"form-group col-"  + getcol }>
                         <select className="form-control form-control-lg" id="inputgenre">
                             <option>Genre</option>
                         {genres.map((i) => {
@@ -93,13 +108,25 @@ const Signup =(props)=> {
                         })}
                         </select>
                     </div>
-                    <div className="mt-3">
-                        <Link className="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" to="/login">SIGN UP</Link>
                     </div>
-                    <div className="text-center mt-4 font-weight-light">
-                        Already have an account? <Link to="/login" className="text-primary">Login</Link>
-                    </div>
+                    {props.showsign ?
+                     <div className="mt-3">
+                     <Link className="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" to="/profile">Submit</Link>
+                     </div>
+                      :
+                    <>
+                        <div className="mt-3">
+                            <Link className="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" to="/login">SIGN UP</Link>
+                        </div>
+                        <div className="text-center mt-4 font-weight-light">
+                            Already have an account? <Link to="/login" className="text-primary">Login</Link>
+                        </div>
+                    </>
+                    }
+                    
                     </form>
+            
+            
             </CardBody>
             </Card>
             </div>

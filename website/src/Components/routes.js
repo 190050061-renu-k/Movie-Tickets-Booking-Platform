@@ -13,6 +13,7 @@ import MovieDetails from "./newpages/details/MovieDetails";
 import ArtistDetails from "./newpages/details/ArtistDetails";
 import TheatreList from "./newpages/lists/TheatreList";
 import TheatreDetails from "./newpages/details/TheatreDetails";
+import UserDetails from "./newpages/details/UserDetails";
 
 var routes = [
   {
@@ -121,6 +122,13 @@ var routes = [
     component: TheatreList,
     layout: "",
   },
+  {
+    path: "/profile", // artist/:id to be done
+    name: "Profile",
+    icon: "nc-icon nc-pin-3",
+    component: UserDetails,
+    layout: "",
+  }
 
   
 ];
@@ -197,6 +205,13 @@ var sidebar_display = [
     component: TheatreList,
     layout: "",
   },
+  {
+    path: "/profile", // artist/:id to be done
+    name: "Profile",
+    icon: "nc-icon nc-pin-3",
+    component: UserDetails,
+    layout: "",
+  }
 ];
 
 export default routes;

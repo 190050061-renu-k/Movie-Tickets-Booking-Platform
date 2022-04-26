@@ -1,13 +1,11 @@
-// Set 1 Usecase 7 - Artist Info Page
+// Set 1 Usecase  - Theatre Detail page
 // TODO: fetch data from db
+// add route links to show timings
 import React, { useState } from 'react';
 import {
     Card,
-    CardHeader,
     CardBody,
-    CardTitle, 
     Button,
-    Row
   } from "reactstrap";
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
@@ -16,7 +14,7 @@ import {Tabs, Tab} from 'react-bootstrap';
 const TheatreDetails = (props) => {
     var [theatreDetails, setTheatreDetails] = useState({});
     let {id} = useParams();
-    var shows = [{"date": Date(2022,4,26), "movies": [{"name": "K.G.F. Chapter 2", id:1, "show_timings": ["Morning", "Evening"]}, {"name": "K.G.F. Chapter 2",id:1, "show_timings": ["Morning", "Evening"]}]},{"date": Date(2022,4,27), "movies": [{"name": "K.G.F. Chapter 2",id:1, "show_timings": ["Morning", "Evening"]}]},{"date": Date(2022,4,28), "movies": [{"name": "K.G.F. Chapter 2",id:1,"show_timings": ["Morning", "Evening"]}]}];  
+    var shows = [{"date": new Date(2022,4,26), "movies": [{"name": "K.G.F. Chapter 2", id:1, "show_timings": ["Morning", "Evening"]}, {"name": "K.G.F. Chapter 2",id:1, "show_timings": ["Morning", "Evening"]}]},{"date": new Date(2022,4,27), "movies": [{"name": "K.G.F. Chapter 2",id:1, "show_timings": ["Morning", "Evening"]}]},{"date": new Date(2022,4,28), "movies": [{"name": "K.G.F. Chapter 2",id:1,"show_timings": ["Morning", "Evening"]}]}];  
     var name= "Ramya's INOX";
     var city = "Las Vegas"
     //modify into useEffect
@@ -53,9 +51,8 @@ const TheatreDetails = (props) => {
                         shows.map((show)=>{
                             i+=1;
                             return(
-                                <Tab style={{marginTop:"30px"}} eventKey={i} title={i}>
+                                <Tab style={{marginTop:"30px"}} eventKey={i} title={show.date.getDate()}>
                                     {
-                                        
                                         show.movies.map((movie)=>{
                                             return(
                                                 <>
