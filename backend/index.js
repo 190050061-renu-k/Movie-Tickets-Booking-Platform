@@ -137,18 +137,6 @@ app.post("/getRecommendations", (req, res) => {
     });
 });
 
-app.post("/getRecommendations", (req, res) => {
-  user_model
-    .getRecommendations(req.body)
-    .then((response) => {
-      res.json(response);
-    })
-    .catch((error) => {
-      console.log(error);
-      res.status(500).send(error);
-    });
-});
-
 app.post("/getTheatres", (req, res) => {
   theatre_model
     .getTheatres(req.body)
@@ -257,9 +245,9 @@ app.post("/gettheatresinrange", (req, res) => {
     });
 });
 
-app.post("/getbookinghistory", (req, res) => {
+app.post("/getBookingHistory", (req, res) => {
   user_model
-    .bookinghistory(req.body)
+    .getBookingHistory(req.body)
     .then((response) => {
       res.json(response);
     })
@@ -269,9 +257,9 @@ app.post("/getbookinghistory", (req, res) => {
     });
 });
 
-app.post("/userlogin", (req, res) => {
+app.post("/userLogin", (req, res) => {
   user_model
-    .userlogin(req.body)
+    .userLogin(req.body)
     .then((response) => {
       res.json(response);
     })
@@ -281,16 +269,14 @@ app.post("/userlogin", (req, res) => {
     });
 });
 
-app.post("/changepassword", (req, res) => {
-  user_model
-    .passwordchange(req.body)
-    .then((response) => {
-      res.json(response);
-    })
-    .catch((error) => {
-      console.log(error);
-      res.status(500).send(error);
-    });
+app.post("/changePassword", async (req, res) => {
+  try {
+    response = await user_model.changePassword(req.body);
+    res.json(response);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
 });
 
 app.post("/addartist", (req, res) => {
@@ -359,9 +345,9 @@ app.post("/signUp", async (req, res) => {
   }
 });
 
-app.post("/editProfile", async (req, res) => {
+app.get("/editProfile", async (req, res) => {
   try {
-    response = await user_model.editProfile(req.body);
+    response = await user_model.editProfile();
     res.json(response);
   } catch (error) {
     console.log(error);
