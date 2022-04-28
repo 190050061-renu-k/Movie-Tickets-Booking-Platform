@@ -110,7 +110,7 @@ var routes = [
     layout: "",
   },
   {
-    path: "/theatres/:id", // artist/:id to be done
+    path: "/theatres/:theatre_id", // artist/:id to be done
     name: "Theatres",
     icon: "nc-icon nc-pin-3",
     component: TheatreDetails,

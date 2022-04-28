@@ -14,36 +14,6 @@ const ArtistDetails = (props) => {
   var [artistDetails, setArtistDetails] = useState({});
   const [isLoading, setisLoading] = useState(0);
 
-  //   var movies = [
-  //     {
-  //       name: "Rocky",
-  //       id: 1,
-  //       poster_img:
-  //         "https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/raveena-tandon-5136-24-03-2017-12-31-43.jpg",
-  //     },
-  //     {
-  //       name: "Srinidhi",
-  //       id: 5,
-  //       poster_img:
-  //         "https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/raveena-tandon-5136-24-03-2017-12-31-43.jpg",
-  //     },
-  //     {
-  //       name: "Raveena Tandon",
-  //       id: 5,
-  //       poster_img:
-  //         "https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/raveena-tandon-5136-24-03-2017-12-31-43.jpg",
-  //     },
-  //     {
-  //       name: "Sanjay Dutt",
-  //       id: 10,
-  //       poster_img:
-  //         "https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/raveena-tandon-5136-24-03-2017-12-31-43.jpg",
-  //     },
-  //   ];
-  //   var name = "Rocky";
-  //   //modify into useEffect
-  //   artistDetails = { movies: movies, name: name };
-
   useEffect(() => {
     getArtistDetails();
   }, [artist_id]);
