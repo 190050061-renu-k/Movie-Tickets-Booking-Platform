@@ -18,6 +18,7 @@ import HomePage from "./newpages/HomePage";
 import SeatSelection from "./newpages/booking/SeatSelection";
 import PaymentPage from "./newpages/payment/PaymentPage";
 import ConfirmationPage from "./newpages/payment/ConfirmationPage";
+import TheatreHomePage from "./newpages/theatre-pages/HomePage";
 
 var routes = [
   {
@@ -160,6 +161,13 @@ var routes = [
     icon: "nc-icon nc-pin-3",
     component: ConfirmationPage,
     layout: "",
+  },
+  {
+    path: "/theatre-homepage", // artist/:id to be done
+    name: "Theatre Home Page",
+    icon: "nc-icon nc-pin-3",
+    component: TheatreHomePage,
+    layout: "",
   }
 ];
 
@@ -268,6 +276,13 @@ var sidebar_display = [
     name: "Booking Confirmation",
     icon: "nc-icon nc-pin-3",
     component: ConfirmationPage,
+    layout: "",
+  },
+  {
+    path: "/theatre-homepage", // artist/:id to be done
+    name: "Theatre Home Page",
+    icon: "nc-icon nc-pin-3",
+    component: TheatreHomePage,
     layout: "",
   }
 ];
