@@ -14,6 +14,7 @@ import ArtistDetails from "./newpages/details/ArtistDetails";
 import TheatreList from "./newpages/lists/TheatreList";
 import TheatreDetails from "./newpages/details/TheatreDetails";
 import UserDetails from "./newpages/details/UserDetails";
+import SeatSelection from "./newpages/booking/SeatSelection";
 
 var routes = [
   {
@@ -128,7 +129,14 @@ var routes = [
     icon: "nc-icon nc-pin-3",
     component: UserDetails,
     layout: "",
-  }
+  }, 
+  {
+    path: "/seats", // artist/:id to be done
+    name: "Seats",
+    icon: "nc-icon nc-pin-3",
+    component: SeatSelection,
+    layout: "",
+  },
 
   
 ];
@@ -211,7 +219,14 @@ var sidebar_display = [
     icon: "nc-icon nc-pin-3",
     component: UserDetails,
     layout: "",
-  }
+  },
+  {
+    path: "/seats", // artist/:id to be done
+    name: "Seats",
+    icon: "nc-icon nc-pin-3",
+    component: SeatSelection,
+    layout: "",
+  },
 ];
 
 export default routes;
