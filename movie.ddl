@@ -243,11 +243,11 @@ ALTER TABLE shows alter show_id set default nextval('show_id_seq');
 CREATE SEQUENCE booking_id_seq START WITH 81000 INCREMENT BY 1;
 ALTER TABLE bookings alter booking_id set default nextval('booking_id_seq');
 
--- CREATE TRIGGER upcoming
---     AFTER INSERT
---     ON show
---     FOR EACH ROW 
---     EXECUTE PROCEDURE change_upcoming()
+CREATE TRIGGER upcoming
+     AFTER INSERT
+     ON shows
+     FOR EACH ROW 
+     EXECUTE PROCEDURE change_upcoming()
 
 --views creation
 
@@ -261,13 +261,14 @@ GROUP BY show_id, user_id, bookings.booking_id, book_date, book_type;
 
 --trigger
 CREATE OR REPLACE FUNCTION change_upcoming()
-    RETURNS TRIGGER
-    LANGUAGE PLPGSQL
-    AS 
-$$
-BEGIN 
-    UPDATE movies
-    SET upcoming_movie = FALSE
-    WHERE movie_id = NEW.movie_id;
-END;
-$$
+     RETURNS TRIGGER
+     LANGUAGE PLPGSQL
+     AS 
+ $$
+ BEGIN 
+     UPDATE movies
+	 SET upcoming = FALSE
+	 WHERE movie_id = NEW.movie_id;
+	 RETURN NULL;
+	 END;
+ $$
