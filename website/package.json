@@ -5,26 +5,27 @@
   "homepage": "https://demos.creative-tim.com/paper-dashboard-react/#/dashboard",
   "dependencies": {
     "@babel/core": "7.14.2",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
     "bootstrap": "4.6.0",
     "chart.js": "3.2.1",
     "chart.piecelabel.js": "^0.15.0",
     "chartjs-plugin-datalabels": "^2.0.0",
     "jquery": "3.6.0",
     "mdbreact": "^5.2.0",
-    "node-sass": "6.0.0",
     "perfect-scrollbar": "1.5.1",
     "react": "17.0.2",
     "react-bootstrap": "^2.3.0",
     "react-chartjs-2": "3.0.3",
     "react-dom": "17.0.2",
+    "react-horizontal-scrolling-menu": "^2.7.1",
     "react-notification-alert": "0.0.13",
     "react-router": "5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
-    "reactstrap": "8.9.0",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2"
+    "react-search-box": "^2.2.1",
+    "reactstrap": "8.9.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -50,6 +51,7 @@
   },
   "devDependencies": {
     "gulp": "4.0.2",
-    "gulp-append-prepend": "1.0.9"
+    "gulp-append-prepend": "1.0.9",
+    "node-sass": "^6.0.1"
   }
 }

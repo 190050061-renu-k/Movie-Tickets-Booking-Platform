@@ -14,7 +14,12 @@ import ArtistDetails from "./newpages/details/ArtistDetails";
 import TheatreList from "./newpages/lists/TheatreList";
 import TheatreDetails from "./newpages/details/TheatreDetails";
 import UserDetails from "./newpages/details/UserDetails";
+import HomePage from "./newpages/HomePage";
 import SeatSelection from "./newpages/booking/SeatSelection";
+import PaymentPage from "./newpages/payment/PaymentPage";
+import ConfirmationPage from "./newpages/payment/ConfirmationPage";
+import TheatreHomePage from "./newpages/theatre-pages/HomePage";
+import MovieTheatreList from "./newpages/lists/MovieTheatreList";
 
 var routes = [
   {
@@ -96,14 +101,14 @@ var routes = [
     layout: "",
   },
   {
-    path: "/movies/:movie_id", // movies/:id to be done
+    path: "/movies/:movie_id",
     name: "Movie Details",
     icon: "nc-icon nc-pin-3",
     component: MovieDetails,
     layout: "",
   },
   {
-    path: "/artists/:artist_id", // artist/:id to be done
+    path: "/artists/:artist_id",
     name: "Artist Details",
     icon: "nc-icon nc-pin-3",
     component: ArtistDetails,
@@ -117,17 +122,24 @@ var routes = [
     layout: "",
   },
   {
-    path: "/theatres", // artist/:id to be done
+    path: "/theatres",
     name: "Theatres",
     icon: "nc-icon nc-pin-3",
     component: TheatreList,
     layout: "",
   },
   {
-    path: "/profile", // artist/:id to be done
+    path: "/profile", // gets id from the saved state
     name: "Profile",
     icon: "nc-icon nc-pin-3",
     component: UserDetails,
+    layout: "",
+  },
+  {
+    path: "/homepage",
+    name: "Home Page",
+    icon: "nc-icon nc-pin-3",
+    component: HomePage,
     layout: "",
   },
   {
@@ -137,6 +149,33 @@ var routes = [
     component: SeatSelection,
     layout: "",
   },
+  {
+    path: "/payment", // artist/:id to be done
+    name: "Payment",
+    icon: "nc-icon nc-pin-3",
+    component: PaymentPage,
+    layout: "",
+  },
+  {
+    path: "/confirmation", // artist/:id to be done
+    name: "Booking Confirmation",
+    icon: "nc-icon nc-pin-3",
+    component: ConfirmationPage,
+    layout: "",
+  },
+  {
+    path: "/theatre-homepage", // artist/:id to be done
+    name: "Theatre Home Page",
+    icon: "nc-icon nc-pin-3",
+    component: TheatreHomePage,
+  },
+  {
+    path: "/movietheatrelist/:movieid", // :movieid to be done
+    name: "Movie Theatre List",
+    icon: "nc-icon nc-pin-3",
+    component: MovieTheatreList,
+    layout: "",
+  }
 ];
 
 var sidebar_display = [
@@ -198,33 +237,61 @@ var sidebar_display = [
     layout: "",
   },
   {
-    path: "/artistdetails", // artist/:id to be done
+    path: "/artistdetails", 
     name: "Artist Details",
     icon: "nc-icon nc-pin-3",
     component: ArtistDetails,
     layout: "",
   },
   {
-    path: "/theatres", // artist/:id to be done
+    path: "/theatres",
     name: "Theatres",
     icon: "nc-icon nc-pin-3",
     component: TheatreList,
     layout: "",
   },
   {
-    path: "/profile", // artist/:id to be done
+    path: "/profile",
     name: "Profile",
     icon: "nc-icon nc-pin-3",
     component: UserDetails,
     layout: "",
   },
   {
-    path: "/seats", // artist/:id to be done
+    path: "/homepage",
+    name: "Home Page",
+    icon: "nc-icon nc-pin-3",
+    component: HomePage,
+    layout: "",
+  },
+  {
+    path: "/seats", // seats/:movieid to be done
     name: "Seats",
     icon: "nc-icon nc-pin-3",
     component: SeatSelection,
     layout: "",
   },
+  {
+    path: "/payment", // payment:bookingid to be done
+    name: "Payment",
+    icon: "nc-icon nc-pin-3",
+    component: PaymentPage,
+    layout: "",
+  },
+  {
+    path: "/confirmation", // confirmation:bookingid to be done
+    name: "Booking Confirmation",
+    icon: "nc-icon nc-pin-3",
+    component: ConfirmationPage,
+    layout: "",
+  },
+  {
+    path: "/theatre-homepage", // artist/:id to be done
+    name: "Theatre Home Page",
+    icon: "nc-icon nc-pin-3",
+    component: TheatreHomePage,
+    layout: "",
+  }
 ];
 
 export default routes;

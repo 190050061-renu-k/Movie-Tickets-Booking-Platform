@@ -1,5 +1,4 @@
 // Set 1 Usecase 7 - Artist Info Page
-// TODO: fetch data from db
 import React, { useState, useEffect } from "react";
 
 import { useParams } from "react-router";
