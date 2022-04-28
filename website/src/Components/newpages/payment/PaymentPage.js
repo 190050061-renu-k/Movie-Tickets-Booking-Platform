@@ -38,6 +38,9 @@ const PaymentPage = (props) => {
                             <p style={{fontSize:"1.2em"}}>Price: <b>{PaymentInfo.price}</b></p>
                         </div>
                         <div className='col-6'>
+                            <p style={{fontSize:"1.2em"}}>Date of booking: <b>{PaymentInfo.date.getDate()+"-"+PaymentInfo.date.getMonth()+"-"+PaymentInfo.date.getFullYear()}</b></p>
+                        </div>
+                        <div className='col-6'>
                             <p style={{fontSize:"1.2em"}}>Selected Seats:
                             {PaymentInfo.seats.map((seat)=>{
                                 return(<b> {seat}</b>);
