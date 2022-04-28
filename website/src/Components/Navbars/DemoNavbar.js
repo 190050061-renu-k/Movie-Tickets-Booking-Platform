@@ -1,6 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import { Navbar, NavbarBrand, Container } from "reactstrap";
+import { Navbar, NavbarBrand, Container, Button } from "reactstrap";
 
 function Header(props) {
   const sidebarToggle = React.useRef();
@@ -22,6 +23,11 @@ function Header(props) {
   }, [location]);
 
   return (
+    <>
+    <div className='float-right'>
+      <Button className='btn-outline-primary' style={{marginBottom:'27px'}}>Logout</Button>
+      <Link to="/profile"><i className='nc-icon nc-single-02' style={{margin:'20px', fontSize:'25px'}}></i></Link>
+    </div>
     <Navbar
       color="dark"
       expand="lg"
@@ -45,6 +51,7 @@ function Header(props) {
         </div>
       </Container>
     </Navbar>
+    </>
   );
 }
 

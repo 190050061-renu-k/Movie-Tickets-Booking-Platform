@@ -14,6 +14,7 @@ import ArtistDetails from "./newpages/details/ArtistDetails";
 import TheatreList from "./newpages/lists/TheatreList";
 import TheatreDetails from "./newpages/details/TheatreDetails";
 import UserDetails from "./newpages/details/UserDetails";
+import HomePage from "./newpages/HomePage";
 
 var routes = [
   {
@@ -109,24 +110,31 @@ var routes = [
     layout: "",
   },
   {
-    path: "/theatres/:id", // artist/:id to be done
+    path: "/theatres/:id", // theatre/:id to be done
     name: "Theatres",
     icon: "nc-icon nc-pin-3",
     component: TheatreDetails,
     layout: "",
   },
   {
-    path: "/theatres", // artist/:id to be done
+    path: "/theatres", 
     name: "Theatres",
     icon: "nc-icon nc-pin-3",
     component: TheatreList,
     layout: "",
   },
   {
-    path: "/profile", // artist/:id to be done
+    path: "/profile", 
     name: "Profile",
     icon: "nc-icon nc-pin-3",
     component: UserDetails,
+    layout: "",
+  },
+  {
+    path: "/homepage", 
+    name: "Home Page",
+    icon: "nc-icon nc-pin-3",
+    component: HomePage,
     layout: "",
   }
 
@@ -192,24 +200,31 @@ var sidebar_display = [
     layout: "",
   },
   {
-    path: "/artistdetails", // artist/:id to be done
+    path: "/artistdetails", // theatre/:id to be done
     name: "Artist Details",
     icon: "nc-icon nc-pin-3",
     component: ArtistDetails,
     layout: "",
   },
   {
-    path: "/theatres", // artist/:id to be done
+    path: "/theatres", 
     name: "Theatres",
     icon: "nc-icon nc-pin-3",
     component: TheatreList,
     layout: "",
   },
   {
-    path: "/profile", // artist/:id to be done
+    path: "/profile",
     name: "Profile",
     icon: "nc-icon nc-pin-3",
     component: UserDetails,
+    layout: "",
+  },
+  {
+    path: "/homepage", 
+    name: "Home Page",
+    icon: "nc-icon nc-pin-3",
+    component: HomePage,
     layout: "",
   }
 ];
