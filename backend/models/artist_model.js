@@ -17,7 +17,7 @@ const getArtistInfo = async (body) => {
     const res1 = await client.query(query1, [artist_id]);
 
     const query2 =
-      "SELECT name, movie_id from movies where movie_id in (SELECT movie_id FROM movie_artists WHERE artist_id = $1);";
+      "SELECT name, movie_id, poster_img from movies where movie_id in (SELECT movie_id FROM movie_artists WHERE artist_id = $1);";
     const res2 = await client.query(query2, [artist_id]);
 
     await client.query("COMMIT");

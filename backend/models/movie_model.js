@@ -32,11 +32,24 @@ const getMovieInfo = async (body) => {
     const res1 = await client.query(query1, [movie_id]);
 
     const query2 =
-      "SELECT distinct name from artists WHERE artist_id in (SELECT artist_id from movie_artists where movie_id = $1)";
+      "SELECT distinct artist_id, name from artists WHERE artist_id in (SELECT artist_id from movie_artists where movie_id = $1)";
     const res2 = await client.query(query2, [movie_id]);
 
+    const query3 =
+      "SELECT name from genres WHERE genre_id in (SELECT genre_id from movie_genres where movie_id = $1)";
+    const res3 = await client.query(query3, [movie_id]);
+
+    const query4 =
+      "SELECT name from languages WHERE language_id in (SELECT language_id from movie_languages where movie_id = $1)";
+    const res4 = await client.query(query4, [movie_id]);
+
     await client.query("COMMIT");
-    return { info: res1.rows, artists: res2.rows };
+    return {
+      info: res1.rows,
+      artists: res2.rows,
+      genres: res3.rows,
+      languages: res4.rows,
+    };
   } catch (e) {
     await client.query("ROLLBACK");
     throw e;
