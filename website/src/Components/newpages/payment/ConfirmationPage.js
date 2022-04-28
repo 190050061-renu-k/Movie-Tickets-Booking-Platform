@@ -16,7 +16,7 @@ import { Link } from 'react-router-dom';
 
 const ConfirmationPage = (props) => {
     var [BookingInfo, setBookingInfo] = useState({});
-    BookingInfo= {"seats":['A1','B2','C3'], "theatre_id": 2, "theatre_name": "Ramya's INOX", "movie_name":"KGF Chapter Two", "movie_id":111, "price": 100, "date": new Date(20,1,2022), "booking_id": 1234};
+    BookingInfo= {"seats":['A1','B2','C3'], "theatre_id": 2, "theatre_name": "Ramya's INOX", "movie_name":"KGF Chapter Two", "movie_id":111, "price": 100, "date": new Date(2022,1,20), "booking_id": 1234};
     
     //useEffect to fetch genres
 
@@ -41,19 +41,17 @@ const ConfirmationPage = (props) => {
                             <p style={{fontSize:"1.2em"}}>Price: <b>{BookingInfo.price}</b></p>
                         </div>
                         <div className='col-6'>
+                            <p style={{fontSize:"1.2em"}}>Date of booking: <b>{BookingInfo.date.getDate()+"-"+BookingInfo.date.getMonth()+"-"+BookingInfo.date.getFullYear()}</b></p>
+                        </div>
+                        <div className='col-6'>
                             <p style={{fontSize:"1.2em"}}>Selected Seats:
                             {BookingInfo.seats.map((seat)=>{
                                 return(<b> {seat}</b>);
                             })}
                             </p>
-                            
                         </div>
+
                         </div>
-                        <Link style={{textDecoration:"none"}}>
-                                <Button className="btn-dark">
-                                    Pay Now
-                                </Button>
-                            </Link>
                     </CardBody>    
                 </Card>                
             </div>

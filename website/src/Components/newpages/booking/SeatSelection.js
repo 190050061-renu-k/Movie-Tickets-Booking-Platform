@@ -33,7 +33,7 @@ const SeatSelection = () => {
 				<SeatAvailability />
 				<PriceCalculator />
 			</MovieContext.Provider>
-			<Link style={{textDecoration:"none"}} to={{pathname:"/payment", state: {"seats":movies.seatNumbers, "theatre_id": 2, "theatre_name": "Ramya's INOX", "movie_name":"KGF Chapter Two", "movie_id":111, "price": 100, "date": new Date(20,1,2022)}}}>
+			<Link style={{textDecoration:"none"}} to={{pathname:"/payment", state: {"seats":movies.seatNumbers, "theatre_id": 2, "theatre_name": "Ramya's INOX", "movie_name":"KGF Chapter Two", "movie_id":111, "price": 100, "date": new Date(2022,1,20)}}}>
 				<Button className="btn-dark">
 					Proceed to Payment
 				</Button>
