@@ -99,14 +99,14 @@ var routes = [
     layout: "",
   },
   {
-    path: "/movies/:movie_id", // movies/:id to be done
+    path: "/movies/:movie_id",
     name: "Movie Details",
     icon: "nc-icon nc-pin-3",
     component: MovieDetails,
     layout: "",
   },
   {
-    path: "/artists/:artist_id", // artist/:id to be done
+    path: "/artists/:artist_id",
     name: "Artist Details",
     icon: "nc-icon nc-pin-3",
     component: ArtistDetails,
@@ -120,21 +120,21 @@ var routes = [
     layout: "",
   },
   {
-    path: "/theatres", 
+    path: "/theatres",
     name: "Theatres",
     icon: "nc-icon nc-pin-3",
     component: TheatreList,
     layout: "",
   },
   {
-    path: "/profile", 
+    path: "/profile", // gets id from the saved state
     name: "Profile",
     icon: "nc-icon nc-pin-3",
     component: UserDetails,
     layout: "",
   },
   {
-    path: "/homepage", 
+    path: "/homepage",
     name: "Home Page",
     icon: "nc-icon nc-pin-3",
     component: HomePage,
@@ -229,7 +229,7 @@ var sidebar_display = [
     layout: "",
   },
   {
-    path: "/theatres", 
+    path: "/theatres",
     name: "Theatres",
     icon: "nc-icon nc-pin-3",
     component: TheatreList,
@@ -243,7 +243,7 @@ var sidebar_display = [
     layout: "",
   },
   {
-    path: "/homepage", 
+    path: "/homepage",
     name: "Home Page",
     icon: "nc-icon nc-pin-3",
     component: HomePage,

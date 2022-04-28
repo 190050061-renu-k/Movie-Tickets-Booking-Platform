@@ -38,7 +38,7 @@ const MovieDetails = (props) => {
       });
   }
 
-  const poster_img_base = "http://image.tmdb.org/t/p/w500/";
+  const poster_img_base = "http://image.tmdb.org/t/p/w300/";
   //useEffect to fetch genres
   if (isLoading == 2) {
     return (
