@@ -1,7 +1,7 @@
 // Set 1 Usecase 6 - Movie Info Page
 // TODO: fetch data from db
 import React, { useState } from "react";
-import "./../../../Assets/css/MovieDetails.css";
+import "./../../../Assets/css/movieDetails.css";
 // import { Link } from 'react-router-dom';
 import { Card, CardHeader, CardBody, CardTitle, Button } from "reactstrap";
 import { Link } from "react-router-dom";
