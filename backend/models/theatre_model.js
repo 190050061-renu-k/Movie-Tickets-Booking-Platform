@@ -23,7 +23,7 @@ const getTheatres = (body) => {
 const getTheatreShows = (body) => {
   const { theatre_id } = body;
   const query =
-    "SELECT * FROM shows, show_timings WHERE shows.show_timings_id = show_timings.show_timings_id and theatre_id = $1 and show_date <= CURRENT_DATE + INTERVAL '2 days' and show_date >= CURRENT_DATE AND start_time > CURRENT_TIME;";
+    "SELECT * FROM shows, show_timings WHERE shows.show_timings_id = show_timings.show_timings_id and theatre_id = $1 and show_date <= CURRENT_DATE + INTERVAL '2 days' and show_date >= CURRENT_DATE;";
   return new Promise(function (resolve, reject) {
     pool.query(query, [theatre_id], (error, results) => {
       if (error) {

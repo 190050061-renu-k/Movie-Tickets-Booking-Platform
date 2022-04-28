@@ -101,7 +101,7 @@ app.post("/rateMovie", (req, res) => {
     });
 });
 
-app.post("/getUpcomingMovies", (req, res) => {
+app.get("/getUpcomingMovies", (req, res) => {
   movie_model
     .getUpcomingMovies(req.body)
     .then((response) => {
@@ -279,9 +279,9 @@ app.post("/changePassword", async (req, res) => {
   }
 });
 
-app.post("/addartist", (req, res) => {
+app.post("/addArtist", (req, res) => {
   artist_model
-    .addartist(req.body)
+    .addArtist(req.body)
     .then((response) => {
       res.json(response);
     })
@@ -325,9 +325,19 @@ app.post("/getOnlineVsOffline", async (req, res) => {
   }
 });
 
-app.post("/getFilteredMovies", async (req, res) => {
+app.post("/getLanguageMovies", async (req, res) => {
   try {
-    response = await movie_model.getFilteredMovies(req.body);
+    response = await movie_model.getLanguageMovies(req.body);
+    res.json(response);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+});
+
+app.post("/getGenreMovies", async (req, res) => {
+  try {
+    response = await movie_model.getGenreMovies(req.body);
     res.json(response);
   } catch (error) {
     console.log(error);

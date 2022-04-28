@@ -9,8 +9,9 @@ const pool = new Pool({
 
 const getMovies = (body) => {
   const { city_id } = body;
-  const query =
-    "SELECT name from movies where movie_id in (SELECT distinct movie_id from shows where theatre_id in (SELECT theatre_id from theatres where city = $1));";
+  const query = `SELECT * from movies where movie_id in 
+        (SELECT distinct movie_id from shows where theatre_id in 
+          (SELECT theatre_id from theatres where city = $1) and show_date BETWEEN current_date AND current_date+interval '3 day');`;
   return new Promise(function (resolve, reject) {
     pool.query(query, [city_id], (error, results) => {
       if (error) {
@@ -31,7 +32,7 @@ const getMovieInfo = async (body) => {
     const res1 = await client.query(query1, [movie_id]);
 
     const query2 =
-      "SELECT distinct name from artist WHERE artist_id in (SELECT artist_id from movie_artists where movie_id = $1;";
+      "SELECT distinct name from artists WHERE artist_id in (SELECT artist_id from movie_artists where movie_id = $1)";
     const res2 = await client.query(query2, [movie_id]);
 
     await client.query("COMMIT");
@@ -52,7 +53,7 @@ const rateMovie = (body) => {
       if (error) {
         reject(error);
       }
-      resolve(results.rows);
+      resolve(true);
     });
   });
 };
@@ -71,13 +72,13 @@ const getUpcomingMovies = (body) => {
 
 const setPreference = (body) => {
   const { user_id, movie_id } = body;
-  const query = "INSERT INTO user_movie VALUES($1,$2, 1, NULL);";
+  const query = "INSERT INTO user_movie VALUES($1,$2, 'TRUE', NULL);";
   return new Promise(function (resolve, reject) {
     pool.query(query, [user_id, movie_id], (error, results) => {
       if (error) {
         reject(error);
       }
-      resolve(results.rows);
+      resolve(true);
     });
   });
 };
@@ -85,7 +86,7 @@ const setPreference = (body) => {
 const addMovie = (body) => {
   const { name, release_date, poster_img, description, homepage } = body;
   const query =
-    "INSERT INTO movies (name, release_date, count_theatres, upcoming, poster_img, imdb_rating, description, homepage) VALUES($1, $2, 0, 1, $3, NULL, $4, $5);";
+    "INSERT INTO movies (name, release_date, count_theatres, upcoming, poster_img, imdb_rating, description, homepage) VALUES($1, $2, 0, true, $3, NULL, $4, $5);";
   return new Promise(function (resolve, reject) {
     pool.query(
       query,
@@ -94,28 +95,52 @@ const addMovie = (body) => {
         if (error) {
           reject(error);
         }
-        resolve(results.rows);
+        resolve(true);
       }
     );
   });
 };
 
-const getFilteredMovies = async (body) => {
-  const { genre_id, language_id } = body;
+const getGenreMovies = async (body) => {
+  const { genre_id } = body;
   const client = await pool.connect();
 
   try {
     await client.query("BEGIN");
     const query1 =
-      "SELECT name FROM movies WHERE movie_id IN (SELECT movie_id FROM movie_genres WHERE genre_id = $1);";
+      "SELECT * FROM movies WHERE movie_id IN \
+      (SELECT movie_id FROM movie_genres WHERE genre_id = $1) and  movie_id IN\
+      (SELECT distinct movie_id from shows where \
+      show_date BETWEEN current_date AND current_date+interval '3 day')";
+
     const res1 = await client.query(query1, [genre_id]);
 
+    await client.query("COMMIT");
+    return res1.rows;
+  } catch (e) {
+    await client.query("ROLLBACK");
+    throw e;
+  } finally {
+    client.release();
+  }
+};
+
+const getLanguageMovies = async (body) => {
+  const { language_id } = body;
+  const client = await pool.connect();
+
+  try {
+    await client.query("BEGIN");
+
     const query2 =
-      "SELECT name FROM movies WHERE movie_id IN (SELECT movie_id FROM movie_languages WHERE language_id = $1);";
+      "SELECT name FROM movies WHERE movie_id IN \
+      (SELECT movie_id FROM movie_languages WHERE language_id = $1) and  movie_id IN\
+      (SELECT distinct movie_id from shows where \
+      show_date BETWEEN current_date AND current_date+interval '3 day');";
     const res2 = await client.query(query2, [language_id]);
 
     await client.query("COMMIT");
-    return { online: res1.rows, offline: res2.rows };
+    return res2.rows;
   } catch (e) {
     await client.query("ROLLBACK");
     throw e;
@@ -130,6 +155,7 @@ module.exports = {
   rateMovie,
   getUpcomingMovies,
   setPreference,
-  getFilteredMovies,
+  getGenreMovies,
+  getLanguageMovies,
   addMovie,
 };

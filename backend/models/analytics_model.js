@@ -116,7 +116,7 @@ const getAdminAnalytics = () => {
   const query1 = `SELECT theatre_id, theatres.name, show_online_offline.book_type, SUM(show_online_offline.seats_booked) sum_seats FROM theatres, shows,
   (SELECT book_type, show_id, SUM(seats_booked) seats_booked_ FROM all_bookings GROUP BY book_type, show_id) show_online_offline
   WHERE theatres.theatre_id = shows.theatre_id AND shows.show_id = show_online_offline.show_id
-  GROUP BY theatre_id, theatres.name, show_online_offline.book_type`;
+  GROUP BY theatre_id, theatres.name, show_online_offline.book_type;`;
   return new Promise(function (resolve, reject) {
     pool.query(query1, (error, results) => {
       if (error) {
