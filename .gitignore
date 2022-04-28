@@ -1,2 +1,6 @@
+.DS_store
+Data/Movies/
+Data/Theatres/
+Data/Users/
 Movie-Tickets-Booking-Platform/test.ddl
 Movie-Tickets-Booking-Platform/queries.txt

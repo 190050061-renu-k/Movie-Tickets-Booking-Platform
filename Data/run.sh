@@ -1,0 +1,11 @@
+python3 movies.py
+python3 users.py
+python3 theatres.py
+python3 artists.py
+python3 seats.py
+python3 screens.py
+python3 showtimings.py
+python3 user_theatre.py
+python3 user_movie.py
+python3 shows.py
+python3 bookings.py
