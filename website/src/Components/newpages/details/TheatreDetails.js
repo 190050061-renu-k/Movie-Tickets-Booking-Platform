@@ -21,6 +21,7 @@ const TheatreDetails = (props) => {
     theatreDetails = {"shows": shows, "name":name, "id": id, "city": city};
     var i = -1;
 
+    
 
 
     //useEffect to fetch genres

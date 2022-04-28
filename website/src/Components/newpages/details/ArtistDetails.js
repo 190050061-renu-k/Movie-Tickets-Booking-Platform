@@ -1,4 +1,8 @@
 // Set 1 Usecase 7 - Artist Info Page
+<<<<<<< HEAD
+=======
+// TODO: fetch data from db
+>>>>>>> 9ee5e0a85a51b97212b9e3509dc919dd5d7a73fa
 import React, { useState, useEffect } from "react";
 
 import { useParams } from "react-router";
@@ -12,6 +16,39 @@ const ArtistDetails = (props) => {
   let { artist_id } = useParams();
   var [artistDetails, setArtistDetails] = useState({});
   const [isLoading, setisLoading] = useState(0);
+<<<<<<< HEAD
+=======
+
+  //   var movies = [
+  //     {
+  //       name: "Rocky",
+  //       id: 1,
+  //       poster_img:
+  //         "https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/raveena-tandon-5136-24-03-2017-12-31-43.jpg",
+  //     },
+  //     {
+  //       name: "Srinidhi",
+  //       id: 5,
+  //       poster_img:
+  //         "https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/raveena-tandon-5136-24-03-2017-12-31-43.jpg",
+  //     },
+  //     {
+  //       name: "Raveena Tandon",
+  //       id: 5,
+  //       poster_img:
+  //         "https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/raveena-tandon-5136-24-03-2017-12-31-43.jpg",
+  //     },
+  //     {
+  //       name: "Sanjay Dutt",
+  //       id: 10,
+  //       poster_img:
+  //         "https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/raveena-tandon-5136-24-03-2017-12-31-43.jpg",
+  //     },
+  //   ];
+  //   var name = "Rocky";
+  //   //modify into useEffect
+  //   artistDetails = { movies: movies, name: name };
+>>>>>>> 9ee5e0a85a51b97212b9e3509dc919dd5d7a73fa
 
   useEffect(() => {
     getArtistDetails();

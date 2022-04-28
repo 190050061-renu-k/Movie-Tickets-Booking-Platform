@@ -5,8 +5,8 @@ import { useParams } from "react-router";
 import { Card, CardHeader, CardBody, CardTitle, Button } from "reactstrap";
 import { Link } from "react-router-dom";
 
-import "./../../../Assets/css/MovieDetails.css";
-import Preload from "./../../layouts/Preload";
+import "./../../../Assets/css/movieDetails.css";
+import Preload from "../../layouts/Preload";
 
 const MovieDetails = (props) => {
   let { movie_id } = useParams();
