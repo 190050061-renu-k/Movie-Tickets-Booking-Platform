@@ -124,10 +124,12 @@ const MovieDetails = (props) => {
                       </Card>
                     </div>
                   </div>
-
-                  <Button className="bg-primary" size="lg">
-                    Book Tickets
-                  </Button>
+                  <Link to={"/movietheatrelist/"+movie_id}>
+                    <Button className="bg-primary" size="lg">
+                      Book Tickets
+                    </Button>
+                  </Link>
+                  
                 </div>
               </div>
             </div>
