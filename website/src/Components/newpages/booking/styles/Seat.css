@@ -1,0 +1,46 @@
+.movie-layout{
+    flex-wrap: nowrap;
+}
+.col-md-2{
+    padding: 0px 10px;
+}
+.col-md-6{
+    padding: 0px 25px;
+}
+.seat{
+    width: 20px;
+    height: 20px;
+    border-radius: 50% 50% 0px 0px;
+    margin: 3px;
+    cursor: pointer;
+}
+.seat-grey:hover, .seat-black:hover, .seat-undefined:hover{
+    transform: scale(1.1);
+}
+.row{
+    justify-content: center;
+    align-items: flex-start;
+}
+.seat-grey{
+    background-color: #ddd;
+}
+.seat-black{
+    background-color: black;
+}
+.seat-red{
+    background-color: rgb(215, 106, 17);
+}
+.seat-red:hover{
+    cursor:not-allowed;
+}
+.seat-undefined{
+    cursor: auto;
+    pointer-events: none;
+}
+.movie-complex p{
+    text-align: center;
+    font-size: 20px;
+}
+.movie-selector{
+    width: 250px;
+}
