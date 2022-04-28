@@ -96,14 +96,14 @@ var routes = [
     layout: "",
   },
   {
-    path: "/moviedetails", // movies/:id to be done
+    path: "/movies/:movie_id", // movies/:id to be done
     name: "Movie Details",
     icon: "nc-icon nc-pin-3",
     component: MovieDetails,
     layout: "",
   },
   {
-    path: "/artistdetails", // artist/:id to be done
+    path: "/artists/:artist_id", // artist/:id to be done
     name: "Artist Details",
     icon: "nc-icon nc-pin-3",
     component: ArtistDetails,
@@ -129,7 +129,7 @@ var routes = [
     icon: "nc-icon nc-pin-3",
     component: UserDetails,
     layout: "",
-  }, 
+  },
   {
     path: "/seats", // artist/:id to be done
     name: "Seats",
@@ -137,8 +137,6 @@ var routes = [
     component: SeatSelection,
     layout: "",
   },
-
-  
 ];
 
 var sidebar_display = [
@@ -163,7 +161,7 @@ var sidebar_display = [
     component: Points,
     layout: "",
   },
-  
+
   {
     path: "/venues",
     name: "Venues",

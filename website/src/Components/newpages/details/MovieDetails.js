@@ -1,117 +1,160 @@
 // Set 1 Usecase 6 - Movie Info Page
-// TODO: fetch data from db
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
+
+import { useParams } from "react-router";
+import { Card, CardHeader, CardBody, CardTitle, Button } from "reactstrap";
+import { Link } from "react-router-dom";
+
 import "./../../../Assets/css/movieDetails.css";
-// import { Link } from 'react-router-dom';
-import {
-    Card,
-    CardHeader,
-    CardBody,
-    CardTitle, 
-    Button
-  } from "reactstrap";
-import { Link } from 'react-router-dom';
+import Preload from "../../layouts/Preload";
 
 const MovieDetails = (props) => {
-    var [MovieDetails, setMovieDetails] = useState({});
-  
-    var artists = [{name:"Rocky", id: 1}, {name:"Srinidhi", id:5}, {name:"Raveena Tandon", id:5}, {name:"Sanjay Dutt", id:10}];  
-    var genres= [{name:"Hype",id:1},{name: "Action", id:10}];
-    var languages = [{name:"Hindi",id:1},{name: "English", id:10}];
-    var isRelease = 1; // fetch from data
-    var releaseDate = "14-Apr-2022";
-    var name = "K.G.F. Chapter 2";
-    var description = "The blood-soaked land of Kolar Gold Fields (KGF) has a new overlord now - Rocky whose name strikes fear in the heart of his foes. His allies look up to Rocky as their saviour, the government sees him as a threat to law and order; enemies are clamouring for revenge and conspiring for his downfall. Bloodier battles and darker days await as Rocky continues on his quest for unchallenged supremacy.";
-    var poster_img = 'https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/raveena-tandon-5136-24-03-2017-12-31-43.jpg';
-    //modify into useEffect
-    MovieDetails = {"genres": genres, "languages":languages, "isRelease":isRelease, "releaseDate": releaseDate,
-                    "description": description, "artists": artists, "name":name, "poster_img": poster_img};
+  let { movie_id } = useParams();
+  var [movieDetails, setMovieDetails] = useState({});
+  const [isLoading, setisLoading] = useState(0);
 
+  useEffect(() => {
+    getMovieDetails();
+  }, [movie_id]);
 
-    //useEffect to fetch genres
+  function getMovieDetails() {
+    setisLoading(1);
+    fetch("http://localhost:3001/getMovieInfo", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ movie_id }),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        setMovieDetails(data);
+        setisLoading(2);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
+  const poster_img_base = "http://image.tmdb.org/t/p/w500/";
+  //useEffect to fetch genres
+  if (isLoading == 2) {
     return (
       <div>
-        <div className="align-items-center  bg-dark" id = "info1" style={{marginTop:'60px'}}>
+        <div
+          className="align-items-center  bg-dark"
+          id="info1"
+          style={{ marginTop: "60px" }}
+        >
           <div className="container">
-            <div >
-              <img src={MovieDetails.poster_img} alt="Snow" className='center'/>
+            <div>
+              <img
+                src={poster_img_base + movieDetails.info[0].poster_img}
+                alt="Snow"
+                className="center"
+              />
 
-                <div className='row' >                  
-                  <div className='col-9 text-left' style={{color: 'white', marginTop:'50px', paddingLeft: '30px'}}>
-                      <h3 style={{fontWeight:'bold'}}>{MovieDetails.name}</h3>
-                      {MovieDetails.isRelease ? <p>Release Date: {MovieDetails.releaseDate}</p> : <></>}
+              <div className="row">
+                <div
+                  className="col-9 text-left"
+                  style={{
+                    color: "white",
+                    marginTop: "50px",
+                    paddingLeft: "30px",
+                  }}
+                >
+                  <h3 style={{ fontWeight: "bold" }}>
+                    {movieDetails.info[0].name}
+                  </h3>
+                  {!movieDetails.info[0].upcoming ? (
+                    <p>Release Date: {movieDetails.info[0].release_date}</p>
+                  ) : (
+                    <></>
+                  )}
+                  <Card>
+                    <CardBody>
+                      {!movieDetails.info[0].upcoming ? (
+                        <>
+                          <h5 style={{ display: "inline", fontSize: "1.5em" }}>
+                            IMDB Rating: {movieDetails.info[0].imdb_rating}
+                          </h5>
+                          <Button className="text-light float-right">
+                            Rate Now
+                          </Button>
+                        </>
+                      ) : (
+                        <>
+                          <h5 style={{ display: "inline", fontSize: "1.5em" }}>
+                            Yet to be Released
+                          </h5>
+                          <Button className="text-light float-right">
+                            Notify me
+                          </Button>
+                        </>
+                      )}
+                    </CardBody>
+                  </Card>
+                  <div className="row">
+                    <div className="col-6">
                       <Card>
                         <CardBody>
-                        {MovieDetails.isRelease ? 
-                          <>
-                          <h5 style={{display:'inline', fontSize: '1.5em'}}>IMDB Rating: 00.00</h5>
-                          <Button className='text-light float-right'>Rate Now</Button>
-                          </>
-                          :
-                          <>
-                          <h5 style={{display:'inline', fontSize: '1.5em'}}>Yet to be Released</h5>
-                          <Button className='text-light float-right'>Notify me</Button>
-                          </>
-                        }
+                          {movieDetails.genres.map((i) => {
+                            return (
+                              <span style={{ fontWeight: "bold" }}>
+                                {i.name}{" "}
+                              </span>
+                            );
+                          })}
                         </CardBody>
                       </Card>
-                      <div className='row'>
-                        <div className='col-6'>
-                          <Card>
-                            <CardBody>
-                              {MovieDetails.genres.map((i)=>{
-                                return(
-                                  <span style={{fontWeight:"bold"}}>{i.name} </span>
-                                );
-                              })}
-                            </CardBody>
-                          </Card>
-                        </div>
-                        <div className='col-6'>
-                          <Card>
-                            <CardBody>
-                            {MovieDetails.languages.map((i)=>{
-                                return(
-                                  <span style={{fontWeight:"bold"}}>{i.name} </span>
-                                );
-                              })}
-                            </CardBody>
-                          </Card>
-                        </div>
-                      </div> 
-
-                      <Button className='bg-primary' size='lg'>Book Tickets</Button>
+                    </div>
+                    <div className="col-6">
+                      <Card>
+                        <CardBody>
+                          {movieDetails.languages.map((i) => {
+                            return (
+                              <span style={{ fontWeight: "bold" }}>
+                                {i.name}{" "}
+                              </span>
+                            );
+                          })}
+                        </CardBody>
+                      </Card>
+                    </div>
                   </div>
-                </div>
-            </div>
 
-                 
+                  <Button className="bg-primary" size="lg">
+                    Book Tickets
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        
-        </div>
-        <div className='container text-left' >
+        <div className="container text-left">
           <h4>Description</h4>
-          <p style={{fontSize:"1.15em"}}>
-            {MovieDetails.description}             
+          <p style={{ fontSize: "1.15em" }}>
+            {movieDetails.info[0].description}
           </p>
-          <hr/>
+          <hr />
           <h4>Cast</h4>
-          {MovieDetails.artists.map((artist)=>{
-            var path = "artist/" + artist.id;
-            return(
-              <Link to={path} style={{padding:"5px"}}>
-            <Button className='btn-outline-primary'>
-               {artist.name}
-            </Button>
-            </Link>
+          {movieDetails.artists.map((artist) => {
+            return (
+              <Link
+                to={"/artists/" + artist.artist_id}
+                style={{ padding: "5px" }}
+              >
+                <Button className="btn-outline-primary">{artist.name}</Button>
+              </Link>
             );
           })}
-          <hr/>
+          <hr />
         </div>
-    </div>
-
+      </div>
     );
-  }
+  } else return <Preload></Preload>;
+};
 
 export default MovieDetails;
