@@ -1,4 +1,6 @@
 const Pool = require("pg").Pool;
+const format = require("pg-format");
+
 const pool = new Pool({
   user: process.env.USER,
   host: process.env.HOST,
@@ -80,22 +82,60 @@ const getTheatreMovies = (body) => {
   });
 };
 
-//TODO
 const registerTheatre = async (body) => {
-  const { name, city, location, screen_num, theatre_id } = body;
+  function generatePassword() {
+    var length = 10,
+      charset =
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
+      retVal = "";
+    for (var i = 0, n = charset.length; i < length; ++i) {
+      retVal += charset.charAt(Math.floor(Math.random() * n));
+    }
+    return retVal;
+  }
+  const { name, city, latitude, longitude, num_of_screens } = body;
+
+  const pswd = generatePassword();
+  const screens = Array.from(
+    { length: num_of_screens },
+    (_, index) => index + 1
+  );
+  const username = name + "_" + city;
+
   const client = await pool.connect();
 
   try {
     await client.query("BEGIN");
-    const query1 =
-      "INSERT INTO theatres(name, city, location) values($1, $2, $3)";
-    await client.query(query1, [name, city, location]);
 
-    const query2 = "INSERT INTO screens values ($1, $2);";
-    await client.query(query2, [screen_num, theatre_id]);
+    const query1 = "SELECT * FROM theatres  WHERE name = $1 and  city = $2";
+    const res1 = await client.query(query1, [name, city]);
+
+    if (res1.rows.length > 0) {
+      await client.query("COMMIT");
+      return { username: null, password: null };
+    }
+
+    const query2 =
+      "INSERT INTO theatres(name, city, password, username, location) values($1, $2, $3, $4, " +
+      "ST_GeomFromText('POINT(" +
+      longitude +
+      " " +
+      latitude +
+      ")',4326));";
+    await client.query(query2, [name, city, pswd, username]);
+
+    const query3 =
+      "SELECT theatre_id FROM theatres  WHERE name = $1 and  city = $2";
+    const res2 = await client.query(query3, [name, city]);
+
+    const theatre_id = res2.rows[0]["theatre_id"];
+    const theatreScreens = screens.map((screen) => [screen, theatre_id]);
+
+    const query4 = format("INSERT INTO screens values %L;", theatreScreens);
+    await client.query(query4, []);
 
     await client.query("COMMIT");
-    return "";
+    return { username: username, password: pswd };
   } catch (e) {
     await client.query("ROLLBACK");
     throw e;

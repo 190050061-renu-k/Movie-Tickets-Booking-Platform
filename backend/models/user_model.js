@@ -10,8 +10,7 @@ const pool = new Pool({
 });
 
 const getProfile = async () => {
-  // const { user_id } = body;
-  user_id = 2;
+  const { user_id } = body;
   const client = await pool.connect();
 
   try {
@@ -168,13 +167,7 @@ const signUp = async () => {
 };
 
 const editProfile = async (body) => {
-  // const { username, age, user_id, city_id, language_ids, genre_ids } = body;
-  username = "Javad Sahiad";
-  age = 21;
-  city_id = 5;
-  language_ids = [21668, 21872];
-  genre_ids = [12, 14];
-  user_id = 1;
+  const { username, age, user_id, city_id, language_ids, genre_ids } = body;
   const client = await pool.connect();
 
   try {
