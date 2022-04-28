@@ -16,6 +16,10 @@ import TheatreDetails from "./newpages/details/TheatreDetails";
 import UserDetails from "./newpages/details/UserDetails";
 import HomePage from "./newpages/HomePage";
 import SeatSelection from "./newpages/booking/SeatSelection";
+import PaymentPage from "./newpages/payment/PaymentPage";
+import ConfirmationPage from "./newpages/payment/ConfirmationPage";
+import TheatreHomePage from "./newpages/theatre-pages/HomePage";
+import MovieTheatreList from "./newpages/lists/MovieTheatreList";
 
 var routes = [
   {
@@ -145,6 +149,33 @@ var routes = [
     component: SeatSelection,
     layout: "",
   },
+  {
+    path: "/payment", // artist/:id to be done
+    name: "Payment",
+    icon: "nc-icon nc-pin-3",
+    component: PaymentPage,
+    layout: "",
+  },
+  {
+    path: "/confirmation", // artist/:id to be done
+    name: "Booking Confirmation",
+    icon: "nc-icon nc-pin-3",
+    component: ConfirmationPage,
+    layout: "",
+  },
+  {
+    path: "/theatre-homepage", // artist/:id to be done
+    name: "Theatre Home Page",
+    icon: "nc-icon nc-pin-3",
+    component: TheatreHomePage,
+  },
+  {
+    path: "/movietheatrelist/:movieid", // :movieid to be done
+    name: "Movie Theatre List",
+    icon: "nc-icon nc-pin-3",
+    component: MovieTheatreList,
+    layout: "",
+  }
 ];
 
 var sidebar_display = [
@@ -206,7 +237,7 @@ var sidebar_display = [
     layout: "",
   },
   {
-    path: "/artistdetails", // theatre/:id to be done
+    path: "/artistdetails", 
     name: "Artist Details",
     icon: "nc-icon nc-pin-3",
     component: ArtistDetails,
@@ -234,12 +265,33 @@ var sidebar_display = [
     layout: "",
   },
   {
-    path: "/seats", // artist/:id to be done
+    path: "/seats", // seats/:movieid to be done
     name: "Seats",
     icon: "nc-icon nc-pin-3",
     component: SeatSelection,
     layout: "",
   },
+  {
+    path: "/payment", // payment:bookingid to be done
+    name: "Payment",
+    icon: "nc-icon nc-pin-3",
+    component: PaymentPage,
+    layout: "",
+  },
+  {
+    path: "/confirmation", // confirmation:bookingid to be done
+    name: "Booking Confirmation",
+    icon: "nc-icon nc-pin-3",
+    component: ConfirmationPage,
+    layout: "",
+  },
+  {
+    path: "/theatre-homepage", // artist/:id to be done
+    name: "Theatre Home Page",
+    icon: "nc-icon nc-pin-3",
+    component: TheatreHomePage,
+    layout: "",
+  }
 ];
 
 export default routes;
