@@ -247,7 +247,7 @@ CREATE TRIGGER upcoming
      AFTER INSERT
      ON shows
      FOR EACH ROW 
-     EXECUTE PROCEDURE change_upcoming()
+     EXECUTE PROCEDURE change_upcoming();
 
 --views creation
 
