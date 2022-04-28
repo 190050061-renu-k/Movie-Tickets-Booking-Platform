@@ -9,7 +9,7 @@ const pool = new Pool({
 
 const getTheatres = (body) => {
   const { city_id } = body;
-  const query = "SELECT  name FROM theatres WHERE city = $1;";
+  const query = "SELECT theatre_id, name FROM theatres WHERE city = $1;";
   return new Promise(function (resolve, reject) {
     pool.query(query, [city_id], (error, results) => {
       if (error) {
@@ -22,7 +22,8 @@ const getTheatres = (body) => {
 
 const getTheatreShows = (body) => {
   const { theatre_id } = body;
-  const query = "SELECT * FROM shows WHERE theatre_id = $1;";
+  const query =
+    "SELECT * FROM shows, show_timings WHERE shows.show_timings_id = show_timings.show_timings_id and theatre_id = $1 and show_date <= CURRENT_DATE + INTERVAL '2 days' and show_date >= CURRENT_DATE AND start_time > CURRENT_TIME;";
   return new Promise(function (resolve, reject) {
     pool.query(query, [theatre_id], (error, results) => {
       if (error) {
@@ -41,17 +42,22 @@ const rateTheatre = (body) => {
       if (error) {
         reject(error);
       }
-      resolve(results.rows);
+      resolve(true);
     });
   });
 };
 
-const theatres_within_range = (body) => {
-  const { selected_location } = body;
+const getTheatresInRange = (body) => {
+  const { longitude, latitude, threshold } = body;
+
   const query =
-    "SELECT name FROM theatres WHERE ST_Distance(location, $1) < threshold";
+    "SELECT theatre_id, name FROM theatres WHERE ST_Distance(ST_Transform(location::geometry, 26986), ST_Transform('SRID=4326;POINT(" +
+    longitude +
+    " " +
+    latitude +
+    ")'::geometry, 26986)) / 1000 < $1;";
   return new Promise(function (resolve, reject) {
-    pool.query(query, [selected_location], (error, results) => {
+    pool.query(query, [threshold], (error, results) => {
       if (error) {
         reject(error);
       }
@@ -60,12 +66,12 @@ const theatres_within_range = (body) => {
   });
 };
 
-const movies_aired = (body) => {
+const getTheatreMovies = (body) => {
   const { theatre_id } = body;
   const query =
-    "SELECT movie_id, name from movie WHERE movie_id in (SELECT movie_id FROM shows WHERE theatre_id = $1)";
+    "SELECT movie_id, name from movies WHERE movie_id in (SELECT movie_id FROM shows WHERE theatre_id = $1 and show_date > CURRENT_DATE)";
   return new Promise(function (resolve, reject) {
-    pool.query(query, [theatre], (error, results) => {
+    pool.query(query, [theatre_id], (error, results) => {
       if (error) {
         reject(error);
       }
@@ -74,6 +80,7 @@ const movies_aired = (body) => {
   });
 };
 
+//TODO
 const registerTheatre = async (body) => {
   const { name, city, location, screen_num, theatre_id } = body;
   const client = await pool.connect();
@@ -101,7 +108,7 @@ module.exports = {
   getTheatres,
   getTheatreShows,
   rateTheatre,
-  theatres_within_range,
-  movies_aired,
+  getTheatresInRange,
+  getTheatreMovies,
   registerTheatre,
 };

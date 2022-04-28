@@ -10,7 +10,7 @@ const pool = new Pool({
 const getTheatreMovieShows = (body) => {
   const { city_id, movie_id } = body;
   const query =
-    "SELECT * from shows where theatre_id in (SELECT theatre_id from theatre where city_id = $1) AND movie_id = $2;";
+    "SELECT * from shows where theatre_id in (SELECT theatre_id from theatres where city = $1) AND movie_id = $2;";
   return new Promise(function (resolve, reject) {
     pool.query(query, [city_id, movie_id], (error, results) => {
       if (error) {

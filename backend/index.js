@@ -233,9 +233,9 @@ app.post("/getAudiencePercent", (req, res) => {
     });
 });
 
-app.post("/gettheatresinrange", (req, res) => {
+app.post("/getTheatresInRange", (req, res) => {
   theatre_model
-    .theatres_within_range(req.body)
+    .getTheatresInRange(req.body)
     .then((response) => {
       res.json(response);
     })
@@ -303,9 +303,9 @@ app.get("/getAdminAnalytics", (req, res) => {
     });
 });
 
-app.post("/moviesaired", (req, res) => {
+app.post("/getTheatreMovies", (req, res) => {
   theatre_model
-    .movies_aired(req.body)
+    .getTheatreMovies(req.body)
     .then((response) => {
       res.json(response);
     })
