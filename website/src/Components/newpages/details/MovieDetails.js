@@ -1,9 +1,11 @@
 // Set 1 Usecase 6 - Movie Info Page
+// change release date format
 import React, { useState, useEffect } from "react";
 
 import { useParams } from "react-router";
 import { Card, CardHeader, CardBody, CardTitle, Button } from "reactstrap";
 import { Link } from "react-router-dom";
+import { ScrollMenu } from "react-horizontal-scrolling-menu";
 
 import "./../../../Assets/css/movieDetails.css";
 import Preload from "../../layouts/Preload";
@@ -140,16 +142,24 @@ const MovieDetails = (props) => {
           </p>
           <hr />
           <h4>Cast</h4>
-          {movieDetails.artists.map((artist) => {
-            return (
-              <Link
-                to={"/artists/" + artist.artist_id}
-                style={{ padding: "5px" }}
-              >
-                <Button className="btn-outline-primary">{artist.name}</Button>
-              </Link>
-            );
-          })}
+          <ScrollMenu
+            options={{
+              ratio: 0.9,
+              rootMargin: "5px",
+              threshold: [0.01, 0.05, 0.5, 0.75, 0.95, 1],
+            }}
+          >
+            {movieDetails.artists.map((artist) => {
+              return (
+                <Link
+                  to={"/artists/" + artist.artist_id}
+                  style={{ padding: "5px" }}
+                >
+                  <Button className="btn-outline-primary">{artist.name}</Button>
+                </Link>
+              );
+            })}
+          </ScrollMenu>
           <hr />
         </div>
       </div>

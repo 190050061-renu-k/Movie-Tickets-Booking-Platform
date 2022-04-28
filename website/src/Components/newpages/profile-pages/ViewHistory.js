@@ -39,35 +39,7 @@ const ViewHistory = (props) => {
     border: "1px solid #e3e8e5",
   };
 
-  //   bookings = [
-  //     {
-  //       movie_name: "K.G.F Chapter 2",
-  //       movie_id: 1,
-  //       date: new Date(2022, 2, 4),
-  //       seats: 2,
-  //       theatre_name: "Ramya's INOX",
-  //       theatre_id: 420,
-  //     },
-  //     {
-  //       movie_name: "K.G.F Chapter 1",
-  //       movie_id: 2,
-  //       date: new Date(2022, 2, 3),
-  //       seats: 2,
-  //       theatre_name: "Ramya's INOX",
-  //       theatre_id: 420,
-  //     },
-  //     {
-  //       movie_name: "K.G.F Chapter 3",
-  //       movie_id: 3,
-  //       date: new Date(2022, 2, 2),
-  //       seats: 3,
-  //       theatre_name: "Ramya's INOX",
-  //       theatre_id: 420,
-  //     },
-  //   ];
-
   if (isLoading == 2) {
-    console.log(bookings);
     return (
       <div>
         <Table responsive striped bordered hover={true}>
@@ -80,7 +52,7 @@ const ViewHistory = (props) => {
                 Date
               </th>
               <th style={border} className="text-center">
-                No. of seats
+                Seats
               </th>
               <th style={border} className="text-center">
                 Theatre Name
@@ -93,20 +65,22 @@ const ViewHistory = (props) => {
                 <tr>
                   <td className="text-center">
                     <Link to={"/movies/" + booking.movie_id}>
-                      {booking.movie_name}
+                      {booking.name}
                     </Link>
                   </td>
                   <td className="text-center">
-                    {booking.date.getDate() +
+                    {new Date(booking.book_date).getDate() +
                       "-" +
-                      booking.date.getMonth() +
+                      new Date(booking.book_date).getMonth() +
                       "-" +
-                      booking.date.getFullYear()}
+                      new Date(booking.book_date).getFullYear()}
                   </td>
-                  <td className="text-center">{booking.seats}</td>
+                  <td className="text-center">
+                    {booking.label + booking.column_}
+                  </td>
                   <td className="text-center">
                     <Link to={"/theatres/" + booking.theatre_id}>
-                      {booking.theatre_name}
+                      {booking.theatre}
                     </Link>
                   </td>
                 </tr>
