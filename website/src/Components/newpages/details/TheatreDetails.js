@@ -7,10 +7,7 @@ import { useParams } from "react-router-dom";
 import { Tabs, Tab } from "react-bootstrap";
 import Preload from "Components/layouts/Preload";
 import { Redirect } from "react-router-dom";
-import UserRating from "../user-pages/UserRating";
 import Rating from "react-rating";
-
-
 
 const TheatreDetails = (props) => {
   const role = localStorage.getItem('role');
