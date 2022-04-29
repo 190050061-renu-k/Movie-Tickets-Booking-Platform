@@ -40,7 +40,6 @@ const getTheatreShows = async (body) => {
 
     const query3 = `select name from theatres where theatre_id = $1`;
     const res3 = await client.query(query3, [theatre_id]);
-
     await client.query("COMMIT");
     return { shows_info: res1.rows, city: res2.rows, name: res3.rows };
   } catch (e) {
