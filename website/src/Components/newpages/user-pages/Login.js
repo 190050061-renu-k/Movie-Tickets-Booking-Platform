@@ -90,12 +90,15 @@ const Login = (props) => {
     let errors = formValues.errors;
     if (formValues.inputtel.length == 0) {
       errors.inputtel = "Required field";
+      setFormValues({ ...formValues, errors });
+      return;
     }
     if (formValues.inputpswd.length == 0) {
       errors.inputpswd = "Required field";
+      setFormValues({ ...formValues, errors });
+      return;
     }
 
-    setFormValues({ ...formValues, errors });
 
     if (validateForm(formValues.errors)) {
       fetch("http://localhost:3001/userLogin", {
