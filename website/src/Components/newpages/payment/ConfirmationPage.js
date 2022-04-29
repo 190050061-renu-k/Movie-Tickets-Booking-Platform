@@ -15,7 +15,7 @@ const ConfirmationPage = (props) => {
   var [booking_id, setbooking_id] = useState(0);
   const [isLoading, setisLoading] = useState(0);
 
-  const user_id = localStorage.getItem('user').user_id;
+  const user_id = props.type =="online" ? localStorage.getItem('user').user_id : -1;
 
   if (props.location.state) {
     BookingInfo = props.location.state;
@@ -36,7 +36,7 @@ const ConfirmationPage = (props) => {
       headers: authHeader(),
       body: JSON.stringify({
         show_id: BookingInfo.show_id,
-        user_id: props.type == "online" ? user_id: -1,
+        user_id: user_id,
         book_date: BookingInfo.date,
         seat_ids: BookingInfo.seat_ids,
         book_type: "online",
