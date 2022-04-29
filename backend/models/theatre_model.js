@@ -1,3 +1,4 @@
+//remove interval additions in getTheatreShows after testing
 const Pool = require("pg").Pool;
 const format = require("pg-format");
 
@@ -23,28 +24,26 @@ const getTheatres = (body) => {
 };
 
 const getTheatreShows = async (body) => {
-  const { theatre_id } = body;
+  const { theatre_id, city_id } = body;
   const client = await pool.connect();
-  try{
+  try {
     await client.query("BEGIN");
-    const query1 =
-    `SELECT show_timings.name as show_time, shows.movie_id as movie_id, show_date, movies.name as movie_name, show_timings.show_timings_id as sid
-    FROM shows, show_timings, theatres, movies WHERE movies.movie_id = shows.movie_id and 
-    theatres.theatre_id = shows.theatre_id and shows.show_timings_id = show_timings.show_timings_id
-    and shows.theatre_id = 8 and show_date <= CURRENT_DATE + INTERVAL '2 days' and
-    show_date >= CURRENT_DATE ORDER BY show_date, movie_name, sid;`;
+    const query1 = `SELECT show_id, show_timings.name as show_time, shows.movie_id as movie_id, movies.name as movie_name, show_date, screen_num
+    FROM shows, show_timings, movies WHERE movies.movie_id = shows.movie_id and 
+     shows.show_timings_id = show_timings.show_timings_id and 
+    shows.theatre_id = $1 and show_date + interval '1 year' + interval '3 month' + interval '27 day' <= CURRENT_DATE + INTERVAL '2 days' and show_date + interval '1 year' + interval '3 month' + interval '27 day' >= CURRENT_DATE 
+  ORDER BY show_date asc, movie_name, screen_num, show_time;`;
     const res1 = await client.query(query1, [theatre_id]);
-    const query2 = `select city from cities where city_id in (select city from theatres where theatre_id = $1)`;
-    const res2 = await client.query(query2, [theatre_id]);
+
+    const query2 = `select city from cities where city_id = $1`;
+    const res2 = await client.query(query2, [city_id]);
+
     const query3 = `select name from theatres where theatre_id = $1`;
     const res3 = await client.query(query3, [theatre_id]);
+
     await client.query("COMMIT");
-    return {
-      shows_info: res1.rows,
-      city: res2.rows,
-      theatre_name: res3.rows,
-    };
-  } catch(e){
+    return { shows_info: res1.rows, city: res2.rows, name: res3.rows };
+  } catch (e) {
     await client.query("ROLLBACK");
     throw e;
   } finally {

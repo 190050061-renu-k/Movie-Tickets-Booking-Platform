@@ -77,9 +77,21 @@ app.post("/getTheatreMovieShows", (req, res) => {
     });
 });
 
-app.post("/getAvailableSeats", (req, res) => {
+app.post("/getUnavailableSeats", (req, res) => {
   show_model
-    .getAvailableSeats(req.body)
+    .getUnavailableSeats(req.body)
+    .then((response) => {
+      res.json(response);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).send(error);
+    });
+});
+
+app.post("/getShowDetails", (req, res) => {
+  show_model
+    .getShowDetails(req.body)
     .then((response) => {
       res.json(response);
     })
@@ -338,6 +350,16 @@ app.post("/getLanguageMovies", async (req, res) => {
 app.post("/getGenreMovies", async (req, res) => {
   try {
     response = await movie_model.getGenreMovies(req.body);
+    res.json(response);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+});
+
+app.post("/getMovieTheatres", async (req, res) => {
+  try {
+    response = await movie_model.getMovieTheatres(req.body);
     res.json(response);
   } catch (error) {
     console.log(error);

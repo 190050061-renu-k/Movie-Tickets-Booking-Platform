@@ -1,3 +1,4 @@
+const format = require("pg-format");
 const Pool = require("pg").Pool;
 const pool = new Pool({
   user: process.env.USER,
@@ -21,11 +22,24 @@ const getTheatreMovieShows = (body) => {
   });
 };
 
-const getAvailableSeats = (body) => {
+const getUnavailableSeats = (body) => {
   const { show_id } = body;
-  const query = `SELECT * from seats where seat_id not in 
-	(SELECT seat_id FROM booking_seat WHERE booking_id IN 
-          (SELECT booking_id FROM bookings WHERE show_id = $1));`;
+  const query = `SELECT distinct seat_id FROM booking_seat WHERE booking_id IN 
+          (SELECT booking_id FROM bookings WHERE show_id = $1) order by seat_id;`;
+  return new Promise(function (resolve, reject) {
+    pool.query(query, [show_id], (error, results) => {
+      if (error) {
+        reject(error);
+      }
+      resolve(results.rows);
+    });
+  });
+};
+
+const getShowDetails = (body) => {
+  const { show_id } = body;
+  const query = `SELECT shows.theatre_id, theatres.name theatre_name, shows.movie_id, movies.name movie_name, show_date, ticket
+  from shows, theatres, movies WHERE show_id = $1 and theatres.theatre_id = shows.theatre_id and movies.movie_id = shows.movie_id;`;
   return new Promise(function (resolve, reject) {
     pool.query(query, [show_id], (error, results) => {
       if (error) {
@@ -37,20 +51,25 @@ const getAvailableSeats = (body) => {
 };
 
 const bookSeats = async (body) => {
-  const { show_id, user_id, book_date, seat_id, book_type } = body;
+  const { show_id, user_id, book_date, seat_ids, book_type } = body;
+
   const client = await pool.connect();
 
   try {
     await client.query("BEGIN");
     const query1 =
-      "INSERT INTO bookings (show_id, user_id, book_date, book_type) VALUES($1, $2, $3, $4)";
-    await client.query(query1, [show_id, user_id, book_date, book_type]);
+      "INSERT INTO bookings (show_id, user_id, book_date, book_type) VALUES($1, $2, $3, $4) returning *";
+    res = await client.query(query1, [show_id, user_id, book_date, book_type]);
 
-    const query2 = "INSERT INTO booking_seat VALUES($1) ;";
-    await client.query(query2, [seat_id]);
+    seats = seat_ids.map((seat) => [res.rows[0].booking_id, seat]);
+    const query2 = format(
+      "INSERT INTO booking_seat(booking_id, seat_id) VALUES %L;",
+      seats
+    );
+    await client.query(query2, []);
 
     await client.query("COMMIT");
-    return "";
+    return res.rows[0].booking_id;
   } catch (e) {
     await client.query("ROLLBACK");
     throw e;
@@ -100,8 +119,9 @@ const selectShows = (body) => {
 
 module.exports = {
   getTheatreMovieShows,
-  getAvailableSeats,
+  getUnavailableSeats,
   bookSeats,
   getShowSlots,
   selectShows,
+  getShowDetails,
 };
