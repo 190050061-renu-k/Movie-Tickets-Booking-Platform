@@ -141,7 +141,6 @@ const HomePage = (props) => {
           value={inputcity}
           className="input-box form-control form-control-lg"
         >
-          <option>None</option>
           {cities.map((i) => {
             return <option value={i.city_id}>{i.city}</option>;
           })}
@@ -172,7 +171,6 @@ const HomePage = (props) => {
             value={inputcity}
             className="input-box form-control form-control-lg"
           >
-            <option>None</option>
             {cities.map((i) => {
               return <option value={i.city_id}>{i.city}</option>;
             })}
