@@ -116,7 +116,7 @@ var routes = [
     layout: "",
   },
   {
-    path: "/movietheatrelist/:movieid", 
+    path: "/movietheatrelist/:movie_id", 
     name: "Movie Theatre List",
     icon: "nc-icon nc-pin-3",
     component: MovieTheatreList,

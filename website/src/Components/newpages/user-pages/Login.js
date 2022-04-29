@@ -121,8 +121,6 @@ const Login = (props) => {
         <div className="d-flex align-items-center auth px-0" style={{marginTop:'100px'}}>
           <div className="row w-100 mx-0">
             <div className="col-lg-4 mx-auto">
-            
-
                 <Card>
                     <CardHeader>
                         <CardTitle tag="h3">Login</CardTitle>
