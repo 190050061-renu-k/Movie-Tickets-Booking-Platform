@@ -11,8 +11,6 @@ const TheatreDetails = (props) => {
   var [details, setDetails] = useState({});
   const [isLoading, setisLoading] = useState(0);
 
-  const city_id = 1;
-
   useEffect(() => {
     getDetails();
   }, [theatre_id]);
@@ -24,7 +22,7 @@ const TheatreDetails = (props) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ theatre_id, city_id }),
+      body: JSON.stringify({ theatre_id }),
     })
       .then((response) => {
         return response.json();
@@ -90,8 +88,8 @@ const TheatreDetails = (props) => {
     let theatreDetails = {
       shows: shows,
       id: theatre_id,
-      city: details.city[0].city,
-      name: details.name[0].name,
+      city: details.city,
+      name: details.name,
     };
 
     return (
