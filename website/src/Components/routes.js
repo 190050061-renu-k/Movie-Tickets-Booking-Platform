@@ -20,6 +20,7 @@ import PaymentPage from "./newpages/payment/PaymentPage";
 import ConfirmationPage from "./newpages/payment/ConfirmationPage";
 import TheatreHomePage from "./newpages/theatre-pages/HomePage";
 import MovieTheatreList from "./newpages/lists/MovieTheatreList";
+import Analytics from "./newpages/theatre-pages/Analytics";
 
 var routes = [
   {
@@ -115,6 +116,13 @@ var routes = [
     layout: "",
   },
   {
+    path: "/theatres/homepage", 
+    name: "Theatre HomePage",
+    icon: "nc-icon nc-pin-3",
+    component: TheatreHomePage,
+    layout: "",
+  },
+  {
     path: "/theatres/:theatre_id", // theatre/:id to be done
     name: "Theatres",
     icon: "nc-icon nc-pin-3",
@@ -164,18 +172,20 @@ var routes = [
     layout: "",
   },
   {
-    path: "/theatre/-homepage", // artist/:id to be done
-    name: "Theatre Home Page",
-    icon: "nc-icon nc-pin-3",
-    component: TheatreHomePage,
-  },
-  {
     path: "/movietheatrelist/:movie_id", // :movieid to be done
     name: "Movie Theatre List",
     icon: "nc-icon nc-pin-3",
     component: MovieTheatreList,
     layout: "",
   },
+  {
+    path: "/theatre/analytics", 
+    name: "Theatre Analytics",
+    icon: "nc-icon nc-pin-3",
+    component: Analytics,
+    layout: "",
+  },
+  
 ];
 
 var sidebar_display = [
@@ -244,6 +254,13 @@ var sidebar_display = [
     layout: "",
   },
   {
+    path: "/theatres/homepage", 
+    name: "Theatre HomePage",
+    icon: "nc-icon nc-pin-3",
+    component: TheatreHomePage,
+    layout: "",
+  },
+  {
     path: "/theatres",
     name: "Theatres",
     icon: "nc-icon nc-pin-3",
@@ -285,13 +302,15 @@ var sidebar_display = [
     component: ConfirmationPage,
     layout: "",
   },
+  
   {
-    path: "/theatre-homepage", // artist/:id to be done
-    name: "Theatre Home Page",
+    path: "/theatre/analytics", // :movieid to be done
+    name: "Theatre Analytics",
     icon: "nc-icon nc-pin-3",
-    component: TheatreHomePage,
+    component: Analytics,
     layout: "",
   },
+  
 ];
 
 export default routes;
