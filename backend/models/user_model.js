@@ -30,7 +30,11 @@ const getProfile = async (body) => {
     const res3 = await client.query(query3, [user_id]);
 
     await client.query("COMMIT");
-    console.log({ demographic: res1.rows, genres: res2.rows, languages: res3.rows });
+    console.log({
+      demographic: res1.rows,
+      genres: res2.rows,
+      languages: res3.rows,
+    });
     return { demographic: res1.rows, genres: res2.rows, languages: res3.rows };
   } catch (e) {
     await client.query("ROLLBACK");
@@ -234,6 +238,42 @@ const editProfile = async (body) => {
   }
 };
 
+const getCities = (body) => {
+  const query = "SELECT * from cities;";
+  return new Promise(function (resolve, reject) {
+    pool.query(query, [], (error, results) => {
+      if (error) {
+        reject(error);
+      }
+      resolve(results.rows);
+    });
+  });
+};
+
+const getGenres = (body) => {
+  const query = "SELECT * from genres;";
+  return new Promise(function (resolve, reject) {
+    pool.query(query, [], (error, results) => {
+      if (error) {
+        reject(error);
+      }
+      resolve(results.rows);
+    });
+  });
+};
+
+const getLanguages = (body) => {
+  const query = "SELECT * from languages;";
+  return new Promise(function (resolve, reject) {
+    pool.query(query, [], (error, results) => {
+      if (error) {
+        reject(error);
+      }
+      resolve(results.rows);
+    });
+  });
+};
+
 module.exports = {
   getProfile,
   getRecommendations,
@@ -242,4 +282,7 @@ module.exports = {
   changePassword,
   signUp,
   editProfile,
+  getCities,
+  getGenres,
+  getLanguages,
 };

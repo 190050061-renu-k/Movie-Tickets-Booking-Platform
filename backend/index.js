@@ -17,7 +17,10 @@ app.use(function (req, res, next) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Credentials", "true");
   res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-  res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, x-access-token");
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, x-access-token"
+  );
 
   next();
 });
@@ -390,6 +393,36 @@ app.post("/signUp", async (req, res) => {
 app.get("/editProfile", async (req, res) => {
   try {
     response = await user_model.editProfile();
+    res.json(response);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+});
+
+app.get("/getCities", async (req, res) => {
+  try {
+    response = await user_model.getCities();
+    res.json(response);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+});
+
+app.get("/getGenres", async (req, res) => {
+  try {
+    response = await user_model.getGenres();
+    res.json(response);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+});
+
+app.get("/getLanguages", async (req, res) => {
+  try {
+    response = await user_model.getLanguages();
     res.json(response);
   } catch (error) {
     console.log(error);
