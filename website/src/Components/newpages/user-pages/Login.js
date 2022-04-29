@@ -10,6 +10,7 @@ import { Card, CardHeader, CardBody, CardTitle } from "reactstrap";
 
 const Login = (props) => {
   const role = localStorage.getItem('role');
+  const user = localStorage.getItem('user');
   console.log(role);
   var initialValues;
 
@@ -283,6 +284,7 @@ const Login = (props) => {
   return (
     <div>
       {role==null ? <Redirect push to="/" /> : null}
+      {user==null ? null: <>{role=="user"?<Redirect push to="/homepage" />:<>{role=="theatre"?<Redirect push to="/theatres/homepage" />:<Redirect push to="/admin/homepage" />}</> } </>}
       {redirect ? <Redirect push to="/homepage" /> : null}
       <NotificationAlert ref={notificationAlert} />
       <div
