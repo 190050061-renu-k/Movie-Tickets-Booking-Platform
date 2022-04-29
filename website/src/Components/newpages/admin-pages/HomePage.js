@@ -63,7 +63,7 @@ const AdminHomePage = (props) => {
             
         {role==null ? <Redirect push to="/" /> : null}
             <div style={{ marginTop: "60px", marginBottom: "30px" }} className="text-center row">
-                <div style={{marginLeft: "160px"}} className="col-3">
+                <div className="col-3">
                 <Button onClick={()=>handleChange("theatre")}>Register Theatre</Button>
                 </div>
                 <div className='col-3'>
