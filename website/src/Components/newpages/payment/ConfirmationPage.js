@@ -1,5 +1,6 @@
 // Set 1 Usecase 6 - Movie Info Page
 // TODO: fetch data from db
+//set user id to -1 if type is live 
 import React, { useEffect, useState } from "react";
 
 // import { Link } from 'react-router-dom';
@@ -36,7 +37,7 @@ const ConfirmationPage = (props) => {
       },
       body: JSON.stringify({
         show_id: BookingInfo.show_id,
-        user_id: user_id,
+        user_id: props.type == "online" ? user_id: -1,
         book_date: BookingInfo.date,
         seat_ids: BookingInfo.seat_ids,
         book_type: "online",

@@ -13,8 +13,9 @@ import { Link } from "react-router-dom";
 import { elements } from "chart.js/auto";
 import Preload from "Components/layouts/Preload";
 
-const SeatSelection = () => {
+const SeatSelection = (props) => {
   let { show_id } = useParams();
+  var type_booking = props.type ? props.type : "online";
   const [isLoading, setisLoading] = useState(0);
   const [movies, setmovies] = useState({
     movieNames: {
@@ -115,6 +116,7 @@ const SeatSelection = () => {
                 date: new Date(),
                 show_id: show_id,
                 show_date: movies.show_date,
+                type : type_booking
               },
             }}
           >
