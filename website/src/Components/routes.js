@@ -19,7 +19,6 @@ import AddArtist from "./newpages/admin-pages/AddArtist";
 import TheatreLiveOnline from "./newpages/admin-pages/TheatresLiveOnline";
 import AddMovie from "./newpages/admin-pages/AddMovie";
 import MainPage from "./newpages/MainPage";
-import TheatreSeatSelection from "./newpages/theatre-pages/LiveBooking";
 import UserRating from "./newpages/user-pages/UserRating";
 
 var routes = [
