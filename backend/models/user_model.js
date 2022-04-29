@@ -84,7 +84,6 @@ const userLogin = async (body) => {
     const res = await client.query(query, [mobile_number, password]);
 
     await client.query("COMMIT");
-    console.log(res.rows);
     if (res.rows.length == 0) return { user_id: null, city_id: null };
     else {
       const token = jwt.sign(
@@ -135,7 +134,7 @@ const changePassword = async (body) => {
   }
 };
 
-const signUp = async () => {
+const signUp = async (body) => {
   const { userName, age, mobile_num, pswd, city_id, language_ids, genre_ids } =
     body;
   const client = await pool.connect();
@@ -146,7 +145,7 @@ const signUp = async () => {
     const res1 = await client.query(query1, [mobile_num]);
     if (res1.rows[0]["count"] > 0) {
       await client.query("COMMIT");
-      return { mobile_cnt: res1.rows, user_id: null };
+      return false;
     }
 
     const query2 =
@@ -158,7 +157,7 @@ const signUp = async () => {
 
     if (res2.rows.length == 0) {
       await client.query("COMMIT");
-      return { mobile_cnt: res1.rows, user_id: null };
+      return false;
     }
 
     const user_id = res2.rows[0]["user_id"];
@@ -178,7 +177,7 @@ const signUp = async () => {
     await client.query(query4, []);
 
     await client.query("COMMIT");
-    return { mobile_cnt: res1.rows, user_id: res2.rows };
+    return true;
   } catch (e) {
     await client.query("ROLLBACK");
     throw e;
