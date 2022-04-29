@@ -339,6 +339,7 @@ app.post("/getOnlineVsOffline", async (req, res) => {
 
 app.post("/getLanguageMovies", async (req, res) => {
   try {
+    console.log(req.body);
     response = await movie_model.getLanguageMovies(req.body);
     res.json(response);
   } catch (error) {

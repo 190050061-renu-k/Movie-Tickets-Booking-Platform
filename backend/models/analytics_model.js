@@ -8,23 +8,25 @@ const pool = new Pool({
 });
 
 const getMovieRatings = () => {
-  const query = `SELECT movies.movie_id, movies.name, AVG(rating) 
-    FROM user_movie, movies where user_movie.movie_id = movies.movie_id
-    GROUP BY movies.movie_id, movies.name;`;
+  const query = `SELECT movies.movie_id, movies.name, AVG(rating) as avg_rating
+  FROM user_movie, movies where user_movie.movie_id = movies.movie_id and movies.movie_id in (
+select distinct movie_id from shows where show_date + interval '1 year' + interval '3 month' + interval '25 day' >= CURRENT_DATE - INTERVAL '6 days')
+  GROUP BY movies.movie_id, movies.name;`;
   return new Promise(function (resolve, reject) {
     pool.query(query, [], (error, results) => {
       if (error) {
         reject(error);
       }
+      console.log(results.rows);
       resolve(results.rows);
     });
   });
 };
 
 const getTheatreRatings = () => {
-  const query = `SELECT theatres.theatre_id, theatres.name, AVG(rating) 
-    FROM user_theatre, theatres WHERE user_theatre.theatre_id = theatres.theatre_id
-    GROUP BY theatres.theatre_id, theatres.name;`;
+  const query = `SELECT theatres.theatre_id, theatres.name as theatre_name, AVG(rating) as rating
+  FROM user_theatre, theatres WHERE user_theatre.theatre_id = theatres.theatre_id
+  GROUP BY theatres.theatre_id, theatres.name;`;
   return new Promise(function (resolve, reject) {
     pool.query(query, [], (error, results) => {
       if (error) {
@@ -36,11 +38,12 @@ const getTheatreRatings = () => {
 };
 
 const getGenreChoice = () => {
-  const query = `SELECT genres.genre_id, genres.name, SUM(seats_for_show.seats_booked) 
-    FROM movies, movie_genres, shows, genres, 
-    (SELECT show_id, count(seat_id) seats_booked FROM bookings NATURAL INNER JOIN booking_seat GROUP BY show_id) seats_for_show 
-    WHERE movies.movie_id = movie_genres.movie_id AND shows.movie_id = movies.movie_id AND shows.show_id = seats_for_show.show_id AND genres.genre_id = movie_genres.genre_id 
-    GROUP BY genres.genre_id, genres.name;`;
+  const query = `SELECT genres.genre_id, genres.name, SUM(seats_for_show.seats_booked) as audience 
+  FROM movies, movie_genres, shows, genres, 
+  (SELECT show_id, count(seat_id) seats_booked FROM bookings NATURAL INNER JOIN booking_seat GROUP BY show_id) seats_for_show 
+  WHERE movies.movie_id = movie_genres.movie_id AND shows.movie_id = movies.movie_id AND shows.show_id = seats_for_show.show_id
+  AND genres.genre_id = movie_genres.genre_id AND shows.show_date + interval '1 year' + interval '3 month' + interval '25 day' >= CURRENT_DATE -INTERVAL '6 days'
+  GROUP BY genres.genre_id, genres.name;`;
   return new Promise(function (resolve, reject) {
     pool.query(query, [], (error, results) => {
       if (error) {
@@ -52,11 +55,12 @@ const getGenreChoice = () => {
 };
 
 const getLanguageChoice = () => {
-  const query = `SELECT languages.language_id, languages.name, SUM(seats_for_show.seats_booked) 
-    FROM movies, movie_languages, shows, languages, 
-    (SELECT show_id, count(seat_id) seats_booked FROM bookings NATURAL INNER JOIN booking_seat GROUP BY show_id) seats_for_show 
-    WHERE movies.movie_id = movie_languages.movie_id AND shows.movie_id = movies.movie_id AND shows.show_id = seats_for_show.show_id AND languages.language_id = movie_languages.language_id 
-    GROUP BY languages.language_id, languages.name;`;
+  const query = `SELECT languages.language_id, languages.name, SUM(seats_for_show.seats_booked) as audience
+  FROM movies, movie_languages, shows, languages, 
+  (SELECT show_id, count(seat_id) seats_booked FROM bookings NATURAL INNER JOIN booking_seat GROUP BY show_id) seats_for_show 
+  WHERE movies.movie_id = movie_languages.movie_id AND shows.movie_id = movies.movie_id AND shows.show_id = seats_for_show.show_id
+  AND languages.language_id = movie_languages.language_id AND shows.show_date + interval '1 year' + interval '3 month' + interval '25 day' >= CURRENT_DATE -INTERVAL '6 days'
+  GROUP BY languages.language_id, languages.name;`;
   return new Promise(function (resolve, reject) {
     pool.query(query, [], (error, results) => {
       if (error) {
@@ -86,17 +90,34 @@ const getAudiencePercent = (body) => {
 const getOnlineVsOffline = async (body) => {
   const { theatre_id } = body;
   const client = await pool.connect();
-
+  console.log(theatre_id);
   try {
     await client.query("BEGIN");
+    console.log('try');
     const query1 =
-      "SELECT count(seat_id) from booking_seat where booking_id in (SELECT booking_id FROM bookings WHERE book_type ='online' and show_id in (SELECT show_id from shows WHERE theatre_id = $1));";
+      `SELECT book_date, coalesce(num_seats,0) as num_seats from 
+      (SELECT date_trunc('day', dd):: date as book_date FROM generate_series
+      (CURRENT_DATE - INTERVAL '6 days', CURRENT_DATE, '1 day'::interval) dd) as t1 natural left outer join
+      (SELECT count(seat_id) as num_seats, book_date from booking_seat,bookings where booking_seat.booking_id = bookings.booking_id
+      and bookings.book_type = 'online' and bookings.show_id in
+      (SELECT show_id from shows WHERE theatre_id = $1 ) 
+      and book_date + interval '1 year' + interval '3 month' + interval '25 day' >= CURRENT_DATE - INTERVAL '6 days' and book_date + interval '1 year' + interval '3 month' + interval '25 day' <= CURRENT_DATE
+      group by book_date order by book_date) as t2`;
     const res1 = await client.query(query1, [theatre_id]);
-
+    console.log('res1');
+    console.log(res1.rows);
     const query2 =
-      "SELECT count(seat_id) from booking_seat where booking_id in (SELECT booking_id FROM bookings WHERE book_type = 'offline' and show_id in (SELECT show_id from shows WHERE theatre_id = $1));";
+      `SELECT book_date, coalesce(num_seats,0) as num_seats from 
+      (SELECT date_trunc('day', dd):: date as book_date FROM generate_series
+      (CURRENT_DATE - INTERVAL '6 days', CURRENT_DATE, '1 day'::interval) dd) as t1 natural left outer join
+      (SELECT count(seat_id) as num_seats, book_date from booking_seat,bookings where booking_seat.booking_id = bookings.booking_id
+      and bookings.book_type = 'offline' and bookings.show_id in
+      (SELECT show_id from shows WHERE theatre_id = $1 ) 
+      and book_date + interval '1 year' + interval '3 month' + interval '25 day' >= CURRENT_DATE - INTERVAL '6 days' and book_date + interval '1 year' + interval '3 month' + interval '25 day' <= CURRENT_DATE
+      group by book_date order by book_date) as t2`;
     const res2 = await client.query(query2, [theatre_id]);
-
+    console.log('res2');
+    console.log(res2.rows);
     await client.query("COMMIT");
     return { online: res1.rows, offline: res2.rows };
   } catch (e) {
