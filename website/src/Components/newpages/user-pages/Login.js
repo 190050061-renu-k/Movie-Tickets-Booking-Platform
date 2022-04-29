@@ -195,7 +195,7 @@ const Login = (props) => {
                         <div className="mt-3">
                             <Link className="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" onClick={handleSubmit} to="/dashboard">LOGIN</Link>
                         </div>
-                        <p className='text-center'>Not yet Registered? <Link to="/register">Sign Up here</Link></p>
+                        <p className='text-center'>Not yet Registered? <Link to="/signup" style={{fontWeight:'bold'}}>Sign Up here</Link></p>
                     </form>
             </CardBody>
             </Card>
