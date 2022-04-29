@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState} from "react";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { Navbar, NavbarBrand, Container, Button } from "reactstrap";
@@ -26,7 +26,7 @@ function Header(props) {
 
   return (
     <>
-      <div className="float-right">
+      <div className="float-right" style={{"margin":"50px"}}>
         {
           (role==null)?
           null
