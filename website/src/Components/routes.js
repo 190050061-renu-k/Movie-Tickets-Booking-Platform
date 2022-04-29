@@ -186,35 +186,35 @@ var sidebar_display = [
   {
     path: "/admin/addmovie",
     name: "Add Movie",
-    icon: "nc-icon nc-pin-3",
+    icon: "nc-icon nc-simple-add",
     component: AddMovie,
     layout: "",
   },
   {
     path: "/admin/analytics",
     name: "Admin Analytics",
-    icon: "nc-icon nc-pin-3",
+    icon: "nc-icon nc-chart-bar-32",
     component: TheatreLiveOnline,
     layout: "",
   },
   {
     path: "/theatres/analytics", // :movieid to be done
     name: "Theatre Analytics",
-    icon: "nc-icon nc-pin-3",
+    icon: "nc-icon nc-chart-bar-32",
     component: Analytics,
     layout: "",
   },
   {
     path: "/theatres/homepage",
     name: "Theatre HomePage",
-    icon: "nc-icon nc-pin-3",
+    icon: "nc-icon nc-shop",
     component: TheatreHomePage,
     layout: "",
   },
   {
     path: "/theatres/addmovie", // artist/:id to be done
-    name: "Theatre Add Movie Page",
-    icon: "nc-icon nc-pin-3",
+    name: "Theatre- Add Movie",
+    icon: "nc-icon nc-simple-add",
     component: AddMovieShowPage,
     layout: "",
   },
@@ -235,66 +235,60 @@ var sidebar_display = [
   {
     path: "/homepage",
     name: "Home Page",
-    icon: "nc-icon nc-pin-3",
+    icon: "nc-icon nc-shop",
     component: HomePage,
     layout: "",
   },
   {
     path: "/seats/:show_id",
     name: "Seats",
-    icon: "nc-icon nc-pin-3",
+    icon: "nc-icon nc-tap-01",
     component: SeatSelection,
     layout: "",
   },
   {
     path: "/payment",
     name: "Payment",
-    icon: "nc-icon nc-pin-3",
+    icon: "nc-icon nc-credit-card",
     component: PaymentPage,
     layout: "",
   },
   {
     path: "/confirmation", // confirmation:bookingid to be done
     name: "Booking Confirmation",
-    icon: "nc-icon nc-pin-3",
+    icon: "nc-icon nc-paper",
     component: ConfirmationPage,
     layout: "",
   },
   {
     path: "/admin/homepage", // :movieid to be done
     name: "Admin Homepage",
-    icon: "nc-icon nc-pin-3",
+    icon: "nc-icon nc-shop",
     component: AdminHomePage,
     layout: "",
   },
   {
     path: "/admin/registertheatre", // :movieid to be done
-    name: "Register Theatre Page",
-    icon: "nc-icon nc-pin-3",
+    name: "Register Theatre",
+    icon: "nc-icon nc-simple-add",
     component: RegisterTheatre,
     layout: "",
   },
   {
     path: "/admin/addartist", // :movieid to be done
     name: "Add Artist",
-    icon: "nc-icon nc-pin-3",
+    icon: "nc-icon nc-simple-add",
     component: AddArtist,
     layout: "",
   },
   {
     path: "/", // :movieid to be done
     name: "Select Role",
-    icon: "nc-icon nc-pin-3",
+    icon: "nc-icon nc-lock-circle-open",
     component: MainPage,
     layout: "",
   },
-  {
-    path: "/rating", // :movieid to be done
-    name: "Rating",
-    icon: "nc-icon nc-pin-3",
-    component: UserRating,
-    layout: "",
-  },
+  
   
 ];
 
