@@ -4,8 +4,10 @@ import TheatreRatings from "./charts/TheatreRatings"
 import MovieRatings from "./charts/MovieRatings"
 import LiveOnline from "./charts/LiveOnline"
 import GenreLanguage from "./charts/GenreLanguage"
+import { Redirect } from "react-router-dom";
 
 const Analytics = () => {
+    const role = localStorage.getItem('role');
 	var [showRatings, setShowRatings] = useState(1);
 	var [showAudience, setShowAudience] = useState(0);
 	var [liveOnline, setLiveOnline] = useState(0);
@@ -49,8 +51,9 @@ const Analytics = () => {
 	}
 
 	return (
-
+		
 		<div className="row container">
+			{role==null ? <Redirect push to="/" /> : null}
 			<div className="col-2"><Button onClick={ratingsHandler} >Movie Ratings</Button></div>
 			<div className="col-2"><Button onClick={liveOnlineHandler}>Live VS Online</Button></div>
 			<div className="col-2"><Button onClick={audienceHandler}>Percentage of Audience</Button></div> 

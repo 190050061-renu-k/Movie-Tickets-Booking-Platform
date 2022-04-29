@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import "./../../../Assets/css/login.css";
 import NotificationAlert  from "react-notification-alert";
 import { Multiselect } from "multiselect-react-dropdown";
+import { Redirect } from "react-router-dom";
 // import Select from "react-select"
 
 import {
@@ -41,6 +42,7 @@ var genres = [
 
 
 const Signup =(props)=> {
+    const role = localStorage.getItem('role');
 
     var getcol = props.col ? props.col : 6;
     var getcard = props.card ? props.card : 8;
@@ -207,6 +209,7 @@ const Signup =(props)=> {
 
     return (
       <div>
+          {role==null ? <Redirect push to="/" /> : null}
         <NotificationAlert ref={notificationAlert} />
 
         <div className=" align-items-center " style={{marginTop:margin}}>

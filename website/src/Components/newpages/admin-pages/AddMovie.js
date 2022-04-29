@@ -1,6 +1,7 @@
 // Set 1 Usecase 6 - Movie Info Page
 // TODO: fetch data from db
 import React, { useState } from 'react';
+import { Redirect } from "react-router-dom";
 
 // import { Link } from 'react-router-dom';
 import {
@@ -14,8 +15,10 @@ import { Link } from 'react-router-dom';
 
 
 const AddMovie = (props) => {
+    const role = localStorage.getItem('role');
     return (
         <div>
+            {role==null ? <Redirect push to="/" /> : null}
         <div className="d-flex align-items-center auth px-0" style={{marginTop:"100px", marginLeft:"250px", width:"50%"}}>
           <div className="row w-100 mx-0">
             <div className={"mx-auto col-lg-4" }></div>

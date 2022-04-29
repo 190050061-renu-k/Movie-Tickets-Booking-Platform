@@ -11,11 +11,14 @@ import {
     Button
   } from "reactstrap";
 import { Link } from 'react-router-dom';
+import { Redirect } from "react-router-dom";
 
 
 const AddArtist = (props) => {
+    const role = localStorage.getItem('role');
     return (
         <div>
+            {role==null ? <Redirect push to="/" /> : null}
         <div className="d-flex align-items-center auth px-0" style={{marginTop:"100px", marginRight:"300px"}}>
           <div className="row w-100 mx-0">
             <div className={"mx-auto col-lg-4" }></div>

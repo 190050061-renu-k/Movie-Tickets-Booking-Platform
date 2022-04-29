@@ -8,11 +8,13 @@ import { Card, CardHeader, CardBody, CardTitle, Button } from "reactstrap";
 import { Link } from "react-router-dom";
 import Signup from "../user-pages/Signup";
 import ViewHistory from "../profile-pages/ViewHistory";
+import { Redirect } from "react-router-dom";
 
 import "./../../../Assets/css/artistDetails.css";
 import authHeader from "../authHeader";
 
 const UserDetails = (props) => {
+  const role = localStorage.getItem('role');
   var [userDetails, setUserDetails] = useState({});
   var [isEdit, setIsEdit] = useState(false);
   var [isPswd, setIsPswd] = useState(false);
@@ -48,6 +50,7 @@ const UserDetails = (props) => {
     console.log(userDetails);
     return (
       <div className="container" style={{ marginTop: "60px" }}>
+        {role==null ? <Redirect push to="/" /> : null}
         <Button
           className="btn-outline-primary "
           style={{ marginRight: "30px" }}

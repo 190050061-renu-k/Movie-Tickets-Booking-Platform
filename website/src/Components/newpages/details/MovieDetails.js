@@ -9,8 +9,10 @@ import { ScrollMenu } from "react-horizontal-scrolling-menu";
 
 import "./../../../Assets/css/movieDetails.css";
 import Preload from "../../layouts/Preload";
+import { Redirect } from "react-router-dom";
 
 const MovieDetails = (props) => {
+  const role = localStorage.getItem('role');
   let { movie_id } = useParams();
   var [movieDetails, setMovieDetails] = useState({});
   const [isLoading, setisLoading] = useState(0);
@@ -45,6 +47,7 @@ const MovieDetails = (props) => {
   if (isLoading == 2) {
     return (
       <div>
+      {role==null ? <Redirect push to="/" /> : null}
         <div
           className="align-items-center  bg-dark"
           id="info1"
@@ -71,7 +74,7 @@ const MovieDetails = (props) => {
                     {movieDetails.info[0].name}
                   </h3>
                   {!movieDetails.info[0].upcoming ? (
-                    <p>Release Date: {movieDetails.info[0].release_date}</p>
+                    <p>Release Date: {movieDetails.info[0].release_date.slice(0,10)}</p>
                   ) : (
                     <></>
                   )}

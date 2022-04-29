@@ -8,8 +8,10 @@ import { Card, CardHeader, CardBody, CardTitle, Button } from "reactstrap";
 import { Link } from "react-router-dom";
 import Preload from "Components/layouts/Preload";
 import authHeader from "../authHeader";
+import { Redirect } from "react-router-dom";
 
 const ConfirmationPage = (props) => {
+  const role = localStorage.getItem('role');
   var [BookingInfo, setBookingInfo] = useState({});
   var [booking_id, setbooking_id] = useState(0);
   const [isLoading, setisLoading] = useState(0);
@@ -58,6 +60,7 @@ const ConfirmationPage = (props) => {
     if (!booked) {
       return (
         <div>
+          {role==null ? <Redirect push to="/" /> : null}
           <div className="container text-left" style={{ marginTop: "60px" }}>
             <h2>Payment Failure!</h2>{" "}
           </div>
@@ -66,6 +69,7 @@ const ConfirmationPage = (props) => {
     } else {
       return (
         <div>
+          {role==null ? <Redirect push to="/" /> : null}
           <div className="container text-left" style={{ marginTop: "60px" }}>
             <h2>Successfully booked tickets</h2>
             <Card>

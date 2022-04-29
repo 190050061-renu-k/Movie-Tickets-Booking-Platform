@@ -18,6 +18,7 @@ import RegisterTheatre from "./newpages/admin-pages/RegisterTheatre";
 import AddArtist from "./newpages/admin-pages/AddArtist";
 import TheatreLiveOnline from "./newpages/theatre-pages/charts/TheatresLiveOnline";
 import AddMovie from "./newpages/admin-pages/AddMovie";
+import MainPage from "./newpages/MainPage";
 
 var routes = [
   {
@@ -160,6 +161,13 @@ var routes = [
     component: AddArtist,
     layout: "",
   },
+  {
+    path: "/", // :movieid to be done
+    name: "Select Role",
+    icon: "nc-icon nc-pin-3",
+    component: MainPage,
+    layout: "",
+  },
 ];
 
 var sidebar_display = [
@@ -273,6 +281,13 @@ var sidebar_display = [
     name: "Add Artist",
     icon: "nc-icon nc-pin-3",
     component: AddArtist,
+    layout: "",
+  },
+  {
+    path: "/", // :movieid to be done
+    name: "Select Role",
+    icon: "nc-icon nc-pin-3",
+    component: MainPage,
     layout: "",
   },
 ];
