@@ -65,21 +65,21 @@ const TheatreList = (props) => {
                 color="primary"
                 size="lg"
                 style={{ marginLeft: "auto", marginRight: "auto" }}
-                onClick={() => setOffset(offset - 10)}
+                onClick={() => setOffset(offset - limit)}
               >
                 Prev
               </Button>
             </div>
           )}
 
-          {offset + show_theatres.length < theatreList.length ? (
+          {offset + show_theatres.length + 1 < theatreList.length ? (
             <div className="float-right" style={{ marginRight: "50px" }}>
               <Button
                 block
                 color="primary"
                 size="lg"
                 style={{ marginLeft: "auto", marginRight: "auto" }}
-                onClick={() => setOffset(offset + 10)}
+                onClick={() => setOffset(offset + limit)}
               >
                 Next
               </Button>
