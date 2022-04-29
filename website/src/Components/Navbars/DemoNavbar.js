@@ -25,7 +25,7 @@ function Header(props) {
   return (
     <>
     <div className='float-right'>
-      <Button className='btn-outline-primary' style={{marginBottom:'27px'}}>Logout</Button>
+      <Link to="/login"><Button className='btn-outline-primary' style={{marginBottom:'27px'}}>Logout</Button></Link>
       <Link to="/profile"><i className='nc-icon nc-single-02' style={{margin:'20px', fontSize:'25px'}}></i></Link>
     </div>
     <Navbar
@@ -33,7 +33,9 @@ function Header(props) {
       expand="lg"
       className="navbar-absolute fixed-top navbar-transparent"
     >
+      
       <Container fluid>
+        
         <div className="navbar-wrapper">
           <div className="navbar-toggle">
             <button
