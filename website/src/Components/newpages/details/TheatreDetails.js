@@ -21,14 +21,11 @@ const TheatreDetails = (props) => {
     var city = "Las Vegas"
     //modify into useEffect
     theatreDetails = {"shows": shows, "name":name, "id": id, "city": city};
+    details = []
+    for(i=0; i<)
     var movie_obj = new Object();
     var date_obj = new Object();
-    for(i=0; i<theatreDetails["shows_info"].length; i++){
-        if(!(movie_data.hasOwnProperty(theatreDetails["shows_info"][i].show_date))){
-            movie_data[theatreDetails["shows_info"][i].show_date] = []
-        }
-
-    }
+    
     var i = -1;
 
     useEffect(() => {
