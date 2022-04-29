@@ -123,6 +123,13 @@ var routes = [
     layout: "",
   },
   {
+    path: "/theatres/analytics", 
+    name: "Theatre Analytics",
+    icon: "nc-icon nc-pin-3",
+    component: Analytics,
+    layout: "",
+  },
+  {
     path: "/theatres/:theatre_id", // theatre/:id to be done
     name: "Theatres",
     icon: "nc-icon nc-pin-3",
@@ -178,13 +185,7 @@ var routes = [
     component: MovieTheatreList,
     layout: "",
   },
-  {
-    path: "/theatre/analytics", 
-    name: "Theatre Analytics",
-    icon: "nc-icon nc-pin-3",
-    component: Analytics,
-    layout: "",
-  },
+  
   
 ];
 
@@ -304,7 +305,7 @@ var sidebar_display = [
   },
   
   {
-    path: "/theatre/analytics", // :movieid to be done
+    path: "/theatres/analytics", // :movieid to be done
     name: "Theatre Analytics",
     icon: "nc-icon nc-pin-3",
     component: Analytics,
