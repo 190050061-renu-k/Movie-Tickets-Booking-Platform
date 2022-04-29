@@ -1,5 +1,5 @@
 // Usecase 1 - Client signing up
-// TODO: Input validation, add entry to database
+// TODO: validation for age
 // TODO: Check if session is in logged in state
 import React, { useState, useEffect, useReducer } from "react";
 import { Link } from "react-router-dom";
@@ -21,8 +21,9 @@ const Signup = (props) => {
   var [cities, setCities] = useState({});
   var [genres, setGenres] = useState({});
   var [languages, setLanguages] = useState({});
+  const [redirect, setRedirect] = useState(false);
   const [isLoading, setisLoading] = useState(0);
-    const role = localStorage.getItem('role');
+  const role = localStorage.getItem("role");
   useEffect(() => {
     getCategories();
   }, []);
@@ -87,6 +88,7 @@ const Signup = (props) => {
     inputcity: "",
     inputlang: [],
     inputgenre: [],
+    age: 0,
     errors: {
       inputname: "",
       inputpswd1: "",
@@ -109,8 +111,8 @@ const Signup = (props) => {
     inputcity,
     inputlang,
     inputgenre,
+    inputage,
   } = formValues;
-  console.log("Here", inputcity);
 
   const validateForm = (errors) => {
     let valid = true;
@@ -122,7 +124,6 @@ const Signup = (props) => {
     event.preventDefault();
 
     const { name, value } = event.target;
-    console.log(name, value);
 
     let errors = formValues.errors;
     switch (name) {
@@ -229,11 +230,56 @@ const Signup = (props) => {
     }
 
     if (validateForm(formValues.errors)) {
-      // in a function, do -  check if credentials are correct in database and redirect to homepage, store user id, city id in session
-      // let path = {dest} // variable ;
-      // console.log(path);
-      // this.props.history.push(path);
-      console.log("Success");
+      console.log({
+        useName: formValues.inputname,
+        age: formValues.inputage,
+        mobile_num: formValues.inputtel,
+        pswd: formValues.inputpswd1,
+        city_id: formValues.inputcity,
+        language_ids: formValues.inputlang,
+        genre_ids: formValues.inputgenre,
+      });
+      fetch("http://localhost:3001/signUp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userName: formValues.inputname,
+          age: formValues.inputage,
+          mobile_num: formValues.inputtel,
+          pswd: formValues.inputpswd1,
+          city_id: parseInt(formValues.inputcity),
+          language_ids: formValues.inputlang.map((e) => e.language_id),
+          genre_ids: formValues.inputgenre.map((e) => e.genre_id),
+        }),
+      })
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          if (data) setRedirect(true);
+          else {
+            var options = {};
+            options = {
+              place: "tc",
+              message: (
+                <div>
+                  <div>
+                    <b>Mobile number already in use</b>
+                  </div>
+                </div>
+              ),
+              type: "danger",
+              icon: "nc-icon nc-bell-55",
+              autoDismiss: 7,
+            };
+            notificationAlert.current.notificationAlert(options);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     } else {
       console.log("Failure");
       var options = {};
@@ -254,10 +300,10 @@ const Signup = (props) => {
     }
   };
   if (isLoading == 2) {
-    console.log(cities, genres, languages);
     return (
       <div>
-          {role==null ? <Redirect push to="/" /> : null}
+        {role != "user" ? <Redirect push to="/" /> : null}
+        {redirect ? <Redirect push to={dest} /> : null}
         <NotificationAlert ref={notificationAlert} />
 
         <div className=" align-items-center " style={{ marginTop: margin }}>
@@ -276,7 +322,7 @@ const Signup = (props) => {
                   {/* <h6 className="font-weight-light">Signing up is easy. It only takes a few steps</h6> */}
                   <form className="pt-3" id="useReducer-form">
                     <div className="row">
-                      <div className={"form-group col-" + 12}>
+                      <div className={"form-group col-" + 6}>
                         Username: <br />
                         <input
                           required
@@ -292,6 +338,33 @@ const Signup = (props) => {
                               ? "hasError"
                               : "")
                           }
+                        />
+                        <div
+                          style={{ width: "100%", marginTop: "8px" }}
+                          className={
+                            formValues.errors.inputname.length > 0
+                              ? "errorBar"
+                              : ""
+                          }
+                        >
+                          {formValues.errors.inputname.length > 0 && (
+                            <span className="error">
+                              {formValues.errors.inputname}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                      <div className={"form-group col-" + 6}>
+                        Age: <br />
+                        <input
+                          required
+                          type="text"
+                          id="inputage"
+                          name="inputage"
+                          value={inputage}
+                          onChange={handleFormChange}
+                          onBlur={handleBlur}
+                          className={"input-box form-control form-control-lg "}
                         />
                         <div
                           style={{ width: "100%", marginTop: "8px" }}
@@ -427,10 +500,13 @@ const Signup = (props) => {
                           onBlur={handleBlur}
                           className="input-box form-control form-control-lg"
                         >
-                          <option>None</option>
-                          {cities.map((i) => {
-                            return <option value={i.city_id}>{i.city}</option>;
-                          })}
+                          {cities.length > 0
+                            ? cities.map((i) => {
+                                return (
+                                  <option value={i.city_id}>{i.city}</option>
+                                );
+                              })
+                            : null}
                         </select>
                       </div>
 
@@ -438,12 +514,20 @@ const Signup = (props) => {
                         Language: <br />
                         <Multiselect
                           options={languages}
+                          name="inputlang"
                           displayValue="name"
-                          //id="inputlang"
-                          //name="inputlang"
-                          //value={inputlang}
-                          //onChange={handleFormChange}
-                          //onBlur={handleBlur}
+                          onSelect={(selectedValues, selectedItem) => {
+                            setFormValues({
+                              ...formValues,
+                              inputlang: selectedValues,
+                            });
+                          }}
+                          onRemove={(selectedValues, selectedItem) =>
+                            setFormValues({
+                              ...formValues,
+                              inputlang: selectedValues,
+                            })
+                          }
                           className="input-box form-control form-control-lg"
                         />
                       </div>
@@ -452,11 +536,20 @@ const Signup = (props) => {
                         Genre: <br />
                         <Multiselect
                           options={genres}
-                          //id="inputgenre"
-                          //name="inputgenre"
+                          name="inputgenre"
                           displayValue="name"
-                          //onChange={handleFormChange}
-                          //onBlur={handleBlur}
+                          onSelect={(selectedValues, selectedItem) => {
+                            setFormValues({
+                              ...formValues,
+                              inputgenre: selectedValues,
+                            });
+                          }}
+                          onRemove={(selectedValues, selectedItem) =>
+                            setFormValues({
+                              ...formValues,
+                              inputgenre: selectedValues,
+                            })
+                          }
                           className="input-box form-control form-control-lg"
                         />
                       </div>

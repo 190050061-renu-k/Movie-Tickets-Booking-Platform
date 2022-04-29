@@ -71,6 +71,7 @@ const ConfirmationPage = (props) => {
         </div>
       );
     } else {
+      console.log(role);
       return (
         <div>
           {role == null ? <Redirect push to="/" /> : null}

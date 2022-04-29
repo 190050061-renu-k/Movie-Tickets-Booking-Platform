@@ -9,11 +9,11 @@ import NotificationAlert from "react-notification-alert";
 import { Card, CardHeader, CardBody, CardTitle } from "reactstrap";
 
 const Login = (props) => {
-  const role = localStorage.getItem('role');
+  const role = localStorage.getItem("role");
   console.log(role);
   var initialValues;
 
-  if(role=="user"){
+  if (role == "user") {
     initialValues = {
       inputtel: "",
       inputpswd: "",
@@ -22,8 +22,8 @@ const Login = (props) => {
         inputpswd: "",
       },
     };
-  } else if(role=="theatre"){
-     initialValues = {
+  } else if (role == "theatre") {
+    initialValues = {
       inputpswd: "",
       inputid: "",
       errors: {
@@ -31,8 +31,8 @@ const Login = (props) => {
         inputid: "",
       },
     };
-  } else{
-     initialValues = {
+  } else {
+    initialValues = {
       inputpswd: "",
       inputid: "",
       errors: {
@@ -49,7 +49,7 @@ const Login = (props) => {
   );
 
   const { inputtel, inputpswd, inputid } = formValues;
-  const [ redirect, setRedirect ] = useState(false);
+  const [redirect, setRedirect] = useState(false);
 
   const validateForm = (errors) => {
     let valid = true;
@@ -112,12 +112,12 @@ const Login = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     let errors = formValues.errors;
-    if(role=="user"){
+    if (role == "user") {
       if (formValues.inputtel.length == 0) {
         errors.inputtel = "Required field";
       }
-    } else{
-      if(formValues.inputid.length == 0) {
+    } else {
+      if (formValues.inputid.length == 0) {
         errors.inputid = "Required field";
       }
     }
@@ -127,53 +127,52 @@ const Login = (props) => {
       return;
     }
 
-
     if (validateForm(formValues.errors)) {
-      if(role=="user"){
+      if (role == "user") {
         fetch("http://localhost:3001/userLogin", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          mobile_number: formValues.inputtel,
-          password: formValues.inputpswd,
-        }),
-      })
-        .then((response) => {
-          return response.json();
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            mobile_number: formValues.inputtel,
+            password: formValues.inputpswd,
+          }),
         })
-        .then((data) => {
-          if (data.accessToken) {
-            localStorage.setItem("user", JSON.stringify(data));
-            setRedirect(true);
-          } else {
-            var options = {};
-            options = {
-              place: "tc",
-              message: (
-                <div>
+          .then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            if (data.accessToken) {
+              localStorage.setItem("user", JSON.stringify(data));
+              setRedirect(true);
+            } else {
+              var options = {};
+              options = {
+                place: "tc",
+                message: (
                   <div>
-                    <b>Invalid credentials</b>
+                    <div>
+                      <b>Invalid credentials</b>
+                    </div>
                   </div>
-                </div>
-              ),
-              type: "danger",
-              icon: "nc-icon nc-bell-55",
-              autoDismiss: 7,
-            };
-            notificationAlert.current.notificationAlert(options);
-          }
-          return data;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+                ),
+                type: "danger",
+                icon: "nc-icon nc-bell-55",
+                autoDismiss: 7,
+              };
+              notificationAlert.current.notificationAlert(options);
+            }
+            return data;
+          })
+          .catch((err) => {
+            console.log(err);
+          });
 
-      // in a function, do -  check if credentials are correct in database and redirect to homepage, store user id, city id in session
-      console.log("Success");
-      } else if(role=="theatre"){
-          fetch("http://localhost:3001/theatreLogin", {
+        // in a function, do -  check if credentials are correct in database and redirect to homepage, store user id, city id in session
+        console.log("Success");
+      } else if (role == "theatre") {
+        fetch("http://localhost:3001/theatreLogin", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -215,8 +214,8 @@ const Login = (props) => {
 
         // in a function, do -  check if credentials are correct in database and redirect to homepage, store user id, city id in session
         console.log("Success");
-      } else if(role=="admin"){
-          fetch("http://localhost:3001/adminLogin", {
+      } else if (role == "admin") {
+        fetch("http://localhost:3001/adminLogin", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -259,7 +258,6 @@ const Login = (props) => {
         // in a function, do -  check if credentials are correct in database and redirect to homepage, store user id, city id in session
         console.log("Success");
       }
-      
     } else {
       console.log("Failure");
       var options = {};
@@ -282,7 +280,7 @@ const Login = (props) => {
 
   return (
     <div>
-      {role==null ? <Redirect push to="/" /> : null}
+      {role == null ? <Redirect push to="/" /> : null}
       {redirect ? <Redirect push to="/homepage" /> : null}
       <NotificationAlert ref={notificationAlert} />
       <div
@@ -297,8 +295,7 @@ const Login = (props) => {
               </CardHeader>
               <CardBody>
                 <form className="pt-3" id="useReducer-form">
-                  {
-                    role=="user"?
+                  {role == "user" ? (
                     <div className="form-group">
                       Phone Number : <br />
                       <input
@@ -319,7 +316,9 @@ const Login = (props) => {
                       <div
                         style={{ width: "100%", marginTop: "8px" }}
                         className={
-                          formValues.errors.inputtel.length > 0 ? "errorBar" : ""
+                          formValues.errors.inputtel.length > 0
+                            ? "errorBar"
+                            : ""
                         }
                       >
                         {formValues.errors.inputtel.length > 0 && (
@@ -328,36 +327,34 @@ const Login = (props) => {
                           </span>
                         )}
                       </div>
-                    </div>:
-                    <div className="form-group">
-                    ID : <br />
-                    <input
-                      required
-                      type="text"
-                      id="inputid"
-                      name="inputid"
-                      value={inputid}
-                      onChange={handleFormChange}
-                      onBlur={handleBlur}
-                      className={
-                        "input-box form-control form-control-lg "
-                      }
-                    />
-                    <div
-                      style={{ width: "100%", marginTop: "8px" }}
-                      className={
-                        formValues.errors.inputid.length > 0 ? "errorBar" : ""
-                      }
-                    >
-                      {formValues.errors.inputid.length > 0 && (
-                        <span className="error">
-                          {formValues.errors.inputid}
-                        </span>
-                      )}
                     </div>
-                  </div>                    
-
-                  }
+                  ) : (
+                    <div className="form-group">
+                      ID : <br />
+                      <input
+                        required
+                        type="text"
+                        id="inputid"
+                        name="inputid"
+                        value={inputid}
+                        onChange={handleFormChange}
+                        onBlur={handleBlur}
+                        className={"input-box form-control form-control-lg "}
+                      />
+                      <div
+                        style={{ width: "100%", marginTop: "8px" }}
+                        className={
+                          formValues.errors.inputid.length > 0 ? "errorBar" : ""
+                        }
+                      >
+                        {formValues.errors.inputid.length > 0 && (
+                          <span className="error">
+                            {formValues.errors.inputid}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  )}
                   <br />
                   <div className="form-group">
                     Password : <br />
@@ -399,12 +396,16 @@ const Login = (props) => {
                       LOGIN
                     </Link>
                   </div>
-                  <p className="text-center">
-                    Not yet Registered?{" "}
-                    <Link to="/signup" style={{ fontWeight: "bold" }}>
-                      Sign Up here
-                    </Link>
-                  </p>
+                  {role == "user" ? (
+                    <p className="text-center">
+                      Not yet Registered?{" "}
+                      <Link to="/signup" style={{ fontWeight: "bold" }}>
+                        Sign Up here
+                      </Link>
+                    </p>
+                  ) : (
+                    <></>
+                  )}
                 </form>
               </CardBody>
             </Card>
