@@ -91,6 +91,7 @@ const SeatSelection = (props) => {
   }
 
   if (isLoading == 2) {
+    console.log(new Date(movies.show_date) , new Date())
     if (new Date(movies.show_date) < new Date())
       return <>Booking unavailable</>;
     console.log(movies);
