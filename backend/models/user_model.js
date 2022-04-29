@@ -3,7 +3,7 @@ const format = require("pg-format");
 const jwt = require("jsonwebtoken");
 
 const pool = new Pool({
-  user: process.env.USER,
+  user: process.env.USERNAME,
   host: process.env.HOST,
   database: process.env.DATABASE,
   password: process.env.PASSWORD,
@@ -267,6 +267,19 @@ const getLanguages = (body) => {
   });
 };
 
+const resetPassword = (body) => {
+  const {user_id, new_password} = body;
+  const query = "UPDATE users SET password=$2 WHERE user_id=$1;";
+  return new Promise(function (resolve, reject) {
+    pool.query(query, [user_id, new_password], (error, results) => {
+      if (error) {
+        reject(error);
+      }
+      resolve(results.rows);
+    });
+  });
+}
+
 module.exports = {
   getProfile,
   getRecommendations,
@@ -278,4 +291,5 @@ module.exports = {
   getCities,
   getGenres,
   getLanguages,
+  resetPassword,
 };
