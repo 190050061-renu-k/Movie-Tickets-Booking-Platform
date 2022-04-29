@@ -70,7 +70,7 @@ const UserDetails = (props) => {
         </Button>
 
         {isEdit ? (
-          <Signup col={6} card={8} margin={"30px"} showsign={true}></Signup>
+          <Signup col={6} card={8} margin={"30px"} showsign={true} dest = "profile"></Signup>
         ) : (
           <></>
         )}

@@ -43,6 +43,7 @@ const Signup =(props)=> {
     var getcol = props.col ? props.col : 6;
     var getcard = props.card ? props.card : 8;
     var margin = props.margin?props.margin:"100px";
+    var dest = props.dest ? props.dest : "/login";
 
     const initialValues = {
         inputname: "",
@@ -155,7 +156,7 @@ const Signup =(props)=> {
             
             if (validateForm(formValues.errors)) {
                 // in a function, do -  check if credentials are correct in database and redirect to homepage, store user id, city id in session 
-                // let path = '/login';
+                // let path = {dest} // variable ;
                 // console.log(path);
                 // this.props.history.push(path);
                 console.log("Success");

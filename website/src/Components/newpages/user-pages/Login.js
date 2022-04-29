@@ -81,13 +81,16 @@ const Login = (props) => {
         event.preventDefault();
         let errors = formValues.errors;
         if (formValues.inputtel.length == 0) {
-          errors.inputtel = "Required field";
+            errors.inputtel = "Required field";
+            setFormValues({ ...formValues, errors });
+            return;
         }
         if (formValues.inputpswd.length == 0) {
           errors.inputpswd = "Required field";
+          setFormValues({ ...formValues, errors });
+          return;
         }
         
-        setFormValues({ ...formValues, errors });
     
         if (validateForm(formValues.errors)) {
             // in a function, do -  check if credentials are correct in database and redirect to homepage, store user id, city id in session 
