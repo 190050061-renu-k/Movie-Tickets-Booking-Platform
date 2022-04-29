@@ -1,5 +1,6 @@
 const Pool = require("pg").Pool;
 const format = require("pg-format");
+const jwt = require("jsonwebtoken");
 
 const pool = new Pool({
   user: process.env.USER,
@@ -71,18 +72,38 @@ const getBookingHistory = (body) => {
   });
 };
 
-const userLogin = (body) => {
+const userLogin = async (body) => {
   const { mobile_number, password } = body;
-  const query =
-    "SELECT user_id, count(*) from users WHERE mobileNumber = $1 AND password = $2 group by user_id";
-  return new Promise(function (resolve, reject) {
-    pool.query(query, [mobile_number, password], (error, results) => {
-      if (error) {
-        reject(error);
-      }
-      resolve(results.rows);
-    });
-  });
+
+  const client = await pool.connect();
+
+  try {
+    await client.query("BEGIN");
+    const query =
+      "SELECT user_id, city_id from users WHERE mobileNumber = $1 AND password = $2";
+    const res = await client.query(query, [mobile_number, password]);
+
+    await client.query("COMMIT");
+    console.log(res.rows);
+    if (res.rows.length == 0) return { user_id: null, city_id: null };
+    else {
+      const token = jwt.sign(
+        { user_id: res.rows[0].user_id },
+        process.env.TOKEN_KEY,
+        { expiresIn: "2h" }
+      );
+      return {
+        user_id: res.rows[0].user_id,
+        city_id: res.rows[0].city_id,
+        accessToken: token,
+      };
+    }
+  } catch (e) {
+    await client.query("ROLLBACK");
+    throw e;
+  } finally {
+    client.release();
+  }
 };
 
 const changePassword = async (body) => {

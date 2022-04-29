@@ -161,16 +161,24 @@ app.post("/getTheatres", (req, res) => {
     });
 });
 
-app.post("/getTheatreShows", (req, res) => {
-  theatre_model
-    .getTheatreShows(req.body)
-    .then((response) => {
-      res.json(response);
-    })
-    .catch((error) => {
-      console.log(error);
-      res.status(500).send(error);
-    });
+app.post("/getTheatreShows", async (req, res) => {
+  try {
+    response = await theatre_model.getTheatreShows(req.body);
+    res.json(response);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+});
+
+app.post("/getTheatreShows2", async (req, res) => {
+  try {
+    response = await theatre_model.getTheatreShows2(req.body);
+    res.json(response);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
 });
 
 app.post("/rateTheatre", (req, res) => {

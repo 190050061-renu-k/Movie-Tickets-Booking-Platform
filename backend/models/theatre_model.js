@@ -50,6 +50,28 @@ const getTheatreShows = async (body) => {
   }
 };
 
+const getTheatreShows2 = async (body) => {
+  const { theatre_id } = body;
+  const client = await pool.connect();
+  try {
+    await client.query("BEGIN");
+    const query1 = `SELECT show_id, show_timings.name as show_time, shows.movie_id as movie_id, movies.name as movie_name, show_date, screen_num
+    FROM shows, show_timings, movies WHERE movies.movie_id = shows.movie_id and 
+     shows.show_timings_id = show_timings.show_timings_id and 
+    shows.theatre_id = $1 and show_date + interval '1 year' + interval '3 month' + interval '27 day' <= CURRENT_DATE + INTERVAL '2 days' and show_date + interval '1 year' + interval '3 month' + interval '27 day' >= CURRENT_DATE 
+  ORDER BY movie_id, screen_num, show_time, show_date asc;`;
+    const res1 = await client.query(query1, [theatre_id]);
+
+    await client.query("COMMIT");
+    return { shows_info: res1.rows };
+  } catch (e) {
+    await client.query("ROLLBACK");
+    throw e;
+  } finally {
+    client.release();
+  }
+};
+
 const rateTheatre = (body) => {
   const { user_id, theatre_id, rating } = body;
   const query = "INSERT INTO user_theatre VALUES($1, $2, $3);";
@@ -161,6 +183,7 @@ const registerTheatre = async (body) => {
 module.exports = {
   getTheatres,
   getTheatreShows,
+  getTheatreShows2,
   rateTheatre,
   getTheatresInRange,
   getTheatreMovies,
