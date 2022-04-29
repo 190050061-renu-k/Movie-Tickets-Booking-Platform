@@ -5,8 +5,10 @@ import { Card, CardHeader, CardBody, CardTitle, Button } from "reactstrap";
 import { Link } from "react-router-dom";
 import Preload from "Components/layouts/Preload";
 import authHeader from "../authHeader";
+import { Redirect } from "react-router-dom";
 
 const TheatreList = (props) => {
+  const role = localStorage.getItem('role');
   var [theatreList, setTheatreList] = useState([]);
   var [offset, setOffset] = useState(0);
   const [isLoading, setisLoading] = useState(0);
@@ -46,6 +48,7 @@ const TheatreList = (props) => {
 
     return (
       <>
+      {role==null ? <Redirect push to="/" /> : null}
         <div style={{ marginTop: "60px", marginBottom: "30px" }}>
           <div style={{ marginTop: "30px" }} className="text-center">
             <h2 style={{ display: "inline" }} className="text-center">

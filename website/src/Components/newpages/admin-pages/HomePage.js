@@ -1,6 +1,8 @@
 // Set 1 Usecase 6 - Movie Info Page
 // TODO: fetch data from db
 import React, { useState } from 'react';
+import { Redirect } from "react-router-dom";
+
 import {scrollMenu} from 'react-horizontal-scrolling-menu';
 // import { Link } from 'react-router-dom';
 import {
@@ -14,9 +16,12 @@ import { Link } from 'react-router-dom';
 
 
 const AdminHomePage = (props) => {
+
+  const role = localStorage.getItem('role');
     return (
         <>
             
+        {role==null ? <Redirect push to="/" /> : null}
             <div style={{ marginTop: "60px", marginBottom: "30px" }} className="text-center">
                 <div style={{marginLeft: "160px"}}>
                 <Link to={"/admin/registertheatre"}><Button>Register Theatre</Button></Link>

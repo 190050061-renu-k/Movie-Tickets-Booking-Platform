@@ -6,8 +6,10 @@ import { Card, CardHeader, CardBody, CardTitle, Button } from "reactstrap";
 import { Link } from "react-router-dom";
 import { ScrollMenu } from "react-horizontal-scrolling-menu";
 import Preload from "Components/layouts/Preload";
+import { Redirect } from "react-router-dom";
 
 const HomePage = (props) => {
+  const role = localStorage.getItem('role');
   var [highRatedMovies, setHighRatedMovies] = useState([]);
   var [upcomingMovies, setUpcomingMovies] = useState([]);
   var [recommendedMovies, setRecommendedsMovies] = useState([]);
@@ -85,6 +87,7 @@ const HomePage = (props) => {
     ];
     return (
       <div>
+        {role==null ? <Redirect push to="/" /> : null}
         <div className="container text-left" style={{ marginTop: "60px" }}>
           {moviesList.map((list) => {
             i = -1;

@@ -10,8 +10,10 @@ import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { Tabs, Tab } from "react-bootstrap";
 import Preload from "Components/layouts/Preload";
+import { Redirect } from "react-router-dom";
 
 const MovieTheatreList = (props) => {
+  const role = localStorage.getItem('role');
   let { movie_id } = useParams();
   var [theatreList, setTheatreList] = useState({});
   const [isLoading, setisLoading] = useState(0);
@@ -99,6 +101,7 @@ const MovieTheatreList = (props) => {
     };
     return (
       <div>
+        {role==null ? <Redirect push to="/" /> : null}
         <div className="container text-left" style={{ marginTop: "60px" }}>
           <div>
             <Card>

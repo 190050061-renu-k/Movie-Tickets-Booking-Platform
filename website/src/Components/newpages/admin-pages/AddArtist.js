@@ -1,6 +1,7 @@
 // Set 1 Usecase 6 - Movie Info Page
 // TODO: fetch data from db
 import React, { useReducer } from 'react';
+import { Redirect } from "react-router-dom";
 import "./../../../Assets/css/login.css";
 import {
     Card,
@@ -10,8 +11,8 @@ import {
     Button 
   } from "reactstrap";
 
-
 const AddArtist = (props) => {
+    const role = localStorage.getItem('role');
     const initialValues = {
         artistname: "",
         errors: {
@@ -141,6 +142,7 @@ const AddArtist = (props) => {
 
     return (
         <div>
+        {role==null ? <Redirect push to="/" /> : null}
             <div className="d-flex align-items-center auth px-0" style={{marginTop:"100px", marginRight:"300px"}}>
             <div className="row w-100 mx-0">
                 <div className={"mx-auto col-lg-4" }></div>

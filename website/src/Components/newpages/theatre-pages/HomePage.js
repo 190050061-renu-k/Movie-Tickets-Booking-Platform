@@ -6,8 +6,10 @@ import React, { useState, useEffect } from "react";
 import { Card, CardHeader, CardBody, CardTitle, Button } from "reactstrap";
 import { Link } from "react-router-dom";
 import Preload from "Components/layouts/Preload";
+import { Redirect } from "react-router-dom";
 
 const TheatreHomePage = (props) => {
+  const role = localStorage.getItem('role');
   var [showsList, setShowsList] = useState([]);
   var [offset, setOffset] = useState(0);
   const [isLoading, setisLoading] = useState(0);
@@ -97,6 +99,7 @@ const TheatreHomePage = (props) => {
 
     return (
       <>
+      {role==null ? <Redirect push to="/" /> : null}
         <div style={{ marginTop: "60px", marginBottom: "30px" }}>
           <div style={{ marginTop: "30px" }} className="text-center">
             <div style={{ marginLeft: "40px" }}>
