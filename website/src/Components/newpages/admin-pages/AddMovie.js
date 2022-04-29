@@ -218,7 +218,7 @@ const AddMovie = (props) => {
                     
                     
                     <div className="mt-3">
-                        <Button className="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" onClick={handleSubmit}>Add Artist</Button>
+                        <Button className="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" onClick={handleSubmit}>Add Movie</Button>
                     </div>
 
                     </div>                    
