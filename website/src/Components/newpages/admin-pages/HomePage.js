@@ -1,7 +1,7 @@
 // Set 1 Usecase 6 - Movie Info Page
 // TODO: fetch data from db
 import React, { useState } from 'react';
-
+import {scrollMenu} from 'react-horizontal-scrolling-menu';
 // import { Link } from 'react-router-dom';
 import {
     Card,

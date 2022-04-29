@@ -25,7 +25,7 @@ const Login = (props) => {
   );
 
   const { inputtel, inputpswd } = formValues;
-  const { redirect, setRedirect } = useState(false);
+  const [ redirect, setRedirect ] = useState(false);
 
   const validateForm = (errors) => {
     let valid = true;
