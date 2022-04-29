@@ -109,6 +109,7 @@ const PaymentPage = (props) => {
                   date: PaymentInfo.date,
                   show_id: PaymentInfo.show_id,
                   show_date: PaymentInfo.show_date,
+                  type: props.type ? props.type : "online"
                 },
               }}
             >

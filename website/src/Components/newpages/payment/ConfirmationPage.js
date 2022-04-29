@@ -1,5 +1,6 @@
 // Set 1 Usecase 6 - Movie Info Page
 // TODO: fetch data from db
+//set user id to -1 if type is live 
 import React, { useEffect, useState } from "react";
 
 // import { Link } from 'react-router-dom';
@@ -7,13 +8,14 @@ import { Card, CardHeader, CardBody, CardTitle, Button } from "reactstrap";
 
 import { Link } from "react-router-dom";
 import Preload from "Components/layouts/Preload";
+import authHeader from "../authHeader";
 
 const ConfirmationPage = (props) => {
   var [BookingInfo, setBookingInfo] = useState({});
   var [booking_id, setbooking_id] = useState(0);
   const [isLoading, setisLoading] = useState(0);
 
-  const user_id = 1;
+  const user_id = localStorage.getItem('user').user_id;
 
   if (props.location.state) {
     BookingInfo = props.location.state;
@@ -31,12 +33,10 @@ const ConfirmationPage = (props) => {
     setisLoading(1);
     fetch("http://localhost:3001/bookSeats", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: authHeader(),
       body: JSON.stringify({
         show_id: BookingInfo.show_id,
-        user_id: user_id,
+        user_id: props.type == "online" ? user_id: -1,
         book_date: BookingInfo.date,
         seat_ids: BookingInfo.seat_ids,
         book_type: "online",

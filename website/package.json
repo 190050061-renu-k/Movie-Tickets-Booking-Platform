@@ -14,6 +14,7 @@
     "chartjs-plugin-datalabels": "^2.0.0",
     "jquery": "3.6.0",
     "mdbreact": "^5.2.0",
+    "multiselect-react-dropdown": "^2.0.21",
     "perfect-scrollbar": "1.5.1",
     "react": "17.0.2",
     "react-bootstrap": "^2.3.0",
@@ -25,7 +26,8 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "react-search-box": "^2.2.1",
-    "reactstrap": "8.9.0"
+    "reactstrap": "8.9.0",
+    "tar": "^6.1.11"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -92,6 +92,7 @@ const Signup = (props) => {
       inputtel: "",
     },
   };
+
   const notificationAlert = React.useRef();
   const [formValues, setFormValues] = useReducer(
     (curVals, newVals) => ({ ...curVals, ...newVals }),
@@ -119,6 +120,7 @@ const Signup = (props) => {
     event.preventDefault();
 
     const { name, value } = event.target;
+    console.log(name, value);
 
     let errors = formValues.errors;
     switch (name) {
@@ -154,36 +156,8 @@ const Signup = (props) => {
       default:
         break;
     }
-    if (name == "inputcity") {
-      console.log(inputcity);
-      if (inputcity.length == 0 || inputcity.indexOf(value) == -1) {
-        inputcity.push(value);
-        setFormValues(
-          ...(prevState) => ({
-            ...prevState,
-            errors: errors,
-            inputcity: inputcity,
-          })
-        );
-        console.log("After", formValues.inputcity);
-      } else {
-        console.log("Clicker here");
-        var newinputcity = [];
-        for (var c in inputcity) {
-          if (c["value"] !== value) {
-            newinputcity.push(c);
-          }
-        }
-        setFormValues(
-          ...(prevState) => ({
-            ...prevState,
-            errors: errors,
-            inputcity: newinputcity,
-          })
-        );
-      }
-    }
-    // setFormValues({ errors, [name]: value });
+
+    setFormValues({ errors, [name]: value });
   };
 
   const handleBlur = (event) => {

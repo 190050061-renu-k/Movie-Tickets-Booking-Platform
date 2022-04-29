@@ -16,7 +16,7 @@ const MovieTheatreList = (props) => {
   var [theatreList, setTheatreList] = useState({});
   const [isLoading, setisLoading] = useState(0);
 
-  const city_id = 6;
+  const city_id = localStorage.getItem('user').city_id;
 
   useEffect(() => {
     getTheatreList();

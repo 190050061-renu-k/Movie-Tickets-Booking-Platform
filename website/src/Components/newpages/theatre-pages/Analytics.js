@@ -53,7 +53,7 @@ const Analytics = () => {
 		<div className="row container">
 			<div className="col-2"><Button onClick={ratingsHandler} >Movie Ratings</Button></div>
 			<div className="col-2"><Button onClick={liveOnlineHandler}>Live VS Online</Button></div>
-			<div className="col-2"><Button onClick={audienceHandler}>Percentage of Audience</Button></div> 
+			<div className="col-2"><Button onClick={audienceHandler}>Ratings of Audience</Button></div> 
 			{/* Theatre Ratings */}
 			<div className="col-2"><Button onClick={genreLanguageHandler}>Choice of Audience</Button></div>
 			{/* Genre Language Choices */}
