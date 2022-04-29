@@ -40,8 +40,8 @@ var genres = [
 
 const Signup =(props)=> {
 
-    var getcol = props.col ? props.col : 12;
-    var getcard = props.card ? props.card : 4;
+    var getcol = props.col ? props.col : 6;
+    var getcard = props.card ? props.card : 8;
     var margin = props.margin?props.margin:"100px";
 
     const initialValues = {
@@ -184,9 +184,9 @@ const Signup =(props)=> {
       <div>
         <NotificationAlert ref={notificationAlert} />
 
-        <div className="d-flex align-items-center auth px-0" style={{marginTop:margin}}>
-          <div className="row w-100 mx-0">
-            <div className={"mx-auto col-lg-" + getcard}>
+        <div className=" align-items-center " style={{marginTop:margin}}>
+          <div className="row">
+            <div className={" col-lg-" + getcard}>
                 
                 <Card>
                     <CardHeader>
@@ -201,7 +201,7 @@ const Signup =(props)=> {
                     <form className="pt-3"  id="useReducer-form">
                         <div className='row'>
 
-                    <div className={"form-group col-" + getcol }>
+                    <div className={"form-group col-" + 12 }>
                         Username: <br/>
                         <input 
                         required
@@ -328,6 +328,7 @@ const Signup =(props)=> {
                     </div>
                     }
                     <div className={"form-group col-" + getcol }>
+                        City: <br/>
                         <select 
                         id="inputcity"
                         name = "inputcity"
@@ -336,7 +337,7 @@ const Signup =(props)=> {
                         onBlur={handleBlur}
                         className="input-box form-control form-control-lg"
                         >
-                        <option>City</option>
+                        <option>None</option>
                         <option>Hyderabad</option>
                         <option>Bangalore</option>
                         <option>Delhi</option>
@@ -348,6 +349,7 @@ const Signup =(props)=> {
                         </select>
                     </div>
                     <div className={"form-group col-"  + getcol }>
+                        Language: <br/>
                     <select 
                         id="inputlang"
                         name = "inputlang"
@@ -356,7 +358,7 @@ const Signup =(props)=> {
                         onBlur={handleBlur}
                         className="input-box form-control form-control-lg"
                         >
-                        <option>Language</option>
+                        <option>None</option>
                         <option>Telugu</option>
                         <option>Hindi</option>
                         <option>English</option>
@@ -364,6 +366,7 @@ const Signup =(props)=> {
                         </select>
                     </div>
                     <div className={"form-group col-"  + getcol }>
+                        Genre: <br/>
                         <select 
                         id="inputgenre"
                         name = "inputgenre"
@@ -372,7 +375,7 @@ const Signup =(props)=> {
                         onBlur={handleBlur}
                         className="input-box form-control form-control-lg"
                         >
-                            <option>Genre</option>
+                            <option>None</option>
                         {genres.map((i) => {
                             return (
                                 <option>{i.name}</option>
@@ -391,7 +394,7 @@ const Signup =(props)=> {
                             <Button className="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" onClick={handleSubmit} >SIGN UP</Button>
                         </div>
                         <div className="text-center mt-4 font-weight-light">
-                            Already have an account? <Link to="/login" className="text-primary" >Login</Link>
+                            <p style= {{fontSize:"1.15em"}}>Already have an account? <Link to="/login" className="text-primary" style={{fontWeight:'bold'}} >Login</Link></p>
                         </div>
                     </>
                     }

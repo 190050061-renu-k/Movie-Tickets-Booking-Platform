@@ -50,7 +50,7 @@ function Dashboard(props) {
               />
             );
           })}
-          <Route render={() => <Redirect to={{ pathname: "/matches" }} />} />
+          <Route render={() => <Redirect to={{ pathname: "/login" }} />} />
         </Switch>
       </div>
     </div>
