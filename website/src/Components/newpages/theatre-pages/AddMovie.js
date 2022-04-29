@@ -2,7 +2,9 @@
 // TODO: fetch data from db
 import React, { useState } from 'react';
 import { Button} from "reactstrap";
+import { Link } from 'react-router-dom';
 import {Tabs, Tab} from 'react-bootstrap';
+import "./../../../Assets/css/addmovie.css";
 
 
 var movies = [{"movie_id":1,"movie_name":"KgF Chapter-3"}, {"movie_id":2,"movie_name":"KgF Chapter-2"}]
@@ -26,6 +28,8 @@ const AddMovieShowPage = (props) => {
     //modify into useEffect
     var today = new Date();
     var i = -1;
+    var isdisable;
+    var isactive;
 
     return (
         <>
@@ -56,8 +60,9 @@ const AddMovieShowPage = (props) => {
                         }}>Select Movie</Button>
                         </>: 
                         <>
-
+                        <Link><Button className='btn-outline-primary float-right'>Add Movie Shows</Button></Link>
                         <h2>{data.ShowsInfo.movie_name}</h2>
+                        
                         <div>
 
                     <Tabs defaultActiveKey={0}>{
@@ -73,33 +78,78 @@ const AddMovieShowPage = (props) => {
                                                 <h3>{new Date(today.getTime()+day*86400000).getDate()+"/"+new Date(today.getTime()+day*86400000).getMonth()+"/"+new Date(today.getTime()+day*86400000).getFullYear()}</h3>
                                                 <div className='row' style={{"margin":"30px"}}>
                                                     <div className='col-3'>
-                                                        <Button className='btn-outline-primary' onClick={()=>{
+                                                        {isdisable = isButtonDisabled(screen_num,day,0)}
+                                                        {isactive = isButtonActive(screen_num,day,0)}
+                                                        <Button 
+                                                        onClick={()=>{
                                                             // if(showsInfo["date"+(day+1)+"s"].includes(0)) console.log(showsInfo["date"+(day+1)+"s"]);
+                                                            showsInfo = data.ShowsInfo;
                                                             showsInfo["screen"+screen_num]["date"+(day+1)+"s"].push(0);
                                                             setData(prevState=>({...prevState, ShowsInfo:showsInfo}));
                                                             console.log(data.ShowsInfo);
-                                                        }} disabled={isButtonDisabled(screen_num,day,0)} active={isButtonActive(screen_num,day,0)}>Morning Show</Button>
+                                                        }} 
+                                                        disabled={isdisable} 
+                                                        active={isactive}
+                                                        className = { isdisable ? "btn-outline-dark " : "btn-outline-primary"}
+                                                        >
+                                                            Morning Show
+                                                        </Button>
                                                     </div>
                                                     <div className='col-3'>
-                                                        <Button className='btn-outline-primary' onClick={()=>{
+                                                        {isdisable = isButtonDisabled(screen_num,day,1)}
+                                                        {isactive = isButtonActive(screen_num,day,1)}
+                                                        <Button 
+                                                        onClick={()=>{
+                                                            showsInfo = data.ShowsInfo;
+
                                                             showsInfo["screen"+screen_num]["date"+(day+1)+"s"].push(1);
                                                             setData(prevState=>({...prevState, ShowsInfo:showsInfo}));
                                                             console.log(data.ShowsInfo);
-                                                        }} disabled={isButtonDisabled(screen_num,day,1)} active={isButtonActive(screen_num,day,1)}>Afternoon Show</Button>
+                                                        }} 
+                                                        disabled={isdisable} 
+                                                        active={isactive}
+                                                        className = { isdisable ? "btn-outline-dark " : "btn-outline-primary"}
+
+                                                        >
+                                                            Afternoon Show
+                                                        </Button>
                                                     </div>
                                                     <div className='col-3'>
-                                                    <Button className='btn-outline-primary' onClick={()=>{
+                                                    {isdisable = isButtonDisabled(screen_num,day,2)}
+                                                    {isactive = isButtonActive(screen_num,day,2)}
+                                                    <Button  
+                                                    onClick={()=>{
+                                                            showsInfo = data.ShowsInfo;
+
                                                             showsInfo["screen"+screen_num]["date"+(day+1)+"s"].push(2);
                                                             setData(prevState=>({...prevState, ShowsInfo:showsInfo}));
                                                             console.log(data.ShowsInfo);
-                                                        }} disabled={isButtonDisabled(screen_num,day,2)} active={isButtonActive(screen_num,day,2)}>First Show</Button>
+                                                        }} 
+                                                    disabled={isdisable} 
+                                                    active={isactive}
+                                                    className = { isdisable ? "btn-outline-dark " : "btn-outline-primary"}
+                                                    
+                                                    >
+                                                        First Show
+                                                    </Button>
                                                     </div>
                                                     <div className='col-3'>
-                                                    <Button className='btn-outline-primary' onClick={()=>{
+                                                    {isdisable = isButtonDisabled(screen_num,day,3)}
+                                                    {isactive = isButtonActive(screen_num,day,3)}
+                                                    <Button  
+                                                    onClick={()=>{
+                                                            showsInfo = data.ShowsInfo;
                                                             showsInfo["screen"+screen_num]["date"+(day+1)+"s"].push(3);
                                                             setData(prevState=>({...prevState, ShowsInfo:showsInfo}));
                                                             console.log(data.ShowsInfo);
-                                                        }} disabled={isButtonDisabled(screen_num,day,3)} active={isButtonActive(screen_num,day,3)}>Second Show</Button>
+                                                        }} 
+                                                    disabled={isdisable} 
+                                                    active={isactive}
+                                                    className = { isdisable ? "btn-outline-dark " : "btn-outline-primary"}
+
+                                                    >
+                                                        Second Show
+                                                    </Button>
                                                     </div>
                                                 </div>
                                                 </>
