@@ -22,6 +22,7 @@ import TheatreHomePage from "./newpages/theatre-pages/HomePage";
 import MovieTheatreList from "./newpages/lists/MovieTheatreList";
 import AddMovieShowPage from "./newpages/theatre-pages/AddMovie";
 import Analytics from "./newpages/theatre-pages/Analytics";
+import AdminHomePage from "./newpages/admin-pages/HomePage";
 
 var routes = [
   {
@@ -192,6 +193,13 @@ var routes = [
     icon: "nc-icon nc-pin-3",
     component: MovieTheatreList,
     layout: "",
+  },
+  {
+    path: "/admin/homepage", // :movieid to be done
+    name: "Admin Homepage",
+    icon: "nc-icon nc-pin-3",
+    component: AdminHomePage,
+    layout: "",
   }
   
   
@@ -323,6 +331,13 @@ var sidebar_display = [
     name: "Booking Confirmation",
     icon: "nc-icon nc-pin-3",
     component: ConfirmationPage,
+    layout: "",
+  },
+  {
+    path: "/admin/homepage", // :movieid to be done
+    name: "Admin Homepage",
+    icon: "nc-icon nc-pin-3",
+    component: AdminHomePage,
     layout: "",
   }
 ];
