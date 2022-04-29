@@ -23,6 +23,10 @@ import MovieTheatreList from "./newpages/lists/MovieTheatreList";
 import AddMovieShowPage from "./newpages/theatre-pages/AddMovie";
 import Analytics from "./newpages/theatre-pages/Analytics";
 import AdminHomePage from "./newpages/admin-pages/HomePage";
+import RegisterTheatre from "./newpages/admin-pages/RegisterTheatre";
+import AddArtist from "./newpages/admin-pages/AddArtist";
+import TheatreLiveOnline from "./newpages/theatre-pages/charts/TheatresLiveOnline";
+import AddMovie from "./newpages/admin-pages/AddMovie";
 
 var routes = [
   {
@@ -118,6 +122,20 @@ var routes = [
     layout: "",
   },
   {
+    path: "/admin/addmovie",
+    name: "Add Movie",
+    icon: "nc-icon nc-pin-3",
+    component: AddMovie,
+    layout: "",
+  },
+  {
+    path: "/admin/analytics",
+    name: "Admin Analytics",
+    icon: "nc-icon nc-pin-3",
+    component: TheatreLiveOnline,
+    layout: "",
+  },
+  {
     path: "/theatres/analytics", 
     name: "Theatre Analytics",
     icon: "nc-icon nc-pin-3",
@@ -200,6 +218,20 @@ var routes = [
     icon: "nc-icon nc-pin-3",
     component: AdminHomePage,
     layout: "",
+  },
+  {
+    path: "/admin/registertheatre", // :movieid to be done
+    name: "Register Theatre Page",
+    icon: "nc-icon nc-pin-3",
+    component: RegisterTheatre,
+    layout: "",
+  },
+  {
+    path: "/admin/addartist", // :movieid to be done
+    name: "Add Artist",
+    icon: "nc-icon nc-pin-3",
+    component: AddArtist,
+    layout: "",
   }
   
   
@@ -271,6 +303,20 @@ var sidebar_display = [
     layout: "",
   },
   {
+    path: "/admin/addmovie",
+    name: "Add Movie",
+    icon: "nc-icon nc-pin-3",
+    component: AddMovie,
+    layout: "",
+  },
+  {
+    path: "/admin/analytics",
+    name: "Admin Analytics",
+    icon: "nc-icon nc-pin-3",
+    component: TheatreLiveOnline,
+    layout: "",
+  },
+  {
     path: "/theatres/analytics", // :movieid to be done
     name: "Theatre Analytics",
     icon: "nc-icon nc-pin-3",
@@ -338,6 +384,20 @@ var sidebar_display = [
     name: "Admin Homepage",
     icon: "nc-icon nc-pin-3",
     component: AdminHomePage,
+    layout: "",
+  },
+  {
+    path: "/admin/registertheatre", // :movieid to be done
+    name: "Register Theatre Page",
+    icon: "nc-icon nc-pin-3",
+    component: RegisterTheatre,
+    layout: "",
+  },
+  {
+    path: "/admin/addartist", // :movieid to be done
+    name: "Add Artist",
+    icon: "nc-icon nc-pin-3",
+    component: AddArtist,
     layout: "",
   }
 ];
