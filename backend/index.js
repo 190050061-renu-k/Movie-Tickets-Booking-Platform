@@ -345,6 +345,16 @@ app.post("/getGenreMovies", async (req, res) => {
   }
 });
 
+app.post("/getMovieTheatres", async (req, res) => {
+  try {
+    response = await movie_model.getMovieTheatres(req.body);
+    res.json(response);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+});
+
 app.post("/signUp", async (req, res) => {
   try {
     response = await user_model.signUp(req.body);

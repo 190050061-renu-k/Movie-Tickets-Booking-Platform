@@ -9,7 +9,7 @@ const pool = new Pool({
   port: process.env.PORT,
 });
 
-const getProfile = async () => {
+const getProfile = async (body) => {
   const { user_id } = body;
   const client = await pool.connect();
 
@@ -40,10 +40,10 @@ const getProfile = async () => {
 const getRecommendations = (body) => {
   const { user_id } = body;
   const query =
-    "SELECT movie_id, name from movies where movie_id in  \
+    "SELECT movie_id, name, poster_img from movies where movie_id in  \
     (SELECT movie_id from movie_genres NATURAL FULL OUTER JOIN movie_languages where genre_id in \
       (SELECT genre_id from user_genres where user_id = $1) and language_id in  \
-      (SELECT language_id from user_languages where user_id = $2))ORDER BY imdb_rating DESC LIMIT 10;";
+      (SELECT language_id from user_languages where user_id = $2))ORDER BY imdb_rating DESC LIMIT 15;";
   return new Promise(function (resolve, reject) {
     pool.query(query, [user_id, user_id], (error, results) => {
       if (error) {
@@ -54,10 +54,10 @@ const getRecommendations = (body) => {
   });
 };
 
-const getBookingHistory = () => {
+const getBookingHistory = (body) => {
   const { user_id } = body;
   const query =
-    "SELECT movies.name, theatres.name, user_bookings.booking_id, book_date, book_type, label, column_ FROM \
+    "SELECT movies.name, movies.movie_id, theatres.theatre_id, theatres.name theatre, user_bookings.booking_id, book_date, book_type, label, column_ FROM \
     movies, theatres, shows, booking_seat, seats, (SELECT * FROM bookings WHERE user_id = $1) user_bookings WHERE \
     user_bookings.booking_id = booking_seat.booking_id AND user_bookings.show_id  = shows.show_id \
     AND shows.movie_id = movies.movie_id AND booking_seat.seat_id  = seats.seat_id AND shows.theatre_id = theatres.theatre_id;";
@@ -71,7 +71,7 @@ const getBookingHistory = () => {
   });
 };
 
-const userLogin = () => {
+const userLogin = (body) => {
   const { mobile_number, password } = body;
   const query =
     "SELECT user_id, count(*) from users WHERE mobileNumber = $1 AND password = $2 group by user_id";

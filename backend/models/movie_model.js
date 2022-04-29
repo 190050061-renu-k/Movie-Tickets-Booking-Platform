@@ -1,3 +1,5 @@
+//remove interval additions in getMovieTheatres after testing
+
 const Pool = require("pg").Pool;
 const pool = new Pool({
   user: process.env.USER,
@@ -9,9 +11,10 @@ const pool = new Pool({
 
 const getMovies = (body) => {
   const { city_id } = body;
-  const query = `SELECT * from movies where movie_id in 
+  const query = `SELECT name, movie_id, poster_img from movies where movie_id in 
         (SELECT distinct movie_id from shows where theatre_id in 
-          (SELECT theatre_id from theatres where city = $1) and show_date BETWEEN current_date AND current_date+interval '3 day');`;
+          (SELECT theatre_id from theatres where city = $1) and show_date BETWEEN current_date AND current_date+interval '3 day') 
+          ORDER BY imdb_rating desc LIMIT 15;`;
   return new Promise(function (resolve, reject) {
     pool.query(query, [city_id], (error, results) => {
       if (error) {
@@ -72,7 +75,8 @@ const rateMovie = (body) => {
 };
 
 const getUpcomingMovies = (body) => {
-  const query = "SELECT name from movies where upcoming = TRUE;";
+  const query =
+    "SELECT name, movie_id, poster_img from movies where upcoming = TRUE LIMIT 15;";
   return new Promise(function (resolve, reject) {
     pool.query(query, [], (error, results) => {
       if (error) {
@@ -162,6 +166,30 @@ const getLanguageMovies = async (body) => {
   }
 };
 
+const getMovieTheatres = async (body) => {
+  const { movie_id, city_id } = body;
+  const client = await pool.connect();
+  try {
+    await client.query("BEGIN");
+    const query1 = `SELECT show_id, show_timings.name as show_time, theatres.name as theatre_name, shows.theatre_id as theatre_id, show_date, screen_num
+    FROM shows, show_timings, theatres where 
+    city = $1 and theatres.theatre_id = shows.theatre_id and shows.show_timings_id = show_timings.show_timings_id and 
+    shows.movie_id = $2 and show_date + interval '1 year' + interval '3 month' + interval '27 day' <= CURRENT_DATE + INTERVAL '2 days' and show_date + interval '1 year' + interval '3 month' + interval '27 day'>= CURRENT_DATE 
+  ORDER BY show_date asc, theatres.name, screen_num, show_timings.show_timings_id;`;
+    const res1 = await client.query(query1, [city_id, movie_id]);
+
+    const query2 = `select name from movies where movie_id = $1`;
+    const res2 = await client.query(query2, [movie_id]);
+    await client.query("COMMIT");
+    return { shows_info: res1.rows, name: res2.rows };
+  } catch (e) {
+    await client.query("ROLLBACK");
+    throw e;
+  } finally {
+    client.release();
+  }
+};
+
 module.exports = {
   getMovies,
   getMovieInfo,
@@ -171,4 +199,5 @@ module.exports = {
   getGenreMovies,
   getLanguageMovies,
   addMovie,
+  getMovieTheatres,
 };
