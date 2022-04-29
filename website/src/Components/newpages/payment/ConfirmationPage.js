@@ -7,13 +7,14 @@ import { Card, CardHeader, CardBody, CardTitle, Button } from "reactstrap";
 
 import { Link } from "react-router-dom";
 import Preload from "Components/layouts/Preload";
+import authHeader from "../authHeader";
 
 const ConfirmationPage = (props) => {
   var [BookingInfo, setBookingInfo] = useState({});
   var [booking_id, setbooking_id] = useState(0);
   const [isLoading, setisLoading] = useState(0);
 
-  const user_id = 1;
+  const user_id = localStorage.getItem('user').user_id;
 
   if (props.location.state) {
     BookingInfo = props.location.state;
@@ -24,16 +25,14 @@ const ConfirmationPage = (props) => {
   useEffect(() => {
     bookSeats();
   }, []);
-  console.log(BookingInfo);
+
   function bookSeats() {
     setisLoading(2);
     if (!booked) return;
     setisLoading(1);
     fetch("http://localhost:3001/bookSeats", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: authHeader(),
       body: JSON.stringify({
         show_id: BookingInfo.show_id,
         user_id: user_id,
@@ -91,6 +90,18 @@ const ConfirmationPage = (props) => {
                   <div className="col-6">
                     <p style={{ fontSize: "1.2em" }}>
                       Price: <b>{BookingInfo.price}</b>
+                    </p>
+                  </div>
+                  <div className="col-6">
+                    <p style={{ fontSize: "1.2em" }}>
+                      Show Date:{" "}
+                      <b>
+                        {BookingInfo.show_date.slice(8, 10) +
+                          "-" +
+                          BookingInfo.show_date.slice(5, 7) +
+                          "-" +
+                          BookingInfo.show_date.slice(0, 4)}
+                      </b>
                     </p>
                   </div>
                   <div className="col-6">

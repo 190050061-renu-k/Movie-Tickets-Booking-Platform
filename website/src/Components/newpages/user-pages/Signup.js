@@ -5,6 +5,8 @@ import React, { useReducer } from 'react';
 import { Link } from 'react-router-dom';
 import "./../../../Assets/css/login.css";
 import NotificationAlert  from "react-notification-alert";
+import { Multiselect } from "multiselect-react-dropdown";
+// import Select from "react-select"
 
 import {
     Card,
@@ -43,13 +45,15 @@ const Signup =(props)=> {
     var getcol = props.col ? props.col : 6;
     var getcard = props.card ? props.card : 8;
     var margin = props.margin?props.margin:"100px";
+    var dest = props.dest ? props.dest : "/login";
+    var opt = ["Hyderabad","Bangalore","Mumbai"];
 
     const initialValues = {
         inputname: "",
         inputpswd1: "",
         inputpswd2: "",
         inputtel: "",
-        inputcity: "",
+        inputcity: [],
         inputlang: "",
         inputgenre: "",
         errors: {
@@ -67,6 +71,7 @@ const Signup =(props)=> {
     
     const { inputname,inputpswd1,
         inputpswd2,inputtel,inputcity,inputlang,inputgenre} = formValues;
+        console.log("Here",inputcity);
 
     
     const validateForm = (errors) => {
@@ -79,6 +84,8 @@ const Signup =(props)=> {
         event.preventDefault();
         
         const { name, value } = event.target;
+        console.log(name,value);
+        
         let errors = formValues.errors;
         switch (name) {
             case "inputname":
@@ -98,8 +105,26 @@ const Signup =(props)=> {
             default:
             break;
         }
-    
-        setFormValues({ errors, [name]: value });
+        if(name=="inputcity"){
+            console.log(inputcity);
+            if(inputcity.length==0 || inputcity.indexOf(value)==-1 ){
+                inputcity.push(value);
+                setFormValues(...prevState=>({...prevState,"errors":errors,  "inputcity": inputcity}));
+                console.log("After", formValues.inputcity);
+            }
+            else{
+                console.log("Clicker here");
+                var newinputcity = [];
+                for(var c in inputcity){
+                    if(c["value"]!==value){
+                        newinputcity.push(c);
+                    }
+                }
+                setFormValues(...prevState=>({...prevState,"errors":errors, "inputcity": newinputcity}));
+            }
+            
+        }
+        // setFormValues({ errors, [name]: value });
         };
         
         const handleBlur = (event) => {
@@ -155,7 +180,7 @@ const Signup =(props)=> {
             
             if (validateForm(formValues.errors)) {
                 // in a function, do -  check if credentials are correct in database and redirect to homepage, store user id, city id in session 
-                // let path = '/login';
+                // let path = {dest} // variable ;
                 // console.log(path);
                 // this.props.history.push(path);
                 console.log("Success");
@@ -328,6 +353,7 @@ const Signup =(props)=> {
                     </div>
                     }
                     <div className={"form-group col-" + getcol }>
+                        
                         City: <br/>
                         <select 
                         id="inputcity"
@@ -335,18 +361,22 @@ const Signup =(props)=> {
                         value = {inputcity}
                         onChange={handleFormChange}
                         onBlur={handleBlur}
+                        multiple
                         className="input-box form-control form-control-lg"
+                        // options = {opt}
+                        // displayValue = "key"
                         >
-                        <option>None</option>
-                        <option>Hyderabad</option>
-                        <option>Bangalore</option>
-                        <option>Delhi</option>
-                        <option>Mumbai</option>
-                        <option>Kolkata</option>
+                        {/* <option >None</option> */}
+                        <option value = "Hyderabad">Hyderabad</option>
+                        <option value="Bangalore">Bangalore</option>
+                        {/* <option>Delhi</option> */}
+                        <option value="Mumbai">Mumbai</option>
+                        {/* <option>Kolkata</option>
                         <option>Kochi</option>
                         <option>Ahmedabad</option>
-                        <option>Chennai</option>
+                        <option>Chennai</option> */}
                         </select>
+                        {/* </Multiselect> */}
                     </div>
                     <div className={"form-group col-"  + getcol }>
                         Language: <br/>

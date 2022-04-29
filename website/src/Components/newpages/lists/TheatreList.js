@@ -4,12 +4,13 @@ import "./../../../Assets/css/movieDetails.css";
 import { Card, CardHeader, CardBody, CardTitle, Button } from "reactstrap";
 import { Link } from "react-router-dom";
 import Preload from "Components/layouts/Preload";
+import authHeader from "../authHeader";
 
 const TheatreList = (props) => {
   var [theatreList, setTheatreList] = useState([]);
   var [offset, setOffset] = useState(0);
   const [isLoading, setisLoading] = useState(0);
-  const city_id = 1;
+  const city_id = localStorage.getItem('user').city_id;
 
   useEffect(() => {
     getTheatreList();
@@ -19,9 +20,7 @@ const TheatreList = (props) => {
     setisLoading(1);
     fetch("http://localhost:3001/getTheatres", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: authHeader(),
       body: JSON.stringify({ city_id }),
     })
       .then((response) => {
@@ -65,21 +64,21 @@ const TheatreList = (props) => {
                 color="primary"
                 size="lg"
                 style={{ marginLeft: "auto", marginRight: "auto" }}
-                onClick={() => setOffset(offset - 10)}
+                onClick={() => setOffset(offset - limit)}
               >
                 Prev
               </Button>
             </div>
           )}
 
-          {offset + show_theatres.length < theatreList.length ? (
+          {offset + show_theatres.length + 1 < theatreList.length ? (
             <div className="float-right" style={{ marginRight: "50px" }}>
               <Button
                 block
                 color="primary"
                 size="lg"
                 style={{ marginLeft: "auto", marginRight: "auto" }}
-                onClick={() => setOffset(offset + 10)}
+                onClick={() => setOffset(offset + limit)}
               >
                 Next
               </Button>

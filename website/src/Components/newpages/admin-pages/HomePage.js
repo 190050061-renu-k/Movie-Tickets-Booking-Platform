@@ -19,16 +19,16 @@ const AdminHomePage = (props) => {
             
             <div style={{ marginTop: "60px", marginBottom: "30px" }} className="text-center">
                 <div style={{marginLeft: "160px"}}>
-                <Button>Register Theatre</Button>
+                <Link to={"/admin/registertheatre"}><Button>Register Theatre</Button></Link>
                 </div>
                 <div>
-                <Button>Add Artist</Button>
+                <Link to="/admin/addartist"><Button>Add Artist</Button></Link>
                 </div>
                 <div>
-                <Button>Add Movie</Button>
+                <Link to="/admin/addmovie"><Button>Add Movie</Button></Link>
                 </div>
                 <div>
-                <Button>View Analytics</Button>
+                <Link to={"/admin/analytics"}><Button>View Analytics</Button></Link>
                 </div>
             </div>
         </>

@@ -10,6 +10,7 @@ import Signup from "../user-pages/Signup";
 import ViewHistory from "../profile-pages/ViewHistory";
 
 import "./../../../Assets/css/artistDetails.css";
+import authHeader from "../authHeader";
 
 const UserDetails = (props) => {
   var [userDetails, setUserDetails] = useState({});
@@ -18,7 +19,7 @@ const UserDetails = (props) => {
   var [ishistory, setIsHistory] = useState(false);
   const [isLoading, setisLoading] = useState(0);
 
-  const user_id = 267;
+  const user_id = JSON.parse(localStorage.getItem('user')).user_id;
 
   useEffect(() => {
     getUserDetails();
@@ -28,9 +29,7 @@ const UserDetails = (props) => {
     setisLoading(1);
     fetch("http://localhost:3001/getProfile", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: authHeader(),
       body: JSON.stringify({ user_id }),
     })
       .then((response) => {
@@ -70,7 +69,7 @@ const UserDetails = (props) => {
         </Button>
 
         {isEdit ? (
-          <Signup col={6} card={8} margin={"30px"} showsign={true}></Signup>
+          <Signup col={6} card={8} margin={"30px"} showsign={true} dest = "profile"></Signup>
         ) : (
           <></>
         )}
@@ -128,10 +127,12 @@ const UserDetails = (props) => {
                     setIsHistory(!ishistory);
                   }}
                 >
+                  <Button className="btn-primary">
                   <b>
                     <i className="nc-icon nc-minimal-down"></i>
                     <p style={{ display: "inline" }}>History</p>
                   </b>
+                  </Button>
                 </div>
                 <ViewHistory></ViewHistory>
               </div>
@@ -142,10 +143,12 @@ const UserDetails = (props) => {
                     setIsHistory(!ishistory);
                   }}
                 >
+                  <Button className="btn-primary">
                   <b>
                     <i className="nc-icon nc-minimal-right"></i>
                     <p style={{ display: "inline" }}>History</p>
                   </b>
+                  </Button>
                 </div>
               </div>
             )}
