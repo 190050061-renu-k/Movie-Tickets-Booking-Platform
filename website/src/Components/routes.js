@@ -20,6 +20,7 @@ import PaymentPage from "./newpages/payment/PaymentPage";
 import ConfirmationPage from "./newpages/payment/ConfirmationPage";
 import TheatreHomePage from "./newpages/theatre-pages/HomePage";
 import MovieTheatreList from "./newpages/lists/MovieTheatreList";
+import AddMovieShowPage from "./newpages/theatre-pages/AddMovie";
 
 var routes = [
   {
@@ -164,16 +165,23 @@ var routes = [
     layout: "",
   },
   {
-    path: "/theatre-homepage", // artist/:id to be done
+    path: "/movietheatrelist/:movieid", // :movieid to be done
+    name: "Movie Theatre List",
+    icon: "nc-icon nc-pin-3",
+    component: MovieTheatreList,
+    layout: "",
+  },
+  {
+    path: "/theatrehomepage", // artist/:id to be done
     name: "Theatre Home Page",
     icon: "nc-icon nc-pin-3",
     component: TheatreHomePage,
   },
   {
-    path: "/movietheatrelist/:movieid", // :movieid to be done
-    name: "Movie Theatre List",
+    path: "/theatreaddmovie", // artist/:id to be done
+    name: "Theatre Add Movie Page",
     icon: "nc-icon nc-pin-3",
-    component: MovieTheatreList,
+    component: AddMovieShowPage,
     layout: "",
   }
 ];
@@ -286,10 +294,17 @@ var sidebar_display = [
     layout: "",
   },
   {
-    path: "/theatre-homepage", // artist/:id to be done
+    path: "/theatrehomepage", // artist/:id to be done
     name: "Theatre Home Page",
     icon: "nc-icon nc-pin-3",
     component: TheatreHomePage,
+    layout: "",
+  },
+  {
+    path: "/theatreaddmovie", // artist/:id to be done
+    name: "Theatre Add Movie Page",
+    icon: "nc-icon nc-pin-3",
+    component: AddMovieShowPage,
     layout: "",
   }
 ];
