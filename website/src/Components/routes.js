@@ -16,7 +16,7 @@ import Analytics from "./newpages/theatre-pages/Analytics";
 import AdminHomePage from "./newpages/admin-pages/HomePage";
 import RegisterTheatre from "./newpages/admin-pages/RegisterTheatre";
 import AddArtist from "./newpages/admin-pages/AddArtist";
-import TheatreLiveOnline from "./newpages/theatre-pages/charts/TheatresLiveOnline";
+import TheatreLiveOnline from "./newpages/admin-pages/TheatresLiveOnline";
 import AddMovie from "./newpages/admin-pages/AddMovie";
 import TheatreSeatSelection from "./newpages/theatre-pages/LiveBooking";
 

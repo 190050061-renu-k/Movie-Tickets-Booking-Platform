@@ -1,37 +1,82 @@
 // Set 1 Usecase 6 - Movie Info Page
 // TODO: fetch data from db
 import React, { useState } from 'react';
-import {scrollMenu} from 'react-horizontal-scrolling-menu';
 // import { Link } from 'react-router-dom';
 import {
-    Card,
-    CardHeader,
-    CardBody,
-    CardTitle, 
     Button
   } from "reactstrap";
 import { Link } from 'react-router-dom';
+import RegisterTheatre from './RegisterTheatre';
+import AddArtist from './AddArtist';
+import AddMovie from './AddMovie';
+import TheatreLiveOnline from './TheatresLiveOnline';
 
 
 const AdminHomePage = (props) => {
+  var [regTheatre, setRegTheatre] = useState(false);
+  var [addArtist, setAddArtist] = useState(false);
+  var [addMovie, setAddMovie] = useState(false);
+  var [viewstats, setViewStats] = useState(false);
+
+  function handleChange(name){
+    switch(name){
+      case "theatre":
+        if(!regTheatre) setRegTheatre(!regTheatre);
+        if (addArtist) setAddArtist(!addArtist);
+        if (addMovie) setAddMovie(!addMovie);
+        if (viewstats) setViewStats(!viewstats);
+        break;
+      case "artist":
+        if(regTheatre) setRegTheatre(!regTheatre);
+        if (!addArtist) setAddArtist(!addArtist);
+        if (addMovie) setAddMovie(!addMovie);
+        if (viewstats) setViewStats(!viewstats);
+        break;
+
+      case "movie":
+        if(regTheatre) setRegTheatre(!regTheatre);
+        if (addArtist) setAddArtist(!addArtist);
+        if (!addMovie) setAddMovie(!addMovie);
+        if (viewstats) setViewStats(!viewstats);
+        break;
+
+      case "stats":
+        if(regTheatre) setRegTheatre(!regTheatre);
+        if (addArtist) setAddArtist(!addArtist);
+        if (addMovie) setAddMovie(!addMovie);
+        if (!viewstats) setViewStats(!viewstats);
+        break;
+
+      default:
+        break;
+    }
+  }
+
     return (
-        <>
-            
-            <div style={{ marginTop: "60px", marginBottom: "30px" }} className="text-center">
-                <div style={{marginLeft: "160px"}}>
-                <Link to={"/admin/registertheatre"}><Button>Register Theatre</Button></Link>
+        <div className='container'>
+            <div style={{ marginTop: "60px", marginBottom: "30px" }} className="text-center row ">
+                <div className='col-3' >
+                <Button onClick={()=>handleChange("theatre")}>Register Theatre</Button>
                 </div>
-                <div>
-                <Link to="/admin/addartist"><Button>Add Artist</Button></Link>
+                <div className='col-3'>
+                <Button onClick={()=>handleChange("artist")}>Add Artist</Button>
                 </div>
-                <div>
-                <Link to="/admin/addmovie"><Button>Add Movie</Button></Link>
+                <div className='col-3'>
+                <Button onClick={()=>handleChange("movie")}>Add Movie</Button>
                 </div>
-                <div>
-                <Link to={"/admin/analytics"}><Button>View Analytics</Button></Link>
+                <div className='col-3'>
+                <Button onClick={()=>handleChange("stats")}>View Analytics</Button>
                 </div>
             </div>
-        </>
+
+            <div>
+              {regTheatre ? <RegisterTheatre></RegisterTheatre> : <></>}
+              {addArtist ? <AddArtist></AddArtist> : <></>}
+              {addMovie ? <AddMovie></AddMovie> : <></>}
+              {viewstats ? <TheatreLiveOnline></TheatreLiveOnline> : <></>}
+            </div>
+
+        </div>
     );
   }
 

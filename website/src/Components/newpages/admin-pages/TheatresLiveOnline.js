@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {  Card, CardBody, CardTitle } from "reactstrap";
 import  { Bar } from "react-chartjs-2";
-import { TwoBar } from "./TwoBar";
+import { TwoBar } from "./../theatre-pages/charts/TwoBar";
 
 const TheatreLiveOnline = () => {
     var [data, setData] = useState([]);
