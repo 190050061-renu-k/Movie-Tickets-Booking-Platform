@@ -24,7 +24,7 @@ const ConfirmationPage = (props) => {
   useEffect(() => {
     bookSeats();
   }, []);
-  console.log(BookingInfo);
+
   function bookSeats() {
     setisLoading(2);
     if (!booked) return;
@@ -91,6 +91,18 @@ const ConfirmationPage = (props) => {
                   <div className="col-6">
                     <p style={{ fontSize: "1.2em" }}>
                       Price: <b>{BookingInfo.price}</b>
+                    </p>
+                  </div>
+                  <div className="col-6">
+                    <p style={{ fontSize: "1.2em" }}>
+                      Show Date:{" "}
+                      <b>
+                        {BookingInfo.show_date.slice(8, 10) +
+                          "-" +
+                          BookingInfo.show_date.slice(5, 7) +
+                          "-" +
+                          BookingInfo.show_date.slice(0, 4)}
+                      </b>
                     </p>
                   </div>
                   <div className="col-6">

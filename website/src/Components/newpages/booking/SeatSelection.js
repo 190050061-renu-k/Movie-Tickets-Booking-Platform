@@ -88,11 +88,6 @@ const SeatSelection = () => {
   }
 
   if (isLoading == 2) {
-    console.log(
-      new Date(movies.show_date) < new Date(),
-      new Date(movies.show_date),
-      new Date()
-    );
     if (new Date(movies.show_date) < new Date())
       return <>Booking unavailable</>;
     console.log(movies);
@@ -119,6 +114,7 @@ const SeatSelection = () => {
                 price: movies.moviePrice * movies.seatNumbers.length,
                 date: new Date(),
                 show_id: show_id,
+                show_date: movies.show_date,
               },
             }}
           >

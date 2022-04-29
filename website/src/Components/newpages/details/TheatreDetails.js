@@ -31,6 +31,7 @@ const TheatreDetails = (props) => {
       })
       .then((data) => {
         setDetails(data);
+        console.log(data);
         setisLoading(2);
       })
       .catch((err) => {
