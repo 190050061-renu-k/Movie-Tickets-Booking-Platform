@@ -12,6 +12,7 @@ const pool = new Pool({
 
 const getProfile = async (body) => {
   const { user_id } = body;
+  console.log(user_id);
   const client = await pool.connect();
 
   try {
@@ -29,6 +30,7 @@ const getProfile = async (body) => {
     const res3 = await client.query(query3, [user_id]);
 
     await client.query("COMMIT");
+    console.log({ demographic: res1.rows, genres: res2.rows, languages: res3.rows });
     return { demographic: res1.rows, genres: res2.rows, languages: res3.rows };
   } catch (e) {
     await client.query("ROLLBACK");

@@ -10,18 +10,19 @@ const artist_model = require("./models/artist_model");
 const theatre_model = require("./models/theatre_model");
 const analytics_model = require("./models/analytics_model");
 
+const auth = require("./auth");
+
 app.use(express.json());
 app.use(function (req, res, next) {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
-  res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Content-Type, Access-Control-Allow-Headers"
-  );
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+  res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, x-access-token");
+
   next();
 });
 
-app.post("/getProfile", async (req, res) => {
+app.post("/getProfile", auth, async (req, res) => {
   try {
     response = await user_model.getProfile(req.body);
     res.json(response);
@@ -347,6 +348,7 @@ app.post("/getOnlineVsOffline", async (req, res) => {
 
 app.post("/getLanguageMovies", async (req, res) => {
   try {
+    console.log(req.body);
     response = await movie_model.getLanguageMovies(req.body);
     res.json(response);
   } catch (error) {
@@ -395,7 +397,7 @@ app.get("/editProfile", async (req, res) => {
   }
 });
 
-app.post("/bookSeats", async (req, res) => {
+app.post("/bookSeats", auth, async (req, res) => {
   try {
     response = await show_model.bookSeats(req.body);
     res.json(response);
