@@ -1,8 +1,8 @@
 // Set 1 Usecase 6 - Movie Info Page
 // TODO: fetch data from db
-import React, { useState } from 'react';
+import React, { useReducer } from 'react';
+import "./../../../Assets/css/login.css";
 
-// import { Link } from 'react-router-dom';
 import {
     Card,
     CardHeader,
@@ -14,6 +14,134 @@ import { Link } from 'react-router-dom';
 
 
 const AddMovie = (props) => {
+    const initialValues = {
+        moviename: "",
+        errors: {
+            moviename: "",
+        },
+    };
+
+    const notificationAlert = React.useRef();
+    const [formValues, setFormValues] = useReducer(
+        (curVals, newVals) => ({ ...curVals, ...newVals }),
+        initialValues
+    );
+
+    const { moviename } = formValues;
+
+    const validateForm = (errors) => {
+        let valid = true;
+        Object.values(errors).forEach((val) => val.length > 0 && (valid = false));
+        return valid;
+    };
+    
+    const handleFormChange = (event) => {
+        event.preventDefault();
+        const { name, value } = event.target;
+        let errors = formValues.errors;
+        switch (name) {
+          case "moviename":
+            errors.moviename = value =="" ? "Required field"
+              : "";
+            break;
+          default:
+            break;
+        }
+    
+        setFormValues({ errors, [name]: value });
+      };
+    
+      const handleBlur = (event) => {
+        event.preventDefault();
+    
+        const { name, value } = event.target;
+        let errors = formValues.errors;
+        switch (name) {
+            case "moviename":
+                errors.moviename = value =="" ? "Required field"
+                  : "";
+                break;
+            default:
+                break;
+        }
+    
+        setFormValues({ errors, [name]: value });
+      };
+    
+      const handleSubmit = (event) => {
+        event.preventDefault();
+        let errors = formValues.errors;
+        if (formValues.moviename.length == 0) {
+          errors.moviename = "Required field";
+          setFormValues({ ...formValues, errors });
+          return;
+        }
+    
+        //need to be modified
+        if (validateForm(formValues.errors)) {
+        //   fetch("http://localhost:3001/userLogin", {
+        //     method: "POST",
+        //     headers: {
+        //       "Content-Type": "application/json",
+        //     },
+        //     body: JSON.stringify({
+        //       mobile_number: formValues.inputtel,
+        //       password: formValues.inputpswd,
+        //     }),
+        //   })
+        //     .then((response) => {
+        //       return response.json();
+        //     })
+        //     .then((data) => {
+        //       if (data.accessToken) {
+        //         localStorage.setItem("user", JSON.stringify(data));
+        //         setRedirect(true);
+        //       } else {
+        //         var options = {};
+        //         options = {
+        //           place: "tc",
+        //           message: (
+        //             <div>
+        //               <div>
+        //                 <b>Invalid credentials</b>
+        //               </div>
+        //             </div>
+        //           ),
+        //           type: "danger",
+        //           icon: "nc-icon nc-bell-55",
+        //           autoDismiss: 7,
+        //         };
+        //         notificationAlert.current.notificationAlert(options);
+        //       }
+        //       return data;
+        //     })
+        //     .catch((err) => {
+        //       console.log(err);
+        //     });
+    
+        //   // in a function, do -  check if credentials are correct in database and redirect to homepage, store user id, city id in session
+          console.log("Success");
+        // } else {
+        //   console.log("Failure");
+        //   var options = {};
+        //   options = {
+        //     place: "tc",
+        //     message: (
+        //       <div>
+        //         <div>
+        //           <b>Please enter valid entries</b>
+        //         </div>
+        //       </div>
+        //     ),
+        //     type: "danger",
+        //     icon: "nc-icon nc-bell-55",
+        //     autoDismiss: 7,
+        //   };
+        //   notificationAlert.current.notificationAlert(options);
+        }
+      };
+
+
     return (
         <div>
         <div className="d-flex align-items-center auth px-0" style={{marginTop:"100px", marginLeft:"250px", width:"50%"}}>
@@ -33,7 +161,33 @@ const AddMovie = (props) => {
                         <div className='row'>
 
                     <div className={"form-group col-12" }>
-                        <input type="text" className="form-control form-control-lg" id="inputname" placeholder="Movie Name" />
+                        Movie Name: <br/>
+                        <input 
+                        type="text" 
+                        id="moviename" 
+                        name="moviename"
+                        value = {moviename}
+                        onChange={handleFormChange}
+                        onBlur={handleBlur}
+                        className={
+                        "input-box form-control form-control-lg " +
+                        (formValues.errors.moviename.length > 0
+                            ? "hasError"
+                            : "")
+                        }
+                        />
+                        <div
+                            style={{ width: "100%", marginTop: "8px" }}
+                            className={
+                                formValues.errors.moviename.length > 0 ? "errorBar" : ""
+                            }
+                            >
+                            {formValues.errors.moviename.length > 0 && (
+                                <span className="error">
+                                {formValues.errors.moviename}
+                                </span>
+                            )}
+                        </div>
                     </div>
                     <div className={"form-group col-12" }>
                         <input type="text" className="form-control form-control-lg" id="inputdate" placeholder="Release Date" />
@@ -60,7 +214,7 @@ const AddMovie = (props) => {
                     
                     
                     <div className="mt-3">
-                        <Link className="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">Add Artist</Link>
+                        <Button className="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" onClick={handleSubmit}>Add Artist</Button>
                     </div>
 
                     </div>                    
