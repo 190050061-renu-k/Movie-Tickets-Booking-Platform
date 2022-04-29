@@ -63,7 +63,7 @@ const getTheatreShows2 = async (body) => {
     const res1 = await client.query(query1, [theatre_id]);
 
     await client.query("COMMIT");
-    return { shows_info: res1.rows };
+    return res1.rows;
   } catch (e) {
     await client.query("ROLLBACK");
     throw e;
