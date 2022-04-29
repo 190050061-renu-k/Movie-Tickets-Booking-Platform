@@ -129,8 +129,6 @@ var routes = [
     component: AdminHomePage,
     layout: "",
   }
-  
-  
 ];
 
 var sidebar_display = [
