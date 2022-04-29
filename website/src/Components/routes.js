@@ -18,7 +18,7 @@ import RegisterTheatre from "./newpages/admin-pages/RegisterTheatre";
 import AddArtist from "./newpages/admin-pages/AddArtist";
 import TheatreLiveOnline from "./newpages/theatre-pages/charts/TheatresLiveOnline";
 import AddMovie from "./newpages/admin-pages/AddMovie";
-import TheatreSeatSelection from "./newpages/theatre-pages/liveBookings/SeatSelection";
+import TheatreSeatSelection from "./newpages/theatre-pages/LiveBooking";
 
 var routes = [
   {
@@ -161,30 +161,11 @@ var routes = [
     component: AddArtist,
     layout: "",
   },
-  {
-    path: "/theatres/livebooking/:show_id", // :movie_id to be added
-    name: "Live Booking",
-    icon: "nc-icon nc-pin-3",
-    component: TheatreSeatSelection,
-    layout: "",
-  },
+  
 ];
 
 var sidebar_display = [
-  {
-    path: "/moviedetails", // movies/:id to be done
-    name: "Movie Details",
-    icon: "nc-icon nc-pin-3",
-    component: MovieDetails,
-    layout: "",
-  },
-  {
-    path: "/artistdetails",
-    name: "Artist Details",
-    icon: "nc-icon nc-pin-3",
-    component: ArtistDetails,
-    layout: "",
-  },
+  
   {
     path: "/admin/addmovie",
     name: "Add Movie",
@@ -282,14 +263,7 @@ var sidebar_display = [
     icon: "nc-icon nc-pin-3",
     component: AddArtist,
     layout: "",
-  },
-  {
-    path: "/theatres/livebooking/:show_id", // :movie_id to be added
-    name: "Live Booking",
-    icon: "nc-icon nc-pin-3",
-    component: TheatreSeatSelection,
-    layout: "",
-  },
+  }
 ];
 
 export default routes;
