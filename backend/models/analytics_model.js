@@ -129,11 +129,13 @@ const getOnlineVsOffline = async (body) => {
 };
 
 const getAdminAnalytics = () => {
-  const query1 = `SELECT theatres.theatre_id, theatres.name, show_online_offline.book_type, SUM(show_online_offline.seats_booked) sum_seats 
+  const query1 = `SELECT theatres.theatre_id, theatres.name as theatre_name, show_online_offline.book_type, SUM(show_online_offline.seats_booked) sum_seats 
   FROM theatres, shows,
-    (SELECT book_type, show_id, count(seat_id) seats_booked FROM bookings NATURAL INNER JOIN booking_seat GROUP BY book_type, show_id) show_online_offline
-    WHERE theatres.theatre_id = shows.theatre_id AND shows.show_id = show_online_offline.show_id
-    GROUP BY theatres.theatre_id, theatres.name, show_online_offline.book_type;`;
+  (SELECT book_type, show_id, count(seat_id) seats_booked FROM bookings NATURAL INNER JOIN booking_seat GROUP BY book_type, show_id) show_online_offline
+  WHERE theatres.theatre_id = shows.theatre_id AND shows.show_id = show_online_offline.show_id 
+and shows.show_date + interval '1 year' + interval '3 month' + interval '25 day' >= CURRENT_DATE - INTERVAL '6 days'
+and shows.show_date + interval '1 year' + interval '3 month' + interval '25 day' <= CURRENT_DATE
+  GROUP BY theatres.theatre_id, theatres.name, show_online_offline.book_type order by theatre_name;`;
   return new Promise(function (resolve, reject) {
     pool.query(query1, (error, results) => {
       if (error) {
