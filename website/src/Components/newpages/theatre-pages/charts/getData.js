@@ -1,4 +1,4 @@
-export function getData(label, yaxis, xaxis) {
+export function getData(label, yaxis, name) {
     return {
       type:"line",
       data: (canvas) => {
@@ -33,7 +33,7 @@ export function getData(label, yaxis, xaxis) {
           y: {
             title: {
               display: true,
-              text: "Ratings",
+              text: name,
             },
             ticks: {
               color: "#9f9f9f",
