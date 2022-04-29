@@ -25,17 +25,6 @@ app.use(function (req, res, next) {
   next();
 });
 
-
-app.post("/resetPassword", async(req,res)=>{
-  try {
-    response = await user_model.resetPassword(req.body);
-    res.json(response);
-  } catch(error) {
-    console.log(error);
-    res.status(500).send(error);
-  }
-});
-
 app.post("/getProfile", auth, async (req, res) => {
   try {
     response = await user_model.getProfile(req.body);
