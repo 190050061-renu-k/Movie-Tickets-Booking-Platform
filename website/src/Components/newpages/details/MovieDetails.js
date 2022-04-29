@@ -10,12 +10,17 @@ import { ScrollMenu } from "react-horizontal-scrolling-menu";
 import "./../../../Assets/css/movieDetails.css";
 import Preload from "../../layouts/Preload";
 import { Redirect } from "react-router-dom";
+import Rating from "react-rating";
+
 
 const MovieDetails = (props) => {
   const role = localStorage.getItem('role');
   let { movie_id } = useParams();
   var [movieDetails, setMovieDetails] = useState({});
   const [isLoading, setisLoading] = useState(0);
+  const [showbutton, setShowButton] = useState(1);
+  var [rating, setRating] = useState(0);
+  var [display,setDisplay] =useState();
 
   useEffect(() => {
     getMovieDetails();
@@ -40,6 +45,11 @@ const MovieDetails = (props) => {
       .catch((err) => {
         console.log(err);
       });
+  }
+
+  function addRatingHandler(){
+    setShowButton(2);
+    // add rating to db , rating in "rating" variable
   }
 
   const poster_img_base = "http://image.tmdb.org/t/p/w300/";
@@ -85,9 +95,31 @@ const MovieDetails = (props) => {
                           <h5 style={{ display: "inline", fontSize: "1.5em" }}>
                             IMDB Rating: {movieDetails.info[0].imdb_rating}
                           </h5>
-                          <Button className="text-light float-right">
-                            Rate Now
-                          </Button>
+                          {showbutton==2 ? <p>You rated {rating}</p>:<></>}
+                  {showbutton==1 ? <Button className="text-light float-right" onClick={()=>setShowButton(0)} >Rate Now</Button>
+                   : <></>}
+                  {showbutton==0 ? 
+                  <div>
+                   <Rating
+                   onClick={setRating}
+                   initialRating={rating}
+                   onHover={setDisplay}
+
+                   emptySymbol="far fa-heart"
+                   fullSymbol="fas fa-heart"
+                   style={{
+                       
+                       color:"red",
+                       fontSize:"30px"
+                   }}
+                   fractions={2}
+                   ></Rating>
+                   <span style={{paddingLeft:"5px"}}>
+                      {display}
+                   </span>
+                   <div><Button onClick={addRatingHandler}>Submit</Button></div>
+                   </div>
+                  : <></>}
                         </>
                       ) : (
                         <>
