@@ -182,11 +182,12 @@ const TheatreDetails = (props) => {
                               <div className="col-8">
                                 {movie.show_timings.map((show_) => {
                                   return (
-                                    <Button className="btn-outline-primary">
+                                    
                                       <Link to={"/seats/" + show_.show_id}>
+                                          <Button className="btn-outline-primary">
                                         {show_.show_time}
+                                        </Button>
                                       </Link>
-                                    </Button>
                                   );
                                 })}
                               </div>
