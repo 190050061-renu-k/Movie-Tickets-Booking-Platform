@@ -1,6 +1,9 @@
 // Set 1 Usecase 6 - Movie Info Page
 // TODO: fetch data from db
 import React, { useState } from 'react';
+import { Redirect } from "react-router-dom";
+
+import {scrollMenu} from 'react-horizontal-scrolling-menu';
 // import { Link } from 'react-router-dom';
 import {
     Button
@@ -52,10 +55,15 @@ const AdminHomePage = (props) => {
     }
   }
 
+    
+
+  const role = localStorage.getItem('role');
     return (
         <div className='container'>
-            <div style={{ marginTop: "60px", marginBottom: "30px" }} className="text-center row ">
-                <div className='col-3' >
+            
+        {role==null ? <Redirect push to="/" /> : null}
+            <div style={{ marginTop: "60px", marginBottom: "30px" }} className="text-center row">
+                <div style={{marginLeft: "160px"}} className="col-3">
                 <Button onClick={()=>handleChange("theatre")}>Register Theatre</Button>
                 </div>
                 <div className='col-3'>

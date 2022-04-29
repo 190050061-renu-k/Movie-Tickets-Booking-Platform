@@ -1,6 +1,7 @@
 // Set 1 Usecase 6 - Movie Info Page
 // TODO: fetch data from db
-import React, { useReducer } from 'react';
+import React, { useState, useReducer } from 'react';
+import { Redirect } from "react-router-dom";
 
 import {
     Card,
@@ -12,6 +13,7 @@ import {
 
 
 const RegisterTheatre = (props) => {
+    const role = localStorage.getItem('role');
     const initialValues = {
         theatrename: "",
         longitude: "", 
@@ -186,6 +188,7 @@ const RegisterTheatre = (props) => {
     
     return (
         <div>
+        {role==null ? <Redirect push to="/" /> : null}
         <div className="d-flex align-items-center auth px-0" style={{marginTop:"100px"}}>
           <div className="row w-100 mx-0">
             <div className={"mx-auto col-lg-4" }></div>

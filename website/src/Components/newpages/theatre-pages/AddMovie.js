@@ -5,11 +5,13 @@ import { Button} from "reactstrap";
 import { Link } from 'react-router-dom';
 import {Tabs, Tab} from 'react-bootstrap';
 import "./../../../Assets/css/addmovie.css";
+import { Redirect } from "react-router-dom";
 
 
 var movies = [{"movie_id":1,"movie_name":"KgF Chapter-3"}, {"movie_id":2,"movie_name":"KgF Chapter-2"}]
 
 const AddMovieShowPage = (props) => {
+    const role = localStorage.getItem('role');
     var showsInfo = {"movie_name":"KGF Chapter 2", "movie_id":2, "screen_numbers": [1,2,3], "screen1": {"date1na": [0], "date2na": [1], "date3na": [1,2], "date4na": [1,2], "date5na": [3], "date6na": [], "date7na": [1,2,3], "date1s": [0], "date2s": [1], "date3s": [1,2], "date4s": [1,2], "date5s": [3,4], "date6s": [], "date7s": [1,2,3]}, "screen2": {"date1na": [0], "date2na": [1], "date3na": [1,2], "date4na": [1,2], "date5na": [3], "date6na": [], "date7na": [1,2,3], "date1s": [0], "date2s": [1], "date3s": [1,2], "date4s": [1,2], "date5s": [3,4], "date6s": [], "date7s": [1,2,3]}, "screen3": {"date1na": [0], "date2na": [1], "date3na": [1,2], "date4na": [1,2], "date5na": [3], "date6na": [], "date7na": [1,2,3], "date1s": [0], "date2s": [1], "date3s": [1,2], "date4s": [1,2], "date5s": [3,4], "date6s": [], "date7s": [1,2,3]}};
 
     var [data, setData] = useState({ShowsInfo :showsInfo, isMovieSelected:false});
@@ -33,6 +35,7 @@ const AddMovieShowPage = (props) => {
 
     return (
         <>
+        {role==null ? <Redirect push to="/" /> : null}
             <div style={{ marginTop: "60px", marginBottom: "30px" }}>
                 <div style={{ marginTop: "30px" }}>
                         {!data.isMovieSelected?

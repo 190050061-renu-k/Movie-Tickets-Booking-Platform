@@ -7,8 +7,10 @@ import { Link } from "react-router-dom";
 
 import "./../../../Assets/css/artistDetails.css";
 import Preload from "Components/layouts/Preload";
+import { Redirect } from "react-router-dom";
 
 const ArtistDetails = (props) => {
+  const role = localStorage.getItem('role');
   let { artist_id } = useParams();
   var [artistDetails, setArtistDetails] = useState({});
   const [isLoading, setisLoading] = useState(0);
@@ -44,6 +46,7 @@ const ArtistDetails = (props) => {
   if (isLoading == 2) {
     return (
       <div>
+      {role==null ? <Redirect push to="/" /> : null}
         <div className="container text-left" style={{ marginTop: "60px" }}>
           <div>
             <h3 style={{ fontWeight: "bold" }}>

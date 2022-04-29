@@ -5,13 +5,13 @@ import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { Tabs, Tab } from "react-bootstrap";
 import Preload from "Components/layouts/Preload";
+import { Redirect } from "react-router-dom";
 
 const TheatreDetails = (props) => {
+  const role = localStorage.getItem('role');
   let { theatre_id } = useParams();
   var [details, setDetails] = useState({});
   const [isLoading, setisLoading] = useState(0);
-
-  const city_id = 1;
 
   useEffect(() => {
     getDetails();
@@ -24,7 +24,7 @@ const TheatreDetails = (props) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ theatre_id, city_id }),
+      body: JSON.stringify({ theatre_id }),
     })
       .then((response) => {
         return response.json();
@@ -90,12 +90,13 @@ const TheatreDetails = (props) => {
     let theatreDetails = {
       shows: shows,
       id: theatre_id,
-      city: details.city[0].city,
-      name: details.name[0].name,
+      city: details.city,
+      name: details.name,
     };
 
     return (
       <div>
+        {role==null ? <Redirect push to="/" /> : null}
         <div className="container text-left" style={{ marginTop: "60px" }}>
           <div>
             <Card>

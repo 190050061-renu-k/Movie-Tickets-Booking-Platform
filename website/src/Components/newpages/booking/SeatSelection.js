@@ -12,8 +12,10 @@ import { Button } from "reactstrap";
 import { Link } from "react-router-dom";
 import { elements } from "chart.js/auto";
 import Preload from "Components/layouts/Preload";
+import { Redirect } from "react-router-dom";
 
 const SeatSelection = (props) => {
+  const role = localStorage.getItem('role');
   let { show_id } = useParams();
   var type_booking = props.type ? props.type : "online";
   const [isLoading, setisLoading] = useState(0);
@@ -94,6 +96,7 @@ const SeatSelection = (props) => {
     console.log(movies);
     return (
       <>
+      {role==null ? <Redirect push to="/" /> : null}
         <div className="main container">
           <MovieContext.Provider value={{ movies, changeState: setmovies }}>
             <MovieSelector />

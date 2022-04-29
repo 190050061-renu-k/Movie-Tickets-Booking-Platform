@@ -5,12 +5,14 @@ import { Card, CardHeader, CardBody, CardTitle, Button } from "reactstrap";
 import { Link } from "react-router-dom";
 import Preload from "Components/layouts/Preload";
 import authHeader from "../authHeader";
+import { Redirect } from "react-router-dom";
 
 const TheatreList = (props) => {
+  const role = localStorage.getItem('role');
   var [theatreList, setTheatreList] = useState([]);
   var [offset, setOffset] = useState(0);
   const [isLoading, setisLoading] = useState(0);
-  const city_id = localStorage.getItem('user').city_id;
+  const city_id = JSON.parse(localStorage.getItem("user")).city_id;
 
   useEffect(() => {
     getTheatreList();
@@ -28,6 +30,7 @@ const TheatreList = (props) => {
       })
       .then((data) => {
         setTheatreList(data);
+        console.log(data, city_id);
         setisLoading(2);
       })
       .catch((err) => {
@@ -40,11 +43,12 @@ const TheatreList = (props) => {
   if (isLoading == 2) {
     const show_theatres =
       theatreList.length - offset > limit
-        ? theatreList.slice(offset, offset + 12)
+        ? theatreList.slice(offset, offset + limit)
         : theatreList.slice(offset, theatreList.length);
 
     return (
       <>
+      {role==null ? <Redirect push to="/" /> : null}
         <div style={{ marginTop: "60px", marginBottom: "30px" }}>
           <div style={{ marginTop: "30px" }} className="text-center">
             <h2 style={{ display: "inline" }} className="text-center">

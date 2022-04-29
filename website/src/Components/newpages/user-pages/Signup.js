@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import "./../../../Assets/css/login.css";
 import NotificationAlert from "react-notification-alert";
 import { Multiselect } from "multiselect-react-dropdown";
+import { Redirect } from "react-router-dom";
+// import Select from "react-select"
 
 import { Card, CardHeader, CardBody, CardTitle, Button } from "reactstrap";
 import Preload from "Components/layouts/Preload";
@@ -20,7 +22,7 @@ const Signup = (props) => {
   var [genres, setGenres] = useState({});
   var [languages, setLanguages] = useState({});
   const [isLoading, setisLoading] = useState(0);
-
+    const role = localStorage.getItem('role');
   useEffect(() => {
     getCategories();
   }, []);
@@ -255,6 +257,7 @@ const Signup = (props) => {
     console.log(cities, genres, languages);
     return (
       <div>
+          {role==null ? <Redirect push to="/" /> : null}
         <NotificationAlert ref={notificationAlert} />
 
         <div className=" align-items-center " style={{ marginTop: margin }}>

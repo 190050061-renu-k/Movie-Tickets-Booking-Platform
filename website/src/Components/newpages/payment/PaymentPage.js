@@ -4,10 +4,12 @@ import React, { useState } from "react";
 
 // import { Link } from 'react-router-dom';
 import { Card, CardHeader, CardBody, CardTitle, Button } from "reactstrap";
+import { Redirect } from "react-router-dom";
 
 import { Link } from "react-router-dom";
 
 const PaymentPage = (props) => {
+  const role = localStorage.getItem('role');
   var [PaymentInfo, setPaymentInfo] = useState({});
   // PaymentInfo= {"seats":['A1','B2','C3'], "theatre_id": 2, "theatre_name": "Ramya's INOX", "movie_name":"KGF Chapter Two", "movie_id":111, "price": 100, "date": new Date(20,1,2022)};
   if (props.location.state) {
@@ -31,6 +33,7 @@ const PaymentPage = (props) => {
   ];
   return (
     <div>
+      {role==null ? <Redirect push to="/" /> : null}
       <div className="container text-left" style={{ marginTop: "60px" }}>
         <Card>
           <CardBody>
