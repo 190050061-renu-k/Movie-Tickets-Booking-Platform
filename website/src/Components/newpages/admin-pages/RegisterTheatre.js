@@ -1,6 +1,6 @@
 // Set 1 Usecase 6 - Movie Info Page
 // TODO: fetch data from db
-import React, { useState } from 'react';
+import React, { useState, useReducer } from 'react';
 import { Redirect } from "react-router-dom";
 
 import {

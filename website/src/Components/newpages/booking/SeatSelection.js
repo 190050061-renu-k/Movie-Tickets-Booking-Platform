@@ -14,7 +14,7 @@ import { elements } from "chart.js/auto";
 import Preload from "Components/layouts/Preload";
 import { Redirect } from "react-router-dom";
 
-const SeatSelection = () => {
+const SeatSelection = (props) => {
   const role = localStorage.getItem('role');
   let { show_id } = useParams();
   var type_booking = props.type ? props.type : "online";

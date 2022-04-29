@@ -1,6 +1,7 @@
 // Set 1 Usecase 6 - Movie Info Page
 // TODO: fetch data from db
 import React, { useReducer } from 'react';
+import { Redirect } from "react-router-dom";
 import "./../../../Assets/css/login.css";
 import {
     Card,

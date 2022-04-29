@@ -22,8 +22,6 @@ const Signup = (props) => {
   var [genres, setGenres] = useState({});
   var [languages, setLanguages] = useState({});
   const [isLoading, setisLoading] = useState(0);
-
-const Signup =(props)=> {
     const role = localStorage.getItem('role');
   useEffect(() => {
     getCategories();
