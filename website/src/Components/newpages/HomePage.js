@@ -196,13 +196,13 @@ const HomePage = (props) => {
                 <CardBody>
                   <h3>{list.name}</h3>
                   <div>
-                    {/* <ScrollMenu
+                    <ScrollMenu
                       options={{
                         ratio: 0.9,
                         rootMargin: "5px",
                         threshold: [0.01, 0.05, 0.5, 0.75, 0.95, 1],
                       }}
-                    > */}
+                    >
                       {list.mvs.map((movie) => {
                         i += 1;
                         return (
@@ -233,7 +233,7 @@ const HomePage = (props) => {
                           </div>
                         );
                       })}
-                    {/* </ScrollMenu> */}
+                    </ScrollMenu>
                   </div>
                 </CardBody>
               </Card>
