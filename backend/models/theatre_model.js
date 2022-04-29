@@ -24,7 +24,7 @@ const getTheatres = (body) => {
 };
 
 const getTheatreShows = async (body) => {
-  const { theatre_id, city_id } = body;
+  const { theatre_id } = body;
   const client = await pool.connect();
   try {
     await client.query("BEGIN");
@@ -35,13 +35,14 @@ const getTheatreShows = async (body) => {
   ORDER BY show_date asc, movie_name, screen_num, show_time;`;
     const res1 = await client.query(query1, [theatre_id]);
 
-    const query2 = `select city from cities where city_id = $1`;
-    const res2 = await client.query(query2, [city_id]);
-
-    const query3 = `select name from theatres where theatre_id = $1`;
-    const res3 = await client.query(query3, [theatre_id]);
+    const query2 = `select name, cities.city from theatres, cities where theatre_id = $1 and theatres.city = cities.city_id;`;
+    const res2 = await client.query(query2, [theatre_id]);
     await client.query("COMMIT");
-    return { shows_info: res1.rows, city: res2.rows, name: res3.rows };
+    return {
+      shows_info: res1.rows,
+      city: res2.rows[0].city,
+      name: res2.rows[0].name,
+    };
   } catch (e) {
     await client.query("ROLLBACK");
     throw e;
@@ -180,6 +181,55 @@ const registerTheatre = async (body) => {
   }
 };
 
+const theatreLogin = async (body) => {
+  const { login_id, password } = body;
+
+  const client = await pool.connect();
+
+  try {
+    await client.query("BEGIN");
+    const query =
+      "SELECT theatre_id from theatres WHERE username = $1 AND password = $2";
+    const res = await client.query(query, [login_id, password]);
+
+    await client.query("COMMIT");
+
+    if (res.rows.length == 0) return { theatre_id: null };
+    else {
+      const token = jwt.sign(
+        { theatre_id: res.rows[0].theatre_id },
+        process.env.TOKEN_KEY,
+        { expiresIn: "2h" }
+      );
+      return {
+        user_id: res.rows[0].theatre_id,
+        accessToken: token,
+      };
+    }
+  } catch (e) {
+    await client.query("ROLLBACK");
+    throw e;
+  } finally {
+    client.release();
+  }
+};
+
+const adminLogin = async (body) => {
+  const { login_id, password } = body;
+
+  if (login_id != "administrator" || password != "islskrprprk") return null;
+  else {
+    const token = jwt.sign(
+      { login_id: "administrator" },
+      process.env.TOKEN_KEY,
+      { expiresIn: "2h" }
+    );
+    return {
+      accessToken: token,
+    };
+  }
+};
+
 module.exports = {
   getTheatres,
   getTheatreShows,
@@ -188,4 +238,6 @@ module.exports = {
   getTheatresInRange,
   getTheatreMovies,
   registerTheatre,
+  theatreLogin,
+  adminLogin,
 };

@@ -410,6 +410,26 @@ app.get("/getCities", async (req, res) => {
   }
 });
 
+app.post("/theatreLogin", async (req, res) => {
+  try {
+    response = await theatre_model.theatreLogin();
+    res.json(response);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+});
+
+app.post("/adminLogin", async (req, res) => {
+  try {
+    response = await theatre_model.adminLogin();
+    res.json(response);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+});
+
 app.get("/getGenres", async (req, res) => {
   try {
     response = await user_model.getGenres();
