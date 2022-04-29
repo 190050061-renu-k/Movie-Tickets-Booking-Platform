@@ -20,7 +20,6 @@ import TheatreLiveOnline from "./newpages/theatre-pages/charts/TheatresLiveOnlin
 import AddMovie from "./newpages/admin-pages/AddMovie";
 
 var routes = [
-  
   {
     path: "/signup",
     name: "Register",
@@ -50,9 +49,6 @@ var routes = [
     layout: "",
   },
   {
-<<<<<<< HEAD
-    path: "/theatres/analytics",
-=======
     path: "/admin/addmovie",
     name: "Add Movie",
     icon: "nc-icon nc-pin-3",
@@ -67,8 +63,7 @@ var routes = [
     layout: "",
   },
   {
-    path: "/theatres/analytics", 
->>>>>>> 9e87b252678ba8489cfb6f3f9f7f29c8740d927f
+    path: "/theatres/analytics",
     name: "Theatre Analytics",
     icon: "nc-icon nc-pin-3",
     component: Analytics,
@@ -89,7 +84,7 @@ var routes = [
     layout: "",
   },
   {
-    path: "/theatres/:theatre_id", 
+    path: "/theatres/:theatre_id",
     name: "Theatres",
     icon: "nc-icon nc-pin-3",
     component: TheatreDetails,
@@ -117,32 +112,28 @@ var routes = [
     layout: "",
   },
   {
-    path: "/seats/:show_id", 
+    path: "/seats/:show_id",
     name: "Seats",
     icon: "nc-icon nc-pin-3",
     component: SeatSelection,
     layout: "",
   },
   {
-    path: "/payment", 
+    path: "/payment",
     name: "Payment",
     icon: "nc-icon nc-pin-3",
     component: PaymentPage,
     layout: "",
   },
   {
-    path: "/confirmation", 
+    path: "/confirmation",
     name: "Booking Confirmation",
     icon: "nc-icon nc-pin-3",
     component: ConfirmationPage,
     layout: "",
   },
   {
-<<<<<<< HEAD
     path: "/movietheatrelist/:movie_id", // :movieid to be done
-=======
-    path: "/movietheatrelist/:movieid", 
->>>>>>> 9e87b252678ba8489cfb6f3f9f7f29c8740d927f
     name: "Movie Theatre List",
     icon: "nc-icon nc-pin-3",
     component: MovieTheatreList,
@@ -154,19 +145,6 @@ var routes = [
     icon: "nc-icon nc-pin-3",
     component: AdminHomePage,
     layout: "",
-<<<<<<< HEAD
-  },
-];
-
-var sidebar_display = [
-  {
-    path: "/matches",
-    name: "Matches",
-    icon: "nc-icon nc-tile-56",
-    component: Matches,
-    layout: "",
-=======
->>>>>>> 9e87b252678ba8489cfb6f3f9f7f29c8740d927f
   },
   {
     path: "/admin/registertheatre", // :movieid to be done
@@ -181,14 +159,10 @@ var sidebar_display = [
     icon: "nc-icon nc-pin-3",
     component: AddArtist,
     layout: "",
-  }
-  
-  
+  },
 ];
 
 var sidebar_display = [
- 
-  
   {
     path: "/moviedetails", // movies/:id to be done
     name: "Movie Details",
@@ -260,14 +234,14 @@ var sidebar_display = [
     layout: "",
   },
   {
-    path: "/seats/:show_id", // seats/:movieid to be done
+    path: "/seats/:show_id",
     name: "Seats",
     icon: "nc-icon nc-pin-3",
     component: SeatSelection,
     layout: "",
   },
   {
-    path: "/payment", // payment:bookingid to be done
+    path: "/payment",
     name: "Payment",
     icon: "nc-icon nc-pin-3",
     component: PaymentPage,
@@ -287,8 +261,6 @@ var sidebar_display = [
     component: AdminHomePage,
     layout: "",
   },
-<<<<<<< HEAD
-=======
   {
     path: "/admin/registertheatre", // :movieid to be done
     name: "Register Theatre Page",
@@ -302,8 +274,7 @@ var sidebar_display = [
     icon: "nc-icon nc-pin-3",
     component: AddArtist,
     layout: "",
-  }
->>>>>>> 9e87b252678ba8489cfb6f3f9f7f29c8740d927f
+  },
 ];
 
 export default routes;
