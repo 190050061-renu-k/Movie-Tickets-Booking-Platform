@@ -174,7 +174,7 @@ const getMovieTheatres = async (body) => {
     const query1 = `SELECT show_id, show_timings.name as show_time, theatres.name as theatre_name, shows.theatre_id as theatre_id, show_date, screen_num
     FROM shows, show_timings, theatres where 
     city = $1 and theatres.theatre_id = shows.theatre_id and shows.show_timings_id = show_timings.show_timings_id and 
-    shows.movie_id = $2 and show_date + interval '1 year' + interval '3 month' + interval '27 day' <= CURRENT_DATE + INTERVAL '2 days' and show_date + interval '1 year' + interval '3 month' + interval '27 day'>= CURRENT_DATE 
+    shows.movie_id = $2 and show_date <= CURRENT_DATE + INTERVAL '2 days' and show_date >= CURRENT_DATE 
   ORDER BY show_date asc, theatres.name, screen_num, show_timings.show_timings_id;`;
     const res1 = await client.query(query1, [city_id, movie_id]);
 

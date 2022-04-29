@@ -77,9 +77,21 @@ app.post("/getTheatreMovieShows", (req, res) => {
     });
 });
 
-app.post("/getAvailableSeats", (req, res) => {
+app.post("/getUnavailableSeats", (req, res) => {
   show_model
-    .getAvailableSeats(req.body)
+    .getUnavailableSeats(req.body)
+    .then((response) => {
+      res.json(response);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).send(error);
+    });
+});
+
+app.post("/getShowDetails", (req, res) => {
+  show_model
+    .getShowDetails(req.body)
     .then((response) => {
       res.json(response);
     })
