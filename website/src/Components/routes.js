@@ -169,21 +169,6 @@ var routes = [
 
 var sidebar_display = [
  
-  
-  {
-    path: "/moviedetails", // movies/:id to be done
-    name: "Movie Details",
-    icon: "nc-icon nc-pin-3",
-    component: MovieDetails,
-    layout: "",
-  },
-  {
-    path: "/artistdetails",
-    name: "Artist Details",
-    icon: "nc-icon nc-pin-3",
-    component: ArtistDetails,
-    layout: "",
-  },
   {
     path: "/admin/addmovie",
     name: "Add Movie",
