@@ -21,6 +21,7 @@ import ConfirmationPage from "./newpages/payment/ConfirmationPage";
 import TheatreHomePage from "./newpages/theatre-pages/HomePage";
 import MovieTheatreList from "./newpages/lists/MovieTheatreList";
 import AddMovieShowPage from "./newpages/theatre-pages/AddMovie";
+import Analytics from "./newpages/theatre-pages/Analytics";
 
 var routes = [
   {
@@ -116,7 +117,21 @@ var routes = [
     layout: "",
   },
   {
-    path: "/theatres/:id", // theatre/:id to be done
+    path: "/theatres/homepage", 
+    name: "Theatre HomePage",
+    icon: "nc-icon nc-pin-3",
+    component: TheatreHomePage,
+    layout: "",
+  },
+  {
+    path: "/theatres/analytics", 
+    name: "Theatre Analytics",
+    icon: "nc-icon nc-pin-3",
+    component: Analytics,
+    layout: "",
+  },
+  {
+    path: "/theatres/:theatre_id", // theatre/:id to be done
     name: "Theatres",
     icon: "nc-icon nc-pin-3",
     component: TheatreDetails,
@@ -144,7 +159,7 @@ var routes = [
     layout: "",
   },
   {
-    path: "/seats", // artist/:id to be done
+    path: "/seats/:show_id", // artist/:id to be done
     name: "Seats",
     icon: "nc-icon nc-pin-3",
     component: SeatSelection,
@@ -180,10 +195,14 @@ var routes = [
   {
     path: "/theatreaddmovie", // artist/:id to be done
     name: "Theatre Add Movie Page",
+    path: "/movietheatrelist/:movie_id", // :movieid to be done
+    name: "Movie Theatre List",
     icon: "nc-icon nc-pin-3",
     component: AddMovieShowPage,
     layout: "",
-  }
+  },
+  
+  
 ];
 
 var sidebar_display = [
@@ -245,10 +264,17 @@ var sidebar_display = [
     layout: "",
   },
   {
-    path: "/artistdetails", 
+    path: "/artistdetails",
     name: "Artist Details",
     icon: "nc-icon nc-pin-3",
     component: ArtistDetails,
+    layout: "",
+  },
+  {
+    path: "/theatres/homepage", 
+    name: "Theatre HomePage",
+    icon: "nc-icon nc-pin-3",
+    component: TheatreHomePage,
     layout: "",
   },
   {
@@ -273,7 +299,7 @@ var sidebar_display = [
     layout: "",
   },
   {
-    path: "/seats", // seats/:movieid to be done
+    path: "/seats/:show_id", // seats/:movieid to be done
     name: "Seats",
     icon: "nc-icon nc-pin-3",
     component: SeatSelection,
@@ -293,11 +319,16 @@ var sidebar_display = [
     component: ConfirmationPage,
     layout: "",
   },
+  
   {
     path: "/theatrehomepage", // artist/:id to be done
     name: "Theatre Home Page",
+  },
+  {
+    path: "/theatres/analytics", // :movieid to be done
+    name: "Theatre Analytics",
     icon: "nc-icon nc-pin-3",
-    component: TheatreHomePage,
+    component: Analytics,
     layout: "",
   },
   {
@@ -307,6 +338,7 @@ var sidebar_display = [
     component: AddMovieShowPage,
     layout: "",
   }
+  
 ];
 
 export default routes;

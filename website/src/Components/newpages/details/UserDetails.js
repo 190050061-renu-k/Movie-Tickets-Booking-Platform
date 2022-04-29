@@ -1,5 +1,7 @@
 // Set 1 Usecase 7 - Artist Info Page
-// TODO: fetch data from db
+// TODO: edit profille and reset password
+// TODO: change to mulltiselection of languages and genres
+
 import React, { useState, useEffect } from "react";
 import ResetPassword from "../profile-pages/ResetPassword";
 import { Card, CardHeader, CardBody, CardTitle, Button } from "reactstrap";

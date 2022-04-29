@@ -26,11 +26,13 @@ const SeatSelection = () => {
 
 	return (
 		<>
+
 		<div className="main container">
 			<MovieContext.Provider value={{ movies, changeState: EditMovies }}>
 				<MovieSelector />
 				<SeatMatrix occupied = {movies.occupied}/>
 				<SeatAvailability />
+				
 				<PriceCalculator />
 			</MovieContext.Provider>
 			<Link style={{textDecoration:"none"}} to={{pathname:"/payment", state: {"seats":movies.seatNumbers, "theatre_id": 2, "theatre_name": "Ramya's INOX", "movie_name":"KGF Chapter Two", "movie_id":111, "price": 100, "date": new Date(2022,1,20)}}}>

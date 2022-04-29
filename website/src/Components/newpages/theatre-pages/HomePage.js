@@ -37,7 +37,7 @@ const TheatreHomePage = (props) => {
                 <div style={{ marginTop: "30px" }} className="text-center">
                 <div style={{marginLeft: "40px"}}>
                 <Button>Add a Movie</Button>
-                <Button>Analytics</Button>
+                <Link to="/theatres/analytics"> <Button>Analytics</Button></Link>
             </div>
                 <p className="text-center">
                     Showing {offset + 1} to{" "}
