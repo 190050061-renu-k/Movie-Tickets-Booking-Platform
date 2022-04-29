@@ -341,10 +341,8 @@ const RegisterTheatre = (props) => {
                     <div className="mt-2 text-center col-6 float-right">
                         <Button className="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" onClick={handleSubmit}>Register Theatre</Button>
                     </div>
-
                                       
                     </form>
-            
             
             </CardBody>
             </Card>

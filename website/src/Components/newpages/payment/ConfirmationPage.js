@@ -18,9 +18,8 @@ const ConfirmationPage = (props) => {
   const [isLoading, setisLoading] = useState(0);
 
   const user_id =
-    props.type == "online"
-      ? JSON.parse(localStorage.getItem("user")).user_id
-      : -1;
+    props.type == "offline"
+      ? -1 :JSON.parse(localStorage.getItem("user")).user_id;
 
   if (props.location.state) {
     BookingInfo = props.location.state;

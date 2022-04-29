@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState} from "react";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { Navbar, NavbarBrand, Container, Button } from "reactstrap";
 
 function Header(props) {
+  const role = localStorage.getItem('role');
+  const user = JSON.parse(localStorage.getItem('user'));
   const sidebarToggle = React.useRef();
   const location = useLocation();
 
@@ -24,22 +26,57 @@ function Header(props) {
 
   return (
     <>
-      <div className="float-right">
-        <Button
-          className="btn-outline-primary"
-          style={{ marginBottom: "27px" }}
-          onClick={() => {
-            localStorage.removeItem("user");
-          }}
-        >
-          Logout
-        </Button>
+      <div className="float-right" style={{"margin":"50px"}}>
+        {
+          (role==null)?
+          null
+          :(
+          (role=="user")?
+          <>
+            {user==null?
+            <Link to="/login">
+            <Button
+              className="btn-outline-primary"
+              style={{ marginBottom: "27px" }}
+            >
+              Login
+            </Button>
+            </Link>
+            :
+            <Button
+              className="btn-outline-primary"
+              style={{ marginBottom: "27px" }}
+              onClick={() => {
+                localStorage.removeItem("user");
+              }}
+            >
+              Logout
+            </Button>
+            }
+          
         <Link to="/profile">
           <i
             className="nc-icon nc-single-02"
             style={{ margin: "20px", fontSize: "25px" }}
           ></i>
         </Link>
+        </>:
+        <>
+        {user==null?null
+          :
+          <Button
+            className="btn-outline-primary"
+            style={{ marginBottom: "27px" }}
+            onClick={() => {
+              localStorage.removeItem("user");
+            }}
+          >
+            Logout
+          </Button>
+        }
+        </>)
+      }
+        
       </div>
       <Navbar
         color="dark"

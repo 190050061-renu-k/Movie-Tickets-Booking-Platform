@@ -1,4 +1,5 @@
 // Set 1 Usecase  - Theatre Detail page
+//disable rating button if aready given rating
 import React, { useState, useEffect } from "react";
 import { Card, CardBody, Button } from "reactstrap";
 import { Link } from "react-router-dom";
@@ -6,12 +7,16 @@ import { useParams } from "react-router-dom";
 import { Tabs, Tab } from "react-bootstrap";
 import Preload from "Components/layouts/Preload";
 import { Redirect } from "react-router-dom";
+import Rating from "react-rating";
 
 const TheatreDetails = (props) => {
   const role = localStorage.getItem('role');
   let { theatre_id } = useParams();
   var [details, setDetails] = useState({});
   const [isLoading, setisLoading] = useState(0);
+  const [showbutton, setShowButton] = useState(1);
+  var [rating, setRating] = useState(0);
+  var [display,setDisplay] =useState();
 
   useEffect(() => {
     getDetails();
@@ -94,6 +99,11 @@ const TheatreDetails = (props) => {
       name: details.name,
     };
 
+    function addRatingHandler(){
+        setShowButton(2);
+        // add rating to db , rating in "rating" variable
+    }
+
     return (
       <div>
         {role==null ? <Redirect push to="/" /> : null}
@@ -103,7 +113,33 @@ const TheatreDetails = (props) => {
               <CardBody>
                 <div>
                   <h1 style={{ display: "inline" }}>{theatreDetails.name}</h1>
-                  <Button className="text-light float-right">Rate Now</Button>
+                  {showbutton==2 ? <p>You rated {rating}</p>:<></>}
+                  {showbutton==1 ? <Button className="text-light float-right" onClick={()=>setShowButton(0)} >Rate Now</Button>
+                   : <></>}
+                  {showbutton==0 ? 
+                  <div>
+                   <Rating
+                   onClick={setRating}
+                   initialRating={rating}
+                   onHover={setDisplay}
+
+                   emptySymbol="far fa-heart"
+                   fullSymbol="fas fa-heart"
+                   style={{
+                       
+                       color:"red",
+                       fontSize:"30px"
+                   }}
+                   fractions={2}
+                   ></Rating>
+                   <span style={{paddingLeft:"5px"}}>
+                      {display}
+                   </span>
+                   <div><Button onClick={addRatingHandler}>Submit</Button></div>
+                   </div>
+                  : <></>}
+                   
+                  
                 </div>
                 <div>
                   <i className="nc-icon nc-pin-3"></i>
