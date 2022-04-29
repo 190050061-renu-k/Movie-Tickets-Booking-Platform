@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { Redirect } from "react-router-dom";
 
+import {scrollMenu} from 'react-horizontal-scrolling-menu';
 // import { Link } from 'react-router-dom';
 import {
     Card,

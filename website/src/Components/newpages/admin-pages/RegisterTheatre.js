@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import { Redirect } from "react-router-dom";
 
-// import { Link } from 'react-router-dom';
 import {
     Card,
     CardHeader,
@@ -11,11 +10,182 @@ import {
     CardTitle, 
     Button
   } from "reactstrap";
-import { Link } from 'react-router-dom';
 
 
 const RegisterTheatre = (props) => {
     const role = localStorage.getItem('role');
+    const initialValues = {
+        theatrename: "",
+        longitude: "", 
+        latitude:"",
+        screens:"",
+        errors: {
+            theatrename: "",
+            longitude: "", 
+            latitude:"",
+            screens:"",
+        },
+    };
+
+    const notificationAlert = React.useRef();
+    const [formValues, setFormValues] = useReducer(
+        (curVals, newVals) => ({ ...curVals, ...newVals }),
+        initialValues
+    );
+
+    const { theatrename, longitude, latitude, screens } = formValues;
+    
+    const validateForm = (errors) => {
+        let valid = true;
+        Object.values(errors).forEach((val) => val.length > 0 && (valid = false));
+        return valid;
+    };
+    
+    const handleFormChange = (event) => {
+        event.preventDefault();
+        const { name, value } = event.target;
+        let errors = formValues.errors;
+        switch (name) {
+          case "theatrename":
+            errors.theatrename = value =="" ? "Required field"
+              : "";
+            break;
+            case "longitude":
+                errors.longitude = value =="" ? "Required field"
+                : "";
+                break;
+            case "latitude":
+                errors.latitude = value =="" ? "Required field"
+                : "";
+                break;
+            case "screens":
+                errors.screens = value =="" ? "Required field"
+                : "";
+            break;
+          default:
+            break;
+        }
+    
+        setFormValues({ errors, [name]: value });
+      };
+    
+      const handleBlur = (event) => {
+        event.preventDefault();
+    
+        const { name, value } = event.target;
+        let errors = formValues.errors;
+        switch (name) {
+            case "theatrename":
+            errors.theatrename = value =="" ? "Required field" 
+              : "";
+            break;
+            case "longitude":
+                errors.longitude = value =="" ? "Required field"
+                : "";
+                break;
+            case "latitude":
+                errors.latitude = value =="" ? "Required field"
+                : "";
+                break;
+            case "screens":
+                errors.screens = value =="" ? "Required field"
+                : "";
+                break;
+            default:
+                break;
+        }
+    
+        setFormValues({ errors, [name]: value });
+      };
+    
+      const handleSubmit = (event) => {
+        event.preventDefault();
+        let errors = formValues.errors;
+        if (formValues.theatrename.length == 0) {
+          errors.theatrename = "Required field";
+          setFormValues({ ...formValues, errors });
+          return;
+        }
+        if (formValues.longitude.length == 0) {
+            errors.longitude = "Required field";
+            setFormValues({ ...formValues, errors });
+            return;
+        }
+        if (formValues.latitude.length == 0) {
+            errors.latitude = "Required field";
+            setFormValues({ ...formValues, errors });
+            return;
+        }
+        if (formValues.screens.length == 0) {
+            errors.screens = "Required field";
+            setFormValues({ ...formValues, errors });
+            return;
+        }
+    
+        //need to be modified
+        if (validateForm(formValues.errors)) {
+        //   fetch("http://localhost:3001/userLogin", {
+        //     method: "POST",
+        //     headers: {
+        //       "Content-Type": "application/json",
+        //     },
+        //     body: JSON.stringify({
+        //       mobile_number: formValues.inputtel,
+        //       password: formValues.inputpswd,
+        //     }),
+        //   })
+        //     .then((response) => {
+        //       return response.json();
+        //     })
+        //     .then((data) => {
+        //       if (data.accessToken) {
+        //         localStorage.setItem("user", JSON.stringify(data));
+        //         setRedirect(true);
+        //       } else {
+        //         var options = {};
+        //         options = {
+        //           place: "tc",
+        //           message: (
+        //             <div>
+        //               <div>
+        //                 <b>Invalid credentials</b>
+        //               </div>
+        //             </div>
+        //           ),
+        //           type: "danger",
+        //           icon: "nc-icon nc-bell-55",
+        //           autoDismiss: 7,
+        //         };
+        //         notificationAlert.current.notificationAlert(options);
+        //       }
+        //       return data;
+        //     })
+        //     .catch((err) => {
+        //       console.log(err);
+        //     });
+    
+        //   // in a function, do -  check if credentials are correct in database and redirect to homepage, store user id, city id in session
+          console.log("Success");
+        // } else {
+        //   console.log("Failure");
+        //   var options = {};
+        //   options = {
+        //     place: "tc",
+        //     message: (
+        //       <div>
+        //         <div>
+        //           <b>Please enter valid entries</b>
+        //         </div>
+        //       </div>
+        //     ),
+        //     type: "danger",
+        //     icon: "nc-icon nc-bell-55",
+        //     autoDismiss: 7,
+        //   };
+        //   notificationAlert.current.notificationAlert(options);
+        }
+      };
+    
     return (
         <div>
         {role==null ? <Redirect push to="/" /> : null}
@@ -29,19 +199,42 @@ const RegisterTheatre = (props) => {
                     
                     <CardBody>
                    
-                {/* brand logo  */}
-                {/* <h4>New here?</h4> */}
-                {/* <h6 className="font-weight-light">Signing up is easy. It only takes a few steps</h6> */}
                     <form className="pt-3">
                         <div className='row'>
 
-                    <div className={"form-group col-12" }>
-                        <input type="text" className="form-control form-control-lg" id="inputname" placeholder="Theatre Name" />
+                    <div className={"form-group col-6" }>
+                        Theatre Name: <br/>
+                        <input 
+                        type="text" 
+                        id="theatrename"
+                        name="theatrename"
+                        value = {theatrename} 
+                        onChange={handleFormChange}
+                        onBlur={handleBlur}
+                        className={
+                        "input-box form-control form-control-lg " +
+                        (formValues.errors.theatrename.length > 0
+                            ? "hasError"
+                            : "")
+                        }
+                        />
+                        <div
+                            style={{ width: "100%", marginTop: "8px" }}
+                            className={
+                                formValues.errors.theatrename.length > 0 ? "errorBar" : ""
+                            }
+                            >
+                            {formValues.errors.theatrename.length > 0 && (
+                                <span className="error">
+                                {formValues.errors.theatrename}
+                                </span>
+                            )}
+                        </div>
                     </div>
                     
-                    <div className={"form-group col-12" }>
+                    <div className={"form-group col-6" }>
+                        City:<br/>
                         <select className="form-control form-control-lg" id="inputcity">
-                        <option>City</option>
                         <option>Hyderabad</option>
                         <option>Bangalore</option>
                         <option>Delhi</option>
@@ -53,22 +246,103 @@ const RegisterTheatre = (props) => {
                         </select>
                     </div>
 
-                    <div className={"form-group col-12" }>
-                        <input type="text" className="form-control form-control-lg" id="inputlongitude" placeholder="Longitude" />
+                    <div className={"form-group col-6" }>
+                    Longitude: <br/>
+                    <input 
+                        type="text" 
+                        id="longitude"
+                        name="longitude"
+                        value = {longitude} 
+                        onChange={handleFormChange}
+                        onBlur={handleBlur}
+                        className={
+                        "input-box form-control form-control-lg " +
+                        (formValues.errors.longitude.length > 0
+                            ? "hasError"
+                            : "")
+                        }
+                        />
+                        <div
+                            style={{ width: "100%", marginTop: "8px" }}
+                            className={
+                                formValues.errors.longitude.length > 0 ? "errorBar" : ""
+                            }
+                            >
+                            {formValues.errors.longitude.length > 0 && (
+                                <span className="error">
+                                {formValues.errors.longitude}
+                                </span>
+                            )}
+                        </div>
                     </div>
 
-                    <div className={"form-group col-12" }>
-                        <input type="text" className="form-control form-control-lg" id="inputlatitude" placeholder="Latitude" />
+                    <div className={"form-group col-6" }>
+                        Latitude: <br/>
+                        <input 
+                            type="text" 
+                            id="latitude"
+                            name="latitude"
+                            value = {latitude} 
+                            onChange={handleFormChange}
+                            onBlur={handleBlur}
+                            className={
+                            "input-box form-control form-control-lg " +
+                            (formValues.errors.latitude.length > 0
+                                ? "hasError"
+                                : "")
+                            }
+                        />
+                        <div
+                            style={{ width: "100%", marginTop: "8px" }}
+                            className={
+                                formValues.errors.latitude.length > 0 ? "errorBar" : ""
+                            }
+                            >
+                            {formValues.errors.latitude.length > 0 && (
+                                <span className="error">
+                                {formValues.errors.latitude}
+                                </span>
+                            )}
+                        </div>
                     </div>
-                    <div className={"form-group col-12" }>
-                        <input type="number" className="form-control form-control-lg" id="inputscreens" placeholder="Screens" min="1" />
+                    <div className={"form-group col-6" }>
+                        Screens: <br/>
+                        <input 
+                        type="number" 
+                        id="inputscreens"
+                        name ="screens"
+                        value = {screens} 
+                        min="1" 
+                        onChange={handleFormChange}
+                        onBlur={handleBlur}
+                        className={
+                        "input-box form-control form-control-lg " +
+                        (formValues.errors.screens.length > 0
+                            ? "hasError"
+                            : "")
+                        }
+                        />
+                        <div
+                            style={{ width: "100%", marginTop: "8px" }}
+                            className={
+                                formValues.errors.screens.length > 0 ? "errorBar" : ""
+                            }
+                            >
+                            {formValues.errors.screens.length > 0 && (
+                                <span className="error">
+                                {formValues.errors.screens}
+                                </span>
+                            )}
+                        </div>
+                        <br/>
+                    </div>
+                    </div>
+                    
+                    <div className="mt-2 text-center col-6 float-right">
+                        <Button className="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" onClick={handleSubmit}>Register Theatre</Button>
                     </div>
 
-                    <div className="mt-3">
-                            <Link className="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">Register Theatre</Link>
-                    </div>
-
-                    </div>                    
+                                      
                     </form>
             
             

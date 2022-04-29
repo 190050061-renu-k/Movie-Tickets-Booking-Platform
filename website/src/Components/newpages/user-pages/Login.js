@@ -123,9 +123,10 @@ const Login = (props) => {
     }
     if (formValues.inputpswd.length == 0) {
       errors.inputpswd = "Required field";
+      setFormValues({ ...formValues, errors });
+      return;
     }
 
-    setFormValues({ ...formValues, errors });
 
     if (validateForm(formValues.errors)) {
       if(role=="user"){

@@ -26,7 +26,8 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "react-search-box": "^2.2.1",
-    "reactstrap": "8.9.0"
+    "reactstrap": "8.9.0",
+    "tar": "^6.1.11"
   },
   "scripts": {
     "start": "react-scripts start",
