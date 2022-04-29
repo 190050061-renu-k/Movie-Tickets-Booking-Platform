@@ -1,11 +1,11 @@
 // Set 2 Usecase 1 - Client logging in
 // TODO: input validation, check if session is in logged in state
 // (Check in database) error handling
-import React, { useReducer } from "react";
+import React, { useReducer, useState } from "react";
+import { Redirect } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "./../../../Assets/css/login.css";
 import NotificationAlert from "react-notification-alert";
-
 import { Card, CardHeader, CardBody, CardTitle } from "reactstrap";
 
 const Login = (props) => {
@@ -25,6 +25,7 @@ const Login = (props) => {
   );
 
   const { inputtel, inputpswd } = formValues;
+  const { redirect, setRedirect } = useState(false);
 
   const validateForm = (errors) => {
     let valid = true;
@@ -110,9 +111,33 @@ const Login = (props) => {
         .then((response) => {
           return response.json();
         })
+        .then((data) => {
+          if (data.accessToken) {
+            localStorage.setItem("user", JSON.stringify(data));
+            setRedirect(true);
+          } else {
+            var options = {};
+            options = {
+              place: "tc",
+              message: (
+                <div>
+                  <div>
+                    <b>Invalid credentials</b>
+                  </div>
+                </div>
+              ),
+              type: "danger",
+              icon: "nc-icon nc-bell-55",
+              autoDismiss: 7,
+            };
+            notificationAlert.current.notificationAlert(options);
+          }
+          return data;
+        })
         .catch((err) => {
           console.log(err);
         });
+
       // in a function, do -  check if credentials are correct in database and redirect to homepage, store user id, city id in session
       console.log("Success");
     } else {
@@ -137,6 +162,7 @@ const Login = (props) => {
 
   return (
     <div>
+      {redirect ? <Redirect push to="/homepage" /> : null}
       <NotificationAlert ref={notificationAlert} />
       <div
         className="d-flex align-items-center auth px-0"

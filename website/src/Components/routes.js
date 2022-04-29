@@ -63,7 +63,7 @@ var routes = [
     layout: "",
   },
   {
-    path: "/theatres/analytics", 
+    path: "/theatres/analytics",
     name: "Theatre Analytics",
     icon: "nc-icon nc-pin-3",
     component: Analytics,
