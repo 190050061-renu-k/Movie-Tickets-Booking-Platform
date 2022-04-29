@@ -1,4 +1,9 @@
 Movie-Tickets-Booking-Platform/test.ddl
 Movie-Tickets-Booking-Platform/queries.txt
+<<<<<<< HEAD
 Movie-Tickets-Booking-Platform/website/node_modules
 .DS_Store
+=======
+node_modules/   
+backend/.env
+>>>>>>> 0082ca50f6eb49cc4915b454daa2ae6c022db348
