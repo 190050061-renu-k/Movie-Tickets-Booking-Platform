@@ -52,6 +52,18 @@ const PaymentPage = (props) => {
               </div>
               <div className="col-6">
                 <p style={{ fontSize: "1.2em" }}>
+                  Show Date:{" "}
+                  <b>
+                    {PaymentInfo.show_date.slice(8, 10) +
+                      "-" +
+                      PaymentInfo.show_date.slice(5, 7) +
+                      "-" +
+                      PaymentInfo.show_date.slice(0, 4)}
+                  </b>
+                </p>
+              </div>
+              <div className="col-6">
+                <p style={{ fontSize: "1.2em" }}>
                   Date of booking:{" "}
                   <b>
                     {PaymentInfo.date.getDate() +
@@ -96,6 +108,7 @@ const PaymentPage = (props) => {
                   price: PaymentInfo.price,
                   date: PaymentInfo.date,
                   show_id: PaymentInfo.show_id,
+                  show_date: PaymentInfo.show_date,
                 },
               }}
             >
