@@ -126,12 +126,15 @@ const MovieDetails = (props) => {
                       </Card>
                     </div>
                   </div>
-                  <Link to={"/movietheatrelist/"+movie_id}>
-                    <Button className="bg-primary" size="lg">
-                      Book Tickets
-                    </Button>
-                  </Link>
-                  
+                  {!movieDetails.info[0].upcoming ? (
+                    <Link to={"/movietheatrelist/" + movie_id}>
+                      <Button className="bg-primary" size="lg">
+                        Book Tickets
+                      </Button>
+                    </Link>
+                  ) : (
+                    <></>
+                  )}
                 </div>
               </div>
             </div>

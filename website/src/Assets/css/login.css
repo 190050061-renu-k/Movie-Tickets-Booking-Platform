@@ -1,0 +1,32 @@
+
+.input-box{
+    margin-top: 5px;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    padding:8px;
+}
+
+.input-box:focus{
+    outline:0;
+    box-shadow: 0 0 0 0.2rem rgb(0 123 255 /25%);
+    /* border: 4px solid #80bdff; */
+}
+
+.hasError{
+    /* outline:0; */
+    box-shadow: 0 0 0 0.2rem #e08b87 !important;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out !important;
+}
+
+.errorBar{
+    color:white;
+    background-color: #f09692;
+    padding: 5px;
+    /* padding-left: 8px; */
+    width:80%;
+    text-align: center;
+    border-radius:0.2rem;
+}

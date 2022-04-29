@@ -1,6 +1,4 @@
 // Set 1 Usecase  - Theatre Detail page
-// TODO: fetch data from db
-// add route links to show timings
 import React, { useState, useEffect } from "react";
 import { Card, CardBody, Button } from "reactstrap";
 import { Link } from "react-router-dom";
@@ -40,50 +38,6 @@ const TheatreDetails = (props) => {
       });
   }
 
-  //var shows = [
-  // {
-  //   date: new Date(2022, 4, 26),
-  //   movies: [
-  //     {
-  //       name: "K.G.F. Chapter 2",
-  //       id: 1,
-  //       show_timings: ["Morning", "Evening"],
-  //     },
-  //     {
-  //       name: "K.G.F. Chapter 2",
-  //       id: 1,
-  //       show_timings: ["Morning", "Evening"],
-  //     },
-  //   ],
-  // },
-  // {
-  //   date: new Date(2022, 4, 27),
-  //   movies: [
-  //     {
-  //       name: "K.G.F. Chapter 2",
-  //       id: 1,
-  //       show_timings: ["Morning", "Evening"],
-  //     },
-  //   ],
-  // },
-  // {
-  //   date: new Date(2022, 4, 28),
-  //   movies: [
-  //     {
-  //       name: "K.G.F. Chapter 2",
-  //       id: 1,
-  //       show_timings: ["Morning", "Evening"],
-  //     },
-  //   ],
-  //},
-  //];
-  //   var name = "Ramya's INOX";
-  //   var city = "Las Vegas";
-  //   //modify into useEffect
-  //   theatreDetails = { shows: shows, name: name, id: id, city: city };
-  //   var i = -1;
-
-  //useEffect to fetch genres
   var i = -1;
   if (isLoading == 2) {
     var shows = [];
@@ -182,12 +136,11 @@ const TheatreDetails = (props) => {
                               <div className="col-8">
                                 {movie.show_timings.map((show_) => {
                                   return (
-                                    
-                                      <Link to={"/seats/" + show_.show_id}>
-                                          <Button className="btn-outline-primary">
+                                    <Link to={"/seats/" + show_.show_id}>
+                                      <Button className="btn-outline-primary">
                                         {show_.show_time}
-                                        </Button>
-                                      </Link>
+                                      </Button>
+                                    </Link>
                                   );
                                 })}
                               </div>
