@@ -63,7 +63,7 @@ var routes = [
     layout: "",
   },
   {
-    path: "/theatres/analytics",
+    path: "/theatres/analytics", 
     name: "Theatre Analytics",
     icon: "nc-icon nc-pin-3",
     component: Analytics,
@@ -133,7 +133,13 @@ var routes = [
     layout: "",
   },
   {
+<<<<<<< HEAD
     path: "/movietheatrelist/:movie_id", // :movieid to be done
+=======
+
+    path: "/movietheatrelist/:movie_id", // :movieid to be done
+    path: "/movietheatrelist/:movieid", 
+>>>>>>> 7cbb807eb5540e5e84aa05e9d936c19671697923
     name: "Movie Theatre List",
     icon: "nc-icon nc-pin-3",
     component: MovieTheatreList,

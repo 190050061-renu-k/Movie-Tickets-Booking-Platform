@@ -70,7 +70,7 @@ const UserDetails = (props) => {
         </Button>
 
         {isEdit ? (
-          <Signup col={6} card={8} margin={"30px"} showsign={true}></Signup>
+          <Signup col={6} card={8} margin={"30px"} showsign={true} dest = "profile"></Signup>
         ) : (
           <></>
         )}
@@ -128,10 +128,12 @@ const UserDetails = (props) => {
                     setIsHistory(!ishistory);
                   }}
                 >
+                  <Button className="btn-primary">
                   <b>
                     <i className="nc-icon nc-minimal-down"></i>
                     <p style={{ display: "inline" }}>History</p>
                   </b>
+                  </Button>
                 </div>
                 <ViewHistory></ViewHistory>
               </div>
@@ -142,10 +144,12 @@ const UserDetails = (props) => {
                     setIsHistory(!ishistory);
                   }}
                 >
+                  <Button className="btn-primary">
                   <b>
                     <i className="nc-icon nc-minimal-right"></i>
                     <p style={{ display: "inline" }}>History</p>
                   </b>
+                  </Button>
                 </div>
               </div>
             )}
