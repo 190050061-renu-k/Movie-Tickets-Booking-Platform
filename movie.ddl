@@ -245,9 +245,9 @@ ALTER TABLE bookings alter booking_id set default nextval('booking_id_seq');
 
 CREATE TRIGGER upcoming
      AFTER INSERT
-     ON show
+     ON shows
      FOR EACH ROW 
-     EXECUTE PROCEDURE change_upcoming()
+     EXECUTE PROCEDURE change_upcoming();
 
 --views creation
 
@@ -261,7 +261,11 @@ GROUP BY show_id, user_id, bookings.booking_id, book_date, book_type;
 
 --trigger
 CREATE OR REPLACE FUNCTION change_upcoming()
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 
+>>>>>>> main
      RETURNS TRIGGER
      LANGUAGE PLPGSQL
      AS 
@@ -273,3 +277,18 @@ CREATE OR REPLACE FUNCTION change_upcoming()
 	 RETURN NULL;
 	 END;
  $$
+<<<<<<< HEAD
+=======
+    RETURNS TRIGGER
+    LANGUAGE PLPGSQL
+    AS 
+$$
+BEGIN 
+    UPDATE movies
+    SET upcoming_movie = FALSE
+    WHERE movie_id = NEW.movie_id;
+END;
+$$
+>>>>>>> 0082ca50f6eb49cc4915b454daa2ae6c022db348
+=======
+>>>>>>> main

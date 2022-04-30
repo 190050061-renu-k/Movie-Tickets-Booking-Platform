@@ -1,6 +1,8 @@
 # Movie-Tickets-Booking-Platform
 ### Developers - Ilindra Sai Lakshmi Shreya, Konda Renu, Palti Ramyasri, Penta Rahul Krishna
 
+Frontend 
+
 Timeline -
 * [Project Proposal](Resources/Project_Proposal.pdf) 
 * [Requirements](Resources/requirements.pdf)
