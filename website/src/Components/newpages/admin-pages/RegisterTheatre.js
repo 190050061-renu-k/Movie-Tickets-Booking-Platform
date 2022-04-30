@@ -16,6 +16,7 @@ const RegisterTheatre = (props) => {
     const role = localStorage.getItem('role');
     const initialValues = {
         theatrename: "",
+        cityname:"",
         longitude: "", 
         latitude:"",
         screens:"",
@@ -33,7 +34,7 @@ const RegisterTheatre = (props) => {
         initialValues
     );
 
-    const { theatrename, longitude, latitude, screens } = formValues;
+    const { theatrename, cityname, longitude, latitude, screens } = formValues;
     
     const validateForm = (errors) => {
         let valid = true;
@@ -61,6 +62,8 @@ const RegisterTheatre = (props) => {
             case "screens":
                 errors.screens = value =="" ? "Required field"
                 : "";
+                errors.screens = (parseInt(value)<=0) ? "Number of screens has to be positive" : "";
+
             break;
           default:
             break;
@@ -73,6 +76,10 @@ const RegisterTheatre = (props) => {
         event.preventDefault();
     
         const { name, value } = event.target;
+        if(name==="cityname"){
+            setFormValues({ errors, [name]: value });
+            return;
+        }
         let errors = formValues.errors;
         switch (name) {
             case "theatrename":
@@ -90,6 +97,7 @@ const RegisterTheatre = (props) => {
             case "screens":
                 errors.screens = value =="" ? "Required field"
                 : "";
+                errors.screens = parseInt(value)<=0 ? "Number of screens has to be positive" : "";
                 break;
             default:
                 break;
@@ -234,7 +242,13 @@ const RegisterTheatre = (props) => {
                     
                     <div className={"form-group col-6" }>
                         City:<br/>
-                        <select className="form-control form-control-lg" id="inputcity">
+                        <select 
+                        className="form-control form-control-lg" 
+                        id="cityname"
+                        name="cityname"
+                        value= {cityname}
+                        onChange={handleFormChange}
+                        >
                         <option>Hyderabad</option>
                         <option>Bangalore</option>
                         <option>Delhi</option>
