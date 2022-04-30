@@ -261,11 +261,6 @@ GROUP BY show_id, user_id, bookings.booking_id, book_date, book_type;
 
 --trigger
 CREATE OR REPLACE FUNCTION change_upcoming()
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
->>>>>>> main
      RETURNS TRIGGER
      LANGUAGE PLPGSQL
      AS 
@@ -277,18 +272,3 @@ CREATE OR REPLACE FUNCTION change_upcoming()
 	 RETURN NULL;
 	 END;
  $$
-<<<<<<< HEAD
-=======
-    RETURNS TRIGGER
-    LANGUAGE PLPGSQL
-    AS 
-$$
-BEGIN 
-    UPDATE movies
-    SET upcoming_movie = FALSE
-    WHERE movie_id = NEW.movie_id;
-END;
-$$
->>>>>>> 0082ca50f6eb49cc4915b454daa2ae6c022db348
-=======
->>>>>>> main
