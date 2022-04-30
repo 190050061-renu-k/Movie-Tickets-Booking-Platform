@@ -26,6 +26,19 @@ const getMovies = (body) => {
   });
 };
 
+const getLatestMovies = (body) => {
+  const { theatre_id } = body;
+  const query = `SELECT name, movie_id from movies where movie_id not in (select distinct movie_id from shows where theatre_id = $1) ORDER BY release_date desc LIMIT 15;`;
+  return new Promise(function (resolve, reject) {
+    pool.query(query, [theatre_id], (error, results) => {
+      if (error) {
+        reject(error);
+      }
+      resolve(results.rows);
+    });
+  });
+};
+
 const getMovieInfo = async (body) => {
   const { movie_id } = body;
   const client = await pool.connect();
@@ -216,4 +229,5 @@ module.exports = {
   getLanguageMovies,
   addMovie,
   getMovieTheatres,
+  getLatestMovies,
 };

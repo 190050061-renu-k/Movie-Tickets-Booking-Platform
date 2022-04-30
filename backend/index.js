@@ -233,6 +233,16 @@ app.get("/getGenreChoice", (req, res) => {
     });
 });
 
+app.post("/getLatestMovies", async (req, res) => {
+  try {
+    response = await movie_model.getLatestMovies(req.body);
+    res.json(response);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+});
+
 app.get("/getLanguageChoice", (req, res) => {
   analytics_model
     .getLanguageChoice()
