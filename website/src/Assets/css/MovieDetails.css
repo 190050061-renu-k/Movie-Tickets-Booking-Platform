@@ -1,59 +1,56 @@
 /* Container holding the image and the text */
 .container {
-    position: relative;
-    text-align: center;
-    
-  }
+  position: relative;
+  text-align: center;
+}
 
-  #info1{
-    /* background-color: black !important; */
-    width: 100%;
-    height: 50%;
-    min-height: 450px;
-  }
+#info1 {
+  /* background-color: black !important; */
+  width: 100%;
+  height: 50%;
+  min-height: 450px;
+}
 
-  .center{
-    margin-top: 60px;
-    margin-bottom: auto;
-    width:30%;
-    height:350px;
-    float:left;
-  }
+.center {
+  margin-top: 60px;
+  margin-bottom: auto;
+  width: 30%;
+  height: 350px;
+  float: left;
+}
 
-  
-  
-  /* Bottom left text */
-  .bottom-left {
-    position: absolute;
-    bottom: 8px;
-    left: 16px;
-  }
-  
-  /* Top left text */
-  .top-left {
-    position: absolute;
-    top: 8px;
-    left: 16px;
-  }
-  
-  /* Top right text */
-  .top-right {
-    position: absolute;
-    top: 60px;
-    right: 500px;
-  }
-  
-  /* Bottom right text */
-  .bottom-right {
-    position: absolute;
-    bottom: 8px;
-    right: 16px;
-  }
-  
-  /* Centered text */
-  .centered {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
+/* Bottom left text */
+.bottom-left {
+  position: absolute;
+  bottom: 8px;
+  left: 16px;
+}
+
+/* Top left text */
+.top-left {
+  position: absolute;
+  top: 8px;
+  left: 16px;
+}
+
+/* Top right text */
+.top-right {
+  position: absolute;
+  top: 60px;
+  right: 500px;
+}
+
+/* Bottom right text */
+.bottom-right {
+  position: absolute;
+  bottom: 8px;
+  right: 16px;
+}
+
+/* Centered text */
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
