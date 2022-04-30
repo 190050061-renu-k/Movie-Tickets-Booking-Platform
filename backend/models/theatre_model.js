@@ -1,6 +1,7 @@
 //remove interval additions in getTheatreShows after testing
 const Pool = require("pg").Pool;
 const format = require("pg-format");
+const jwt = require("jsonwebtoken");
 
 const pool = new Pool({
   user: process.env.USERNAME,
@@ -73,17 +74,32 @@ const getTheatreShows2 = async (body) => {
   }
 };
 
-const rateTheatre = (body) => {
+const rateTheatre = async (body) => {
   const { user_id, theatre_id, rating } = body;
-  const query = "INSERT INTO user_theatre VALUES($1, $2, $3);";
-  return new Promise(function (resolve, reject) {
-    pool.query(query, [user_id, theatre_id, rating], (error, results) => {
-      if (error) {
-        reject(error);
-      }
-      resolve(true);
-    });
-  });
+  const client = await pool.connect();
+
+  try {
+    await client.query("BEGIN");
+    const query1 =
+      "SELECT * from user_theatre where theatre_id = $1 and user_id = $2;";
+    const res1 = await client.query(query1, [theatre_id, user_id]);
+
+    if (res1.rows.length > 0) {
+      const query2 =
+        "UPDATE user_theatre set rating = $1 where theatre_id = $2 and user_id = $3;";
+      const res2 = await client.query(query2, [rating, theatre_id, user_id]);
+    } else {
+      const query3 = "INSERT INTO user_theatre VALUES($1, $2, $3);";
+      const res3 = await client.query(query3, [user_id, theatre_id, rating]);
+    }
+    await client.query("COMMIT");
+    return "";
+  } catch (e) {
+    await client.query("ROLLBACK");
+    throw e;
+  } finally {
+    client.release();
+  }
 };
 
 const getTheatresInRange = (body) => {

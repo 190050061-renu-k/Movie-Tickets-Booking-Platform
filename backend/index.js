@@ -412,7 +412,7 @@ app.get("/getCities", async (req, res) => {
 
 app.post("/theatreLogin", async (req, res) => {
   try {
-    response = await theatre_model.theatreLogin();
+    response = await theatre_model.theatreLogin(req.body);
     res.json(response);
   } catch (error) {
     console.log(error);
@@ -422,7 +422,7 @@ app.post("/theatreLogin", async (req, res) => {
 
 app.post("/adminLogin", async (req, res) => {
   try {
-    response = await theatre_model.adminLogin();
+    response = await theatre_model.adminLogin(req.body);
     res.json(response);
   } catch (error) {
     console.log(error);

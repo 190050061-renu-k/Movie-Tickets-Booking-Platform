@@ -8,6 +8,7 @@ const pool = new Pool({
   password: process.env.PASSWORD,
   port: process.env.PORT,
 });
+const jwt = require("jsonwebtoken");
 
 const getMovies = (body) => {
   const { city_id } = body;
@@ -61,17 +62,32 @@ const getMovieInfo = async (body) => {
   }
 };
 
-const rateMovie = (body) => {
+const rateMovie = async (body) => {
   const { user_id, movie_id, rating } = body;
-  const query = "INSERT INTO user_movie VALUES($1, $2, NULL, $3);";
-  return new Promise(function (resolve, reject) {
-    pool.query(query, [user_id, movie_id, rating], (error, results) => {
-      if (error) {
-        reject(error);
-      }
-      resolve(true);
-    });
-  });
+  const client = await pool.connect();
+
+  try {
+    await client.query("BEGIN");
+    const query1 =
+      "SELECT * from user_movie where movie_id = $1 and user_id = $2;";
+    const res1 = await client.query(query1, [movie_id, user_id]);
+
+    if (res1.rows.length > 0) {
+      const query2 =
+        "UPDATE user_movie set rating = $1 where movie_id = $2 and user_id = $3;";
+      const res2 = await client.query(query2, [rating, movie_id, user_id]);
+    } else {
+      const query3 = "INSERT INTO user_movie VALUES($1, $2, NULL, $3);";
+      const res3 = await client.query(query3, [user_id, movie_id, rating]);
+    }
+    await client.query("COMMIT");
+    return "";
+  } catch (e) {
+    await client.query("ROLLBACK");
+    throw e;
+  } finally {
+    client.release();
+  }
 };
 
 const getUpcomingMovies = (body) => {
