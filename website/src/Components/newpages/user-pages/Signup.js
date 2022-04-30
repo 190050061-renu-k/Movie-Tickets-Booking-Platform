@@ -239,47 +239,93 @@ const Signup = (props) => {
         language_ids: formValues.inputlang,
         genre_ids: formValues.inputgenre,
       });
-      fetch("http://localhost:3001/signUp", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userName: formValues.inputname,
-          age: formValues.inputage,
-          mobile_num: formValues.inputtel,
-          pswd: formValues.inputpswd1,
-          city_id: parseInt(formValues.inputcity),
-          language_ids: formValues.inputlang.map((e) => e.language_id),
-          genre_ids: formValues.inputgenre.map((e) => e.genre_id),
-        }),
-      })
-        .then((response) => {
-          return response.json();
+      if(props.showsign){
+        fetch("http://localhost:3001/signUp", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userName: formValues.inputname,
+            age: formValues.inputage,
+            mobile_num: formValues.inputtel,
+            pswd: formValues.inputpswd1,
+            city_id: parseInt(formValues.inputcity),
+            language_ids: formValues.inputlang.map((e) => e.language_id),
+            genre_ids: formValues.inputgenre.map((e) => e.genre_id),
+          }),
         })
-        .then((data) => {
-          if (data) setRedirect(true);
-          else {
-            var options = {};
-            options = {
-              place: "tc",
-              message: (
-                <div>
+          .then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            setFormValues({});
+            if (data) setRedirect(true);
+            else {
+              var options = {};
+              options = {
+                place: "tc",
+                message: (
                   <div>
-                    <b>Mobile number already in use</b>
+                    <div>
+                      <b>Mobile number already in use</b>
+                    </div>
                   </div>
-                </div>
-              ),
-              type: "danger",
-              icon: "nc-icon nc-bell-55",
-              autoDismiss: 7,
-            };
-            notificationAlert.current.notificationAlert(options);
-          }
+                ),
+                type: "danger",
+                icon: "nc-icon nc-bell-55",
+                autoDismiss: 7,
+              };
+              notificationAlert.current.notificationAlert(options);
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else{
+        fetch("http://localhost:3001/editProfile", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userName: formValues.inputname,
+            age: formValues.inputage,
+            mobile_num: formValues.inputtel,
+            pswd: formValues.inputpswd1,
+            city_id: parseInt(formValues.inputcity),
+            language_ids: formValues.inputlang.map((e) => e.language_id),
+            genre_ids: formValues.inputgenre.map((e) => e.genre_id),
+          }),
         })
-        .catch((err) => {
-          console.log(err);
-        });
+          .then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            if (data) setRedirect(true);
+            else {
+              var options = {};
+              options = {
+                place: "tc",
+                message: (
+                  <div>
+                    <div>
+                      <b>Mobile number already in use</b>
+                    </div>
+                  </div>
+                ),
+                type: "danger",
+                icon: "nc-icon nc-bell-55",
+                autoDismiss: 7,
+              };
+              notificationAlert.current.notificationAlert(options);
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+
     } else {
       console.log("Failure");
       var options = {};

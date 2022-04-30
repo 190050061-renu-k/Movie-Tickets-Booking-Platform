@@ -20,7 +20,10 @@ import TheatreLiveOnline from "./newpages/admin-pages/TheatresLiveOnline";
 import AddMovie from "./newpages/admin-pages/AddMovie";
 import MainPage from "./newpages/MainPage";
 import UserRating from "./newpages/user-pages/UserRating";
-//import LiveBooking from "./newpages/theatre-pages/LiveBooking";
+import { useState } from "react";
+
+var role = localStorage.getItem("role");
+var user = JSON.parse(localStorage.getItem("user"));
 
 var routes = [
   {
@@ -187,66 +190,106 @@ var routes = [
   },
 ];
 
-var sidebar_display = [
-  {
-    path: "/theatres/analytics", // :movieid to be done
-    name: "Theatre Analytics",
-    icon: "nc-icon nc-chart-bar-32",
-    component: Analytics,
-    layout: "",
-  },
-  {
-    path: "/theatres/homepage",
-    name: "Theatre HomePage",
-    icon: "nc-icon nc-shop",
-    component: TheatreHomePage,
-    layout: "",
-  },
-  {
-    path: "/theatres/addmovie", // artist/:id to be done
-    name: "Theatre- Add Movie",
-    icon: "nc-icon nc-simple-add",
-    component: AddMovieShowPage,
-    layout: "",
-  },
-  {
-    path: "/theatres",
-    name: "Theatres",
-    icon: "nc-icon nc-pin-3",
-    component: TheatreList,
-    layout: "",
-  },
-  {
-    path: "/profile",
-    name: "Profile",
-    icon: "nc-icon nc-circle-10",
-    component: UserDetails,
-    layout: "",
-  },
-  {
-    path: "/homepage",
-    name: "Home Page",
-    icon: "nc-icon nc-shop",
-    component: HomePage,
-    layout: "",
-  },
+var sidebar_display;
 
-  {
-    path: "/admin/homepage", // :movieid to be done
-    name: "Admin Homepage",
-    icon: "nc-icon nc-shop",
-    component: AdminHomePage,
-    layout: "",
-  },
-
-  {
-    path: "/", // :movieid to be done
-    name: "Select Role",
-    icon: "nc-icon nc-lock-circle-open",
-    component: MainPage,
-    layout: "",
-  },
-];
+if (role == "user") {
+  sidebar_display = [
+    {
+      path: "/profile",
+      name: "Profile",
+      role: "user",
+      icon: "nc-icon nc-circle-10",
+      component: UserDetails,
+      layout: "",
+    },
+    {
+      path: "/homepage",
+      name: "Home Page",
+      icon: "nc-icon nc-shop",
+      component: HomePage,
+      layout: "",
+    },
+    {
+      path: "/", // :movieid to be done
+      name: "Select Role",
+      icon: "nc-icon nc-lock-circle-open",
+      component: MainPage,
+      layout: "",
+    },
+    {
+      path: "/theatres",
+      name: "Theatres",
+      icon: "nc-icon nc-pin-3",
+      component: TheatreList,
+      layout: "",
+    },
+  ];
+} else if (role == "theatre") {
+  sidebar_display = [
+    {
+      path: "/theatres/analytics", // :movieid to be done
+      name: "Theatre Analytics",
+      icon: "nc-icon nc-chart-bar-32",
+      component: Analytics,
+      layout: "",
+    },
+    {
+      path: "/theatres/homepage",
+      name: "Theatre HomePage",
+      icon: "nc-icon nc-shop",
+      component: TheatreHomePage,
+      layout: "",
+    },
+    {
+      path: "/theatres/addmovie", // artist/:id to be done
+      name: "Theatre- Add Movie",
+      icon: "nc-icon nc-simple-add",
+      component: AddMovieShowPage,
+      layout: "",
+    },
+    {
+      path: "/", // :movieid to be done
+      name: "Select Role",
+      icon: "nc-icon nc-lock-circle-open",
+      component: MainPage,
+      layout: "",
+    },
+  ];
+} else if (role == "admin") {
+  sidebar_display = [
+    {
+      path: "/admin/homepage", // :movieid to be done
+      name: "Admin Homepage",
+      icon: "nc-icon nc-shop",
+      component: AdminHomePage,
+      layout: "",
+    },
+    {
+      path: "/admin/analytics",
+      name: "Admin Analytics",
+      icon: "nc-icon nc-chart-bar-32",
+      component: TheatreLiveOnline,
+      layout: "",
+    },
+    {
+      path: "/", // :movieid to be done
+      name: "Select Role",
+      icon: "nc-icon nc-lock-circle-open",
+      component: MainPage,
+      layout: "",
+    },
+  ];
+} else {
+  sidebar_display = [
+    {
+      path: "/", // :movieid to be done
+      name: "Select Role",
+      icon: "nc-icon nc-lock-circle-open",
+      component: MainPage,
+      layout: "",
+    },
+  ];
+}
 
 export default routes;
 export { sidebar_display };

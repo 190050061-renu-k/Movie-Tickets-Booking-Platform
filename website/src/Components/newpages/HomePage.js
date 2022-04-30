@@ -164,7 +164,6 @@ const HomePage = (props) => {
           contentLabel="Example Modal"
         >
           <button onClick={closeModal}>close</button>
-          <div>I am a modal</div>
           <select
             id="inputcity"
             name="inputcity"

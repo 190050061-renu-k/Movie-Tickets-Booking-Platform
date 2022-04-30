@@ -8,14 +8,9 @@ import "./../../../Assets/css/addmovie.css";
 import { Redirect } from "react-router-dom";
 import Preload from "Components/layouts/Preload";
 
-// var movies = [
-//   { movie_id: 1, movie_name: "KgF Chapter-3" },
-//   { movie_id: 2, movie_name: "KgF Chapter-2" },
-// ];
-
 const AddMovieShowPage = (props) => {
   const role = localStorage.getItem("role");
-  const theatre_id = 1;
+  const theatre_id = JSON.parse(localStorage.getItem("user")).login_id;
   var [movies, setMovies] = useState({});
   const [isLoading, setisLoading] = useState(0);
 
