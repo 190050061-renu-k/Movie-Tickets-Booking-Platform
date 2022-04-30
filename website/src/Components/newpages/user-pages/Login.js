@@ -216,13 +216,14 @@ const Login = (props) => {
         // in a function, do -  check if credentials are correct in database and redirect to homepage, store user id, city id in session
         console.log("Success");
       } else if (role == "admin") {
+        console.log(formValues.inputid, formValues.inputpswd);
         fetch("http://localhost:3001/adminLogin", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            mobile_number: formValues.inputtel,
+            login_id: formValues.inputid,
             password: formValues.inputpswd,
           }),
         })
@@ -282,22 +283,20 @@ const Login = (props) => {
   return (
     <div>
       {role == null ? <Redirect push to="/" /> : null}
-      {user == null ? null : (
-        <>
-          {role == "user" ? (
-            <Redirect push to="/homepage" />
-          ) : (
-            <>
-              {role == "theatre" ? (
-                <Redirect push to="/theatres/homepage" />
-              ) : (
-                <Redirect push to="/admin/homepage" />
-              )}
-            </>
-          )}{" "}
-        </>
-      )}
-      {redirect ? <Redirect push to="/homepage" /> : null}
+      {user == null ? null : <>{} </>}
+      {redirect ? (
+        role == "user" ? (
+          <Redirect push to="/homepage" />
+        ) : (
+          <>
+            {role == "theatre" ? (
+              <Redirect push to="/theatres/homepage" />
+            ) : (
+              <Redirect push to="/admin/homepage" />
+            )}
+          </>
+        )
+      ) : null}
       <NotificationAlert ref={notificationAlert} />
       <div
         className="d-flex align-items-center auth px-0"

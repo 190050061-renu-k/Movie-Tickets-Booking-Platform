@@ -12,15 +12,15 @@ import Preload from "../../layouts/Preload";
 import { Redirect } from "react-router-dom";
 import Rating from "react-rating";
 
-
 const MovieDetails = (props) => {
-  const role = localStorage.getItem('role');
+  const role = localStorage.getItem("role");
   let { movie_id } = useParams();
   var [movieDetails, setMovieDetails] = useState({});
   const [isLoading, setisLoading] = useState(0);
   const [showbutton, setShowButton] = useState(1);
   var [rating, setRating] = useState(0);
-  var [display,setDisplay] =useState();
+  var [display, setDisplay] = useState();
+  const user_id = JSON.parse(localStorage.getItem("user")).user_id;
 
   useEffect(() => {
     getMovieDetails();
@@ -47,8 +47,25 @@ const MovieDetails = (props) => {
       });
   }
 
-  function addRatingHandler(){
+  function addRatingHandler() {
     setShowButton(2);
+    fetch("http://localhost:3001/rateMovie", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user_id: user_id,
+        movie_id: movie_id,
+        rating: rating,
+      }),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     // add rating to db , rating in "rating" variable
   }
 
@@ -57,7 +74,7 @@ const MovieDetails = (props) => {
   if (isLoading == 2) {
     return (
       <div>
-      {role==null ? <Redirect push to="/" /> : null}
+        {role == null ? <Redirect push to="/" /> : null}
         <div
           className="align-items-center  bg-dark"
           id="info1"
@@ -84,7 +101,10 @@ const MovieDetails = (props) => {
                     {movieDetails.info[0].name}
                   </h3>
                   {!movieDetails.info[0].upcoming ? (
-                    <p>Release Date: {movieDetails.info[0].release_date.slice(0,10)}</p>
+                    <p>
+                      Release Date:{" "}
+                      {movieDetails.info[0].release_date.slice(0, 10)}
+                    </p>
                   ) : (
                     <></>
                   )}
@@ -95,31 +115,43 @@ const MovieDetails = (props) => {
                           <h5 style={{ display: "inline", fontSize: "1.5em" }}>
                             IMDB Rating: {movieDetails.info[0].imdb_rating}
                           </h5>
-                          {showbutton==2 ? <p>You rated {rating}</p>:<></>}
-                  {showbutton==1 ? <Button className="text-light float-right" onClick={()=>setShowButton(0)} >Rate Now</Button>
-                   : <></>}
-                  {showbutton==0 ? 
-                  <div>
-                   <Rating
-                   onClick={setRating}
-                   initialRating={rating}
-                   onHover={setDisplay}
-
-                   emptySymbol="far fa-heart"
-                   fullSymbol="fas fa-heart"
-                   style={{
-                       
-                       color:"red",
-                       fontSize:"30px"
-                   }}
-                   fractions={2}
-                   ></Rating>
-                   <span style={{paddingLeft:"5px"}}>
-                      {display}
-                   </span>
-                   <div><Button onClick={addRatingHandler}>Submit</Button></div>
-                   </div>
-                  : <></>}
+                          {showbutton == 2 ? <p>You rated {rating}</p> : <></>}
+                          {showbutton == 1 ? (
+                            <Button
+                              className="text-light float-right"
+                              onClick={() => setShowButton(0)}
+                            >
+                              Rate Now
+                            </Button>
+                          ) : (
+                            <></>
+                          )}
+                          {showbutton == 0 ? (
+                            <div>
+                              <Rating
+                                onClick={setRating}
+                                initialRating={rating}
+                                onHover={setDisplay}
+                                emptySymbol="far fa-heart"
+                                fullSymbol="fas fa-heart"
+                                style={{
+                                  color: "red",
+                                  fontSize: "30px",
+                                }}
+                                fractions={2}
+                              ></Rating>
+                              <span style={{ paddingLeft: "5px" }}>
+                                {display}
+                              </span>
+                              <div>
+                                <Button onClick={addRatingHandler}>
+                                  Submit
+                                </Button>
+                              </div>
+                            </div>
+                          ) : (
+                            <></>
+                          )}
                         </>
                       ) : (
                         <>
