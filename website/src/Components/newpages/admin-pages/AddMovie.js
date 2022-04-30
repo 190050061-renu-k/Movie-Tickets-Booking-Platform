@@ -22,7 +22,6 @@ const AddMovie = (props) => {
         reldate:"",
         inputimg:"",
         inputdesc:"",
-        inputcast:"",
         errors: {
             moviename: "",
         },
@@ -34,7 +33,7 @@ const AddMovie = (props) => {
         initialValues
     );
 
-    const { moviename, reldate, inputimg, inputdesc, inputcast } = formValues;
+    const { moviename, reldate, inputimg, inputdesc } = formValues;
     console.log(formValues);
 
     const validateForm = (errors) => {
@@ -238,25 +237,7 @@ const AddMovie = (props) => {
                         onChange={handleChange2}
                         />
                     </div>
-                    <div className={"form-group col-12" }>
-                      Cast: <br/>
-                        <select 
-                        className="form-control form-control-lg" 
-                        id="inputcast"
-                        name="inputcast"
-                        value={inputcast}
-                        onChange={handleChange2}
-                        >
-                        <option>Hyderabad</option>
-                        <option>Bangalore</option>
-                        <option>Delhi</option>
-                        <option>Mumbai</option>
-                        <option>Kolkata</option>
-                        <option>Kochi</option>
-                        <option>Ahmedabad</option>
-                        <option>Chennai</option>
-                        </select>
-                    </div>
+                    
                     
                     
                     <div className="mt-3">
