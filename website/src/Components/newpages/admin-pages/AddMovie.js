@@ -19,6 +19,9 @@ const AddMovie = (props) => {
     const role = localStorage.getItem('role');
     const initialValues = {
         moviename: "",
+        reldate:"",
+        inputimg:"",
+        inputdesc:"",
         errors: {
             moviename: "",
         },
@@ -30,7 +33,8 @@ const AddMovie = (props) => {
         initialValues
     );
 
-    const { moviename } = formValues;
+    const { moviename, reldate, inputimg, inputdesc } = formValues;
+    console.log(formValues);
 
     const validateForm = (errors) => {
         let valid = true;
@@ -144,6 +148,13 @@ const AddMovie = (props) => {
         }
       };
 
+      function handleChange2(event){
+        event.preventDefault();
+        const { name, value } = event.target;
+
+        setFormValues({...formValues, [name]:value});
+      }
+
 
     return (
         <div>
@@ -194,27 +205,39 @@ const AddMovie = (props) => {
                         </div>
                     </div>
                     <div className={"form-group col-12" }>
-                        <input type="text" className="form-control form-control-lg" id="inputdate" placeholder="Release Date" />
+                        Release Date:<br/>
+                        <input 
+                        type="text" 
+                        className="form-control form-control-lg" 
+                        id="inputdate" 
+                        name="reldate"
+                        value={reldate} 
+                        onChange={handleChange2}
+                        />
                     </div>
                     <div className={"form-group col-12" }>
-                        <input type="text" className="form-control form-control-lg" id="inputimg" placeholder="Poster Image Path" />
+                      Image Path:<br/>
+                        <input 
+                        type="text" 
+                        className="form-control 
+                        form-control-lg" 
+                        id="inputimg" 
+                        name="inputimg"
+                        value={inputimg}
+                        onChange={handleChange2}
+                        />
                     </div>
                     <div className={"form-group col-12" }>
-                        <textarea className="form-control form-control-lg" id="inputdesc" placeholder="Description" />
+                      Description: <br/>
+                        <textarea 
+                        className="form-control form-control-lg" 
+                        id="inputdesc"  
+                        name="inputdesc"
+                        value={inputdesc}
+                        onChange={handleChange2}
+                        />
                     </div>
-                    <div className={"form-group col-12" }>
-                        <select className="form-control form-control-lg" id="inputcast">
-                        <option>Cast</option>
-                        <option>Hyderabad</option>
-                        <option>Bangalore</option>
-                        <option>Delhi</option>
-                        <option>Mumbai</option>
-                        <option>Kolkata</option>
-                        <option>Kochi</option>
-                        <option>Ahmedabad</option>
-                        <option>Chennai</option>
-                        </select>
-                    </div>
+                    
                     
                     
                     <div className="mt-3">

@@ -183,13 +183,6 @@ var routes = [
 var sidebar_display = [
   
   {
-    path: "/admin/analytics",
-    name: "Admin Analytics",
-    icon: "nc-icon nc-chart-bar-32",
-    component: TheatreLiveOnline,
-    layout: "",
-  },
-  {
     path: "/theatres/analytics", // :movieid to be done
     name: "Theatre Analytics",
     icon: "nc-icon nc-chart-bar-32",
