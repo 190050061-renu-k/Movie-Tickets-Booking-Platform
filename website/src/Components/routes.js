@@ -20,6 +20,7 @@ import TheatreLiveOnline from "./newpages/admin-pages/TheatresLiveOnline";
 import AddMovie from "./newpages/admin-pages/AddMovie";
 import MainPage from "./newpages/MainPage";
 import UserRating from "./newpages/user-pages/UserRating";
+//import LiveBooking from "./newpages/theatre-pages/LiveBooking";
 
 var routes = [
   {
@@ -64,6 +65,14 @@ var routes = [
     component: TheatreLiveOnline,
     layout: "",
   },
+
+  // {
+  //   path: "/theatres/livebookings",
+  //   name: "Live Bookings",
+  //   icon: "nc-icon nc-pin-3",
+  //   component: LiveBooking,
+  //   layout: "",
+  // },
   {
     path: "/theatres/analytics",
     name: "Theatre Analytics",
@@ -176,12 +185,9 @@ var routes = [
     component: MainPage,
     layout: "",
   },
-  
-  
 ];
 
 var sidebar_display = [
-  
   {
     path: "/theatres/analytics", // :movieid to be done
     name: "Theatre Analytics",
@@ -224,7 +230,7 @@ var sidebar_display = [
     component: HomePage,
     layout: "",
   },
-  
+
   {
     path: "/admin/homepage", // :movieid to be done
     name: "Admin Homepage",
@@ -232,7 +238,7 @@ var sidebar_display = [
     component: AdminHomePage,
     layout: "",
   },
-  
+
   {
     path: "/", // :movieid to be done
     name: "Select Role",
@@ -240,8 +246,6 @@ var sidebar_display = [
     component: MainPage,
     layout: "",
   },
-  
-  
 ];
 
 export default routes;
