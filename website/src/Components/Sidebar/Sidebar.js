@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
 import { Nav } from "reactstrap";
 // javascript plugin used to create scrollbars on windows
@@ -9,7 +9,6 @@ var ps;
 
 function Sidebar(props) {
   const sidebar = React.useRef();
-  var role = props.role;
 
   // verifies if routeName is the one active (in browser input)
   const activeRoute = (routeName) => {
@@ -31,7 +30,6 @@ function Sidebar(props) {
       }
     };
   });
-
   return (
     <div
       className="sidebar"
@@ -49,11 +47,7 @@ function Sidebar(props) {
       <div className="sidebar-wrapper" ref={sidebar}>
         <Nav>
           {props.routes.map((prop, key) => {
-
-            console.log(prop, role);
-            
             return (
-              prop.role==role?
               <li
                 className={
                   activeRoute(prop.path) + (prop.pro ? " active-pro" : "")
@@ -68,8 +62,7 @@ function Sidebar(props) {
                   <i className={prop.icon} />
                   <p>{prop.name}</p>
                 </NavLink>
-              </li>:
-              null
+              </li>
             );
           })}
         </Nav>
