@@ -4,3 +4,5 @@ Data/Theatres/
 Data/Users/
 Movie-Tickets-Booking-Platform/test.ddl
 Movie-Tickets-Booking-Platform/queries.txt
+node_modules/   
+backend/.env

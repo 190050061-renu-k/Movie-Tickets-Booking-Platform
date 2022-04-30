@@ -142,7 +142,7 @@ create table screens(
 -- Table : seat
 create table seats(
 	seat_id INT,
-	label CHAR CHECK(label like '%[A-M]%' and LENGTH(label)=1),
+	label CHAR CHECK(label not like '%[^A-M]%' and LENGTH(label)=1),
     column_ INT CHECK(column_ in (1,2,3,4,5,6,7,8,9,10)),
     CONSTRAINT seat_unique UNIQUE (label,column_),
 	PRIMARY KEY (seat_id)	
@@ -261,6 +261,7 @@ GROUP BY show_id, user_id, bookings.booking_id, book_date, book_type;
 
 --trigger
 CREATE OR REPLACE FUNCTION change_upcoming()
+
      RETURNS TRIGGER
      LANGUAGE PLPGSQL
      AS 
