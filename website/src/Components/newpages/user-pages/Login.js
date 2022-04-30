@@ -222,7 +222,7 @@ const Login = (props) => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            mobile_number: formValues.inputtel,
+            id: formValues.inputid,
             password: formValues.inputpswd,
           }),
         })

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 // javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from "perfect-scrollbar";
 import { Route, Switch, useLocation, Redirect } from "react-router-dom";
@@ -30,10 +30,17 @@ function Dashboard(props) {
     document.scrollingElement.scrollTop = 0;
   }, [location]);
 
+  const [role, setRole] = useState("");
+  function updateRole(role_name){
+    console.log("Update role")
+    setRole(role_name);
+  }
+
   return (
     <div className="wrapper">
       <Sidebar
         {...props}
+        role={role}
         routes={sidebar_display}
         bgColor={"black"}
         activeColor={"info"}
@@ -42,8 +49,10 @@ function Dashboard(props) {
         <DemoNavbar {...props} />
         <Switch>
           {routes.map((prop, key) => {
+            console.log(prop.component)
             return (
               <Route
+                updateRole={updateRole}
                 path={prop.layout + prop.path}
                 component={prop.component}
                 key={key}

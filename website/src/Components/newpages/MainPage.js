@@ -5,6 +5,7 @@ import { Card, CardHeader, CardBody, CardTitle, Button } from "reactstrap";
 
 import { Link } from "react-router-dom";
 const MainPage = (props) => {
+    console.log(props, "dyhjkk")
     return (
       <div>
         <div className="container text-center" style={{ marginTop: "60px" }}>
@@ -12,12 +13,15 @@ const MainPage = (props) => {
             <div>
                 <Link to="/homepage"><Button style={{"margin": "10px"}} onClick={()=>{
                     localStorage.setItem("role", "user");
+                    props.updateRole("user");
                 }}>User</Button></Link>
                 <Link to="/login"><Button style={{"margin": "10px"}} onClick={()=>{
                     localStorage.setItem("role", "theatre");
+                    props.updateRole("theatre");
                 }}>Theatre Admin</Button></Link>
                 <Link to="/login"><Button style={{"margin": "10px"}} onClick={()=>{
                     localStorage.setItem("role", "admin");
+                    props.updateRole("admin");
                 }}>Admin</Button></Link>
             </div>
         </div>
