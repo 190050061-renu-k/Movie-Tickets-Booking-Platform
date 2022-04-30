@@ -10,13 +10,14 @@ import { Redirect } from "react-router-dom";
 import Rating from "react-rating";
 
 const TheatreDetails = (props) => {
-  const role = localStorage.getItem('role');
+  const role = localStorage.getItem("role");
   let { theatre_id } = useParams();
   var [details, setDetails] = useState({});
   const [isLoading, setisLoading] = useState(0);
   const [showbutton, setShowButton] = useState(1);
   var [rating, setRating] = useState(0);
-  var [display,setDisplay] =useState();
+  var [display, setDisplay] = useState();
+  const user_id = JSON.parse(localStorage.getItem("user")).user_id;
 
   useEffect(() => {
     getDetails();
@@ -99,47 +100,69 @@ const TheatreDetails = (props) => {
       name: details.name,
     };
 
-    function addRatingHandler(){
-        setShowButton(2);
-        // add rating to db , rating in "rating" variable
+    function addRatingHandler() {
+      setShowButton(2);
+      fetch("http://localhost:3001/rateTheatre", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: user_id,
+          theatre_id: theatre_id,
+          rating: rating,
+        }),
+      })
+        .then((response) => {
+          return response.json();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
 
     return (
       <div>
-        {role==null ? <Redirect push to="/" /> : null}
+        {role == null ? <Redirect push to="/" /> : null}
         <div className="container text-left" style={{ marginTop: "60px" }}>
           <div>
             <Card>
               <CardBody>
                 <div>
                   <h1 style={{ display: "inline" }}>{theatreDetails.name}</h1>
-                  {showbutton==2 ? <p>You rated {rating}</p>:<></>}
-                  {showbutton==1 ? <Button className="text-light float-right" onClick={()=>setShowButton(0)} >Rate Now</Button>
-                   : <></>}
-                  {showbutton==0 ? 
-                  <div>
-                   <Rating
-                   onClick={setRating}
-                   initialRating={rating}
-                   onHover={setDisplay}
-
-                   emptySymbol="far fa-heart"
-                   fullSymbol="fas fa-heart"
-                   style={{
-                       
-                       color:"red",
-                       fontSize:"30px"
-                   }}
-                   fractions={2}
-                   ></Rating>
-                   <span style={{paddingLeft:"5px"}}>
-                      {display}
-                   </span>
-                   <div><Button onClick={addRatingHandler}>Submit</Button></div>
-                   </div>
-                  : <></>}
-                   
-                  
+                  {showbutton == 2 ? <p>You rated {rating}</p> : <></>}
+                  {showbutton == 1 ? (
+                    <Button
+                      className="text-light float-right"
+                      onClick={() => setShowButton(0)}
+                    >
+                      Rate Now
+                    </Button>
+                  ) : (
+                    <></>
+                  )}
+                  {showbutton == 0 ? (
+                    <div>
+                      <Rating
+                        onClick={setRating}
+                        initialRating={rating}
+                        onHover={setDisplay}
+                        emptySymbol="far fa-heart"
+                        fullSymbol="fas fa-heart"
+                        style={{
+                          color: "red",
+                          fontSize: "30px",
+                        }}
+                        fractions={2}
+                      ></Rating>
+                      <span style={{ paddingLeft: "5px" }}>{display}</span>
+                      <div>
+                        <Button onClick={addRatingHandler}>Submit</Button>
+                      </div>
+                    </div>
+                  ) : (
+                    <></>
+                  )}
                 </div>
                 <div>
                   <i className="nc-icon nc-pin-3"></i>
